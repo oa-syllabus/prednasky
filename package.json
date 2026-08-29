@@ -8,7 +8,7 @@
     "postbuild": "node scripts/build-index.js",
     "buildindex": "node scripts/build-index.js",
     "clean": "node ./scripts/clean.js",
-    "test": "node --test scripts/",
+    "test": "node --test scripts/**/*.test.js",
     "export": "pnpm -r run export --with-clicks --wait-until none"
   },
   "packageManager": "pnpm@11.24.0",
