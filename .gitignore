@@ -29,3 +29,4 @@ courses/**/slides/**/global_bottom.vue
 yarn.lock
 /.codegraph/
 .idea/
+.vite-cache/

@@ -20,6 +20,7 @@ function makeViteConfig(base, cacheRel) {
     return `import { defineConfig } from 'vite';
 export default defineConfig({
   base: ${JSON.stringify(base)},
+  // cacheDir is inert for production builds — vite build's cacheDir setting is a dev-server dependency pre-bundling concept and is not populated/consulted during a build
   cacheDir: '${cacheRel}',
   build: {
     minify: false,
