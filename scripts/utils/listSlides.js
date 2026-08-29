@@ -12,3 +12,14 @@ export async function listSlidesByCourse({ config, rootDir, skipTalks = SKIP_TAL
     }
     return result
 }
+
+// Guards against a course directory that genuinely lost all its decks — distinct
+// from a course whose decks were all filtered out by skipTalks (totalCount > 0
+// but entries is empty), which is expected and must NOT throw here.
+export function assertNoEmptyCourses(perCourse) {
+    for (const { course, totalCount } of perCourse) {
+        if (totalCount === 0) {
+            throw new Error(`Kurz "${course.id}" neobsahuje žádné přednášky`)
+        }
+    }
+}

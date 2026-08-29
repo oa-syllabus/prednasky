@@ -10,6 +10,11 @@ defaults:
   run:
     shell: bash
 
+# Safe default: any job added later without its own explicit `permissions:`
+# key inherits this (empty) set instead of the repo's broader default token
+# permissions.
+permissions: {}
+
 jobs:
   list:
     runs-on: ubuntu-latest
@@ -23,6 +28,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
 
       - name: Setup pnpm + Node
         uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2
@@ -51,22 +58,27 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-
-      - name: Setup pnpm + Node
-        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2
         with:
-          runtime: node@22
-          cache: true
+          persist-credentials: false
 
       # Cache klíč zahrnuje obsah konkrétního decku i sdílený scaffold —
       # změna components/**, setup/** nebo scripts/** invaliduje cache úplně
-      # všech decků (viz spec: CI/Deploy sekce).
+      # všech decků (viz spec: CI/Deploy sekce). Restore běží hned po
+      # checkoutu, před Setup pnpm + Node, aby cache-hit job mohl přeskočit
+      # pnpm install / Playwright install / build úplně.
       - name: Restore deck cache
         id: deck-cache
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: dist/${{ matrix.course }}/${{ matrix.name }}
-          key: ${{ matrix.course }}-${{ matrix.name }}-${{ hashFiles(format('courses/{0}/slides/{1}/**', matrix.course, matrix.name), 'components/**', 'setup/**', 'scripts/**') }}
+          key: ${{ matrix.course }}-${{ matrix.name }}-${{ hashFiles(format('courses/{0}/slides/{1}/**', matrix.course, matrix.name), format('courses/{0}/components/**', matrix.course), 'components/**', 'setup/**', 'scripts/**', 'courses.config.json', 'pnpm-lock.yaml') }}
+
+      - name: Setup pnpm + Node
+        if: steps.deck-cache.outputs.cache-hit != 'true'
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2
+        with:
+          runtime: node@22
+          cache: true
 
       - name: Install Playwright browsers
         if: steps.deck-cache.outputs.cache-hit != 'true'
@@ -74,7 +86,10 @@ jobs:
 
       - name: Build deck
         if: steps.deck-cache.outputs.cache-hit != 'true'
-        run: node scripts/build-one.js ${{ matrix.course }} ${{ matrix.name }}
+        env:
+          COURSE: ${{ matrix.course }}
+          NAME: ${{ matrix.name }}
+        run: node scripts/build-one.js "$COURSE" "$NAME"
 
       # Jméno artifactu musí odpovídat utils/assembleDist.js::artifactName() —
       # assemble-and-deploy job podle něj skládá dist/ zpátky dohromady.
@@ -85,25 +100,16 @@ jobs:
           path: dist/${{ matrix.course }}/${{ matrix.name }}
           retention-days: 1
 
-  assemble-and-deploy:
+  assemble:
     needs: [list, build]
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      pages: write
-      id-token: write
-    # Vlastní concurrency skupina bez cancel-in-progress — běžící deploy se
-    # nikdy nezruší uprostřed, nový běh jen počká ve frontě (viz spec:
-    # Hardening deploy.yml).
-    concurrency:
-      group: pages-deploy
-      cancel-in-progress: false
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
 
       - name: Setup pnpm + Node
         uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2
@@ -134,6 +140,23 @@ jobs:
         with:
           path: ./dist
 
+  deploy:
+    needs: assemble
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    # Vlastní concurrency skupina bez cancel-in-progress — běžící deploy se
+    # nikdy nezruší uprostřed, nový běh jen počká ve frontě (viz spec:
+    # Hardening deploy.yml).
+    concurrency:
+      group: pages-deploy
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5

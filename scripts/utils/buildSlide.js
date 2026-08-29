@@ -68,8 +68,16 @@ export async function buildSlide({ course, entry, config, rootDir, useSymlinks =
     await ensureLinkOrCopy(setupSrc, path.join(dir, 'setup'), useSymlinks)
 
     // 3) build slajdu přímo přes CLI
-    cd(dir)
-    await $`pnpm exec slidev build`
+    // cd() je zx-globální (mění process.cwd() na úrovni procesu), takže ho
+    // po buildu vracíme zpátky — buildSlide() se volá opakovaně ve smyčce
+    // (viz build.js) i z případných budoucích volajících.
+    const originalCwd = process.cwd()
+    try {
+        cd(dir)
+        await $`pnpm exec slidev build`
+    } finally {
+        cd(originalCwd)
+    }
 
     // 4) přesuň dist do root/dist/<course>/<name>
     const slideDist  = path.join(dir, 'dist')

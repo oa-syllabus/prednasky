@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import fs from 'node:fs'
 import path from 'node:path'
 import fse from 'fs-extra'
 import { fileURLToPath } from 'node:url'
@@ -20,6 +21,15 @@ const matrix = JSON.parse(matrixJsonArg)
 for (const { course, name } of matrix) {
     const src  = path.join(artifactsDirArg, artifactName(course, name))
     const dest = slideDistDir(rootDir, course, name)
+
+    if (!await fse.pathExists(src)) {
+        const actual = fs.existsSync(artifactsDirArg) ? fs.readdirSync(artifactsDirArg) : []
+        throw new Error(
+            `Chybí artifact pro ${course}/${name}: očekávaný adresář "${src}" neexistuje. ` +
+            `Obsah "${artifactsDirArg}": ${actual.length ? actual.join(', ') : '(prázdný nebo neexistuje)'}`,
+        )
+    }
+
     await fse.ensureDir(dest)
     await fse.copy(src, dest, { overwrite: true })
     console.log(`✅ assembled ${course}/${name}`)

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import os from 'node:os'
-import { listSlidesByCourse, SKIP_TALKS } from './listSlides.js'
+import { listSlidesByCourse, assertNoEmptyCourses, SKIP_TALKS } from './listSlides.js'
 
 async function makeSlide(slidesDir, folder, pkg) {
     const dir = path.join(slidesDir, folder)
@@ -63,4 +63,16 @@ test('listSlidesByCourse totalCount stays 0 for a genuinely empty course (no ski
 
     assert.equal(result.totalCount, 0)
     assert.deepEqual(result.entries, [])
+})
+
+test('assertNoEmptyCourses throws for a genuinely empty course (totalCount === 0)', () => {
+    const perCourse = [{ course: { id: 'pva2', title: 'PVA2' }, entries: [], totalCount: 0 }]
+
+    assert.throws(() => assertNoEmptyCourses(perCourse), /Kurz "pva2" neobsahuje žádné přednášky/)
+})
+
+test('assertNoEmptyCourses does NOT throw when totalCount > 0 but entries is empty (all filtered by skipTalks)', () => {
+    const perCourse = [{ course: { id: 'pva2', title: 'PVA2' }, entries: [], totalCount: 1 }]
+
+    assert.doesNotThrow(() => assertNoEmptyCourses(perCourse))
 })
