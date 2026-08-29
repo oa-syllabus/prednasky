@@ -42,7 +42,7 @@ jobs:
     permissions:
       contents: read
     concurrency:
-      group: pages-build-${{ github.ref }}
+      group: pages-build-${{ github.ref }}-${{ matrix.course }}-${{ matrix.name }}
       cancel-in-progress: true
     strategy:
       fail-fast: false
