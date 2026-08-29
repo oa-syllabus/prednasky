@@ -1,0 +1,13 @@
+{
+  "name": "40_OOP_Uvod_Trida_Objekt",
+  "title": "OOP Úvod Třída Objekt",
+  "author": { "name": "Adam Fišer" },
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build",
+    "export": "slidev export --output ../40_OOP_Uvod_Trida_Objekt.pdf"
+  }
+}

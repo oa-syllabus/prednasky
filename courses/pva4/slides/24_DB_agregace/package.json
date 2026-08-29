@@ -1,0 +1,13 @@
+{
+  "name": "24_DB_agregace",
+  "title": "DB Agregace",
+  "author": { "name": "Adam Fišer" },
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build",
+    "export": "slidev export --output ../24_DB_agregace.pdf"
+  }
+}

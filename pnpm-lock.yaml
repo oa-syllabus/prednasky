@@ -100,6 +100,50 @@ importers:
 
   courses/pva2/slides/60_team_app: {}
 
+  courses/pva4/slides/00_skeleton: {}
+
+  courses/pva4/slides/00_uvodni_hodina: {}
+
+  courses/pva4/slides/02_uvod_do_php: {}
+
+  courses/pva4/slides/03_konstrukt1_zaklady_promenne_vystupy: {}
+
+  courses/pva4/slides/04_konstrukt2_datovetypy_promenne_operator: {}
+
+  courses/pva4/slides/05_formulare: {}
+
+  courses/pva4/slides/06_prikazy_include_require: {}
+
+  courses/pva4/slides/07_ridici_struktury: {}
+
+  courses/pva4/slides/09_auth: {}
+
+  courses/pva4/slides/10_sessions: {}
+
+  courses/pva4/slides/11_header: {}
+
+  courses/pva4/slides/12_email: {}
+
+  courses/pva4/slides/20_DB_nastaveni: {}
+
+  courses/pva4/slides/21_DB_SQLvsPHP: {}
+
+  courses/pva4/slides/22_DB_select: {}
+
+  courses/pva4/slides/23_DB_relace: {}
+
+  courses/pva4/slides/24_DB_agregace: {}
+
+  courses/pva4/slides/25_DB_tabulky: {}
+
+  courses/pva4/slides/26_DB_insert: {}
+
+  courses/pva4/slides/35_git_markdown: {}
+
+  courses/pva4/slides/40_OOP_Uvod_Trida_Objekt: {}
+
+  courses/pva4/slides/41_OOP_dedicnost: {}
+
   courses/scm/slides/00_skeleton: {}
 
   courses/scm/slides/10_markdown: {}
