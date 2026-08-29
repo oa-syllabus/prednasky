@@ -1,9 +1,9 @@
 import 'zx/globals'
-import fs from 'fs'
+import fs from 'node:fs'
 import fse from 'fs-extra'
-import path from 'path'
+import path from 'node:path'
 import { rimraf } from 'rimraf'
-import { fileURLToPath } from 'url'
+import { fileURLToPath } from 'node:url'
 import { loadCoursesConfig } from './utils/courses.js'
 import { getSlidesSorted } from './utils/slides.js'
 import { computeViteBase } from './utils/paths.js'
@@ -42,7 +42,7 @@ function makeViteConfig(base, cacheRel) {
     // rychlý build: minify off, sourcemap off, shared cache
     return `import { defineConfig } from 'vite';
 export default defineConfig({
-  base: '${base}',
+  base: ${JSON.stringify(base)},
   cacheDir: '${cacheRel}',
   build: {
     minify: false,
@@ -69,6 +69,10 @@ for (const course of config.courses) {
     const slidesDir           = path.resolve(rootDir, 'courses', course.id, 'slides')
     const courseComponentsDir = path.resolve(rootDir, 'courses', course.id, 'components')
     const entries             = await getSlidesSorted(slidesDir)
+
+    if (entries.length === 0) {
+        throw new Error(`Kurz "${course.id}" neobsahuje žádné přednášky (prohledáváno: ${slidesDir})`)
+    }
 
     for (const entry of entries) {
         const dir  = entry.dir
