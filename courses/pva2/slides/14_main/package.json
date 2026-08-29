@@ -1,0 +1,13 @@
+{
+  "name": "14_main",
+  "title": "Funkce main",
+  "author": { "name": "Adam Fišer" },
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build",
+    "export": "slidev export --output ../14_main.pdf"
+  }
+}

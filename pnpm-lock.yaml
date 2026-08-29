@@ -52,6 +52,54 @@ importers:
         specifier: ^8.8.5
         version: 8.8.5
 
+  courses/pva2/slides/00_skeleton: {}
+
+  courses/pva2/slides/00_uvodni_hodina: {}
+
+  courses/pva2/slides/01_uvod_do_python: {}
+
+  courses/pva2/slides/02_input_konverze_text: {}
+
+  courses/pva2/slides/03_datove_struktury: {}
+
+  courses/pva2/slides/07_ridici_struktury: {}
+
+  courses/pva2/slides/08_funkce: {}
+
+  courses/pva2/slides/09_moduly: {}
+
+  courses/pva2/slides/10_datum_cas: {}
+
+  courses/pva2/slides/11_vyjimky: {}
+
+  courses/pva2/slides/12_logovani: {}
+
+  courses/pva2/slides/13_regex: {}
+
+  courses/pva2/slides/14_main: {}
+
+  courses/pva2/slides/34_git_scm_uvod_do_git: {}
+
+  courses/pva2/slides/35_git_markdown: {}
+
+  courses/pva2/slides/36_git_pokrocile: {}
+
+  courses/pva2/slides/37_testovani: {}
+
+  courses/pva2/slides/38_testovani_actions: {}
+
+  courses/pva2/slides/40_oop_uvod_tridy_objekty: {}
+
+  courses/pva2/slides/41_konstruktor: {}
+
+  courses/pva2/slides/42_modifikatory_pristupnosti: {}
+
+  courses/pva2/slides/43_privatni_funkce: {}
+
+  courses/pva2/slides/44_dedicnost: {}
+
+  courses/pva2/slides/60_team_app: {}
+
   courses/scm/slides/00_skeleton: {}
 
   courses/scm/slides/10_markdown: {}

@@ -1,0 +1,13 @@
+{
+  "name": "44_dedicnost",
+  "title": "OOP Dědičnost",
+  "author": { "name": "Adam Fišer" },
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build",
+    "export": "slidev export --output ../44_dedicnost.pdf"
+  }
+}

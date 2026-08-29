@@ -1,0 +1,15 @@
+:root {
+    --slidev-code-line-height: 17px;
+    --slidev-code-font-size: 16px;
+}
+
+h1 {
+    background-color: #c4262e;
+    background-image: linear-gradient(45deg, #ef564c 10%, #c4262e 20%);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+}
+

@@ -1,0 +1,13 @@
+{
+  "name": "43_privatni_funkce",
+  "title": "Privátní funkce",
+  "author": { "name": "Adam Fišer" },
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build",
+    "export": "slidev export --output ../43_privatni_funkce.pdf"
+  }
+}
