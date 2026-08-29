@@ -6,6 +6,7 @@ import path from 'node:path'
 import fs from 'node:fs/promises'
 import { rimraf } from 'rimraf'
 import { fileURLToPath } from 'node:url'
+import { distDir } from './utils/coursePaths.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname  = path.dirname(__filename)
@@ -13,7 +14,7 @@ const __dirname  = path.dirname(__filename)
 const rootDir = path.resolve(__dirname, '..')
 
 // 1) smaž root/dist
-await rimraf(path.join(rootDir, 'dist'))
+await rimraf(distDir(rootDir))
 
 // 2) najdi všechny slajdy napříč kurzy (podle package.json)
 const pkgFiles  = await fg(['courses/*/slides/*/package.json'], { cwd: rootDir, absolute: true })
