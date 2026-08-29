@@ -2,73 +2,161 @@
 name: CD Deploy page to Github Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: [main]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow one concurrent deployment
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
-
-# Default to bash
 defaults:
   run:
     shell: bash
 
+# Safe default: any job added later without its own explicit `permissions:`
+# key inherits this (empty) set instead of the repo's broader default token
+# permissions.
+permissions: {}
+
 jobs:
-  # Build job
-  build:
+  list:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    concurrency:
+      group: pages-build-${{ github.ref }}
+      cancel-in-progress: true
+    outputs:
+      matrix: ${{ steps.list.outputs.matrix }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
 
-      # pnpm/setup nahrazuje pnpm/action-setup i actions/setup-node:
-      # nainstaluje pnpm (verze se bere z pole packageManager v package.json),
-      # k tomu Node runtime a rovnou spustí `pnpm install`.
       - name: Setup pnpm + Node
-        uses: pnpm/setup@v2
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2
         with:
           runtime: node@22
           cache: true
 
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v6
+      - name: List slides
+        id: list
+        run: |
+          MATRIX=$(node scripts/list-slides.js)
+          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
 
-      # Slidev generuje PDF ke stažení přes modul playwright-chromium,
-      # takže stačí chromium — bez argumentu by se táhl i firefox a webkit.
+  build:
+    needs: list
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    concurrency:
+      group: pages-build-${{ github.ref }}-${{ matrix.course }}-${{ matrix.name }}
+      cancel-in-progress: true
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.list.outputs.matrix) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      # Cache klíč zahrnuje obsah konkrétního decku i sdílený scaffold —
+      # změna components/**, setup/** nebo scripts/** invaliduje cache úplně
+      # všech decků (viz spec: CI/Deploy sekce). Restore běží hned po
+      # checkoutu, před Setup pnpm + Node, aby cache-hit job mohl přeskočit
+      # pnpm install / Playwright install / build úplně.
+      - name: Restore deck cache
+        id: deck-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: dist/${{ matrix.course }}/${{ matrix.name }}
+          key: ${{ matrix.course }}-${{ matrix.name }}-${{ hashFiles(format('courses/{0}/slides/{1}/**', matrix.course, matrix.name), format('courses/{0}/components/**', matrix.course), 'components/**', 'setup/**', 'scripts/**', 'courses.config.json', 'pnpm-lock.yaml') }}
+
+      - name: Setup pnpm + Node
+        if: steps.deck-cache.outputs.cache-hit != 'true'
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2
+        with:
+          runtime: node@22
+          cache: true
+
       - name: Install Playwright browsers
+        if: steps.deck-cache.outputs.cache-hit != 'true'
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Build
-        run: pnpm build
+      - name: Build deck
+        if: steps.deck-cache.outputs.cache-hit != 'true'
         env:
-          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          COURSE: ${{ matrix.course }}
+          NAME: ${{ matrix.name }}
+        run: node scripts/build-one.js "$COURSE" "$NAME"
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
+      # Jméno artifactu musí odpovídat utils/assembleDist.js::artifactName() —
+      # assemble-and-deploy job podle něj skládá dist/ zpátky dohromady.
+      - name: Upload deck artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: dist-${{ matrix.course }}-${{ matrix.name }}
+          path: dist/${{ matrix.course }}/${{ matrix.name }}
+          retention-days: 1
+
+  assemble:
+    needs: [list, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup pnpm + Node
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2
+        with:
+          runtime: node@22
+          cache: true
+
+      - name: Download all deck artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: dist-*
+          path: dist-parts
+
+      - name: Assemble dist tree
+        env:
+          MATRIX_JSON: ${{ needs.list.outputs.matrix }}
+        run: node scripts/assemble-dist.js "$MATRIX_JSON" dist-parts
+
+      - name: Build index & README
+        run: node scripts/build-index.js
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
           path: ./dist
 
-  # Deployment job
   deploy:
+    needs: assemble
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    # Vlastní concurrency skupina bez cancel-in-progress — běžící deploy se
+    # nikdy nezruší uprostřed, nový běh jen počká ve frontě (viz spec:
+    # Hardening deploy.yml).
+    concurrency:
+      group: pages-deploy
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5
