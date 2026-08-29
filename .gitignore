@@ -28,3 +28,4 @@ courses/**/slides/**/global_bottom.vue
 # use pnpm-lock
 yarn.lock
 /.codegraph/
+.idea/

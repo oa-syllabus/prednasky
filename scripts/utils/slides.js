@@ -17,6 +17,24 @@ export async function getSlidesSorted(slidesDir) {
             folder: path.basename(dir),
         }
     }))
+
+    for (const entry of entries) {
+        if (!entry.name) {
+            throw new Error(`Slide "${entry.folder}" v ${slidesDir} nemá v package.json vyplněné "name"`)
+        }
+    }
+
+    const byName = new Map()
+    for (const entry of entries) {
+        const existing = byName.get(entry.name)
+        if (existing) {
+            throw new Error(
+                `Duplicitní "name" ("${entry.name}") v package.json složek "${existing.folder}" a "${entry.folder}" v ${slidesDir}`,
+            )
+        }
+        byName.set(entry.name, entry)
+    }
+
     const collator = new Intl.Collator('cs', { numeric: true, sensitivity: 'base' })
     entries.sort((a, b) => collator.compare(a.folder, b.folder))
     return entries
