@@ -1,20 +1,21 @@
+// scripts/build-index.js
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import fse from 'fs-extra'
-import { getSlidesSorted } from './utils/slides.js'
 import { loadCoursesConfig } from './utils/courses.js'
 import { computeLiveUrl } from './utils/paths.js'
 import { renderCourseIndexHtml, renderHubIndexHtml, renderReadmeSection } from './utils/render.js'
+import { listSlidesByCourse } from './utils/listSlides.js'
+import { distDir, courseDistDir } from './utils/coursePaths.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname  = path.dirname(__filename)
 
 const rootDir = path.resolve(__dirname, '..')
 
-const OUTPUT_PATH = path.resolve(rootDir, 'dist')
+const OUTPUT_PATH = distDir(rootDir)
 const PUBLIC_PATH = path.resolve(rootDir, 'public')
-const SKIP_TALKS  = ['00_skeleton', '00_uvodni_hodina'] // vynechat z indexu
 const currentYear = new Date().getFullYear()
 
 console.log('📃 build index & readme ...')
@@ -25,11 +26,10 @@ await fse.ensureDir(OUTPUT_PATH)
 const readmeSections = []
 const hubCourses = []
 
-for (const course of config.courses) {
-    const slidesDir = path.resolve(rootDir, 'courses', course.id, 'slides')
-    const entries = (await getSlidesSorted(slidesDir)).filter(e => !SKIP_TALKS.includes(e.folder))
+const perCourse = await listSlidesByCourse({ config, rootDir })
 
-    const courseDist = path.join(OUTPUT_PATH, course.id)
+for (const { course, entries } of perCourse) {
+    const courseDist = courseDistDir(rootDir, course.id)
     await fse.ensureDir(courseDist)
     await fs.writeFile(
         path.join(courseDist, 'index.html'),
