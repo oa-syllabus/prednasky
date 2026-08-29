@@ -1,0 +1,12 @@
+packages:
+  - "courses/*/slides/*"
+
+shamefullyHoist: true
+autoInstallPeers: true
+
+overrides:
+  dompurify: ^3.4.14
+  rollup: ^4.63.0
+
+allowBuilds:
+  playwright-chromium: true

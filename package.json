@@ -1,0 +1,37 @@
+{
+  "name": "prednasky",
+  "description": "Přednášky — PVA2, PVA4, SCM",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "zx ./scripts/build.js",
+    "postbuild": "node scripts/build-index.js",
+    "buildindex": "node scripts/build-index.js",
+    "clean": "node ./scripts/clean.js",
+    "test": "node --test scripts/",
+    "export": "pnpm -r run export --with-clicks --wait-until none"
+  },
+  "packageManager": "pnpm@11.24.0",
+  "devDependencies": {
+    "@iconify-json/material-symbols": "^1.2.89",
+    "@iconify-json/mdi": "^1.2.3",
+    "@slidev/cli": "^52.19.1",
+    "@slidev/theme-default": "^0.25.0",
+    "@slidev/types": "^52.19.1",
+    "fast-glob": "^3.3.3",
+    "fs-extra": "^11.4.0",
+    "playwright": "^1.62.1",
+    "playwright-chromium": "^1.62.1",
+    "plop": "^4.0.5",
+    "rimraf": "^6.1.3",
+    "shiki": "^4.4.3",
+    "zx": "^8.8.5"
+  },
+  "keywords": ["prednasky", "vyuka", "oa", "oaopava", "pva2", "pva4", "scm"],
+  "author": {
+    "name": "Adam Fišer",
+    "url": "https://github.com/AdamFiser",
+    "email": "adam.fiser@wanex.cz"
+  },
+  "license": "CC BY-NC 4.0"
+}
