@@ -1,5 +1,5 @@
 {
-  "name": "01_uvod_do_python",
+  "name": "00_skeleton",
   "title": "Úvod do Pythonu",
   "author": { "name": "Adam Fišer" },
   "type": "module",
@@ -8,6 +8,6 @@
   "scripts": {
     "dev": "slidev",
     "build": "slidev build",
-    "export": "slidev export --output ../01_uvod_do_python.pdf"
+    "export": "slidev export --output ../00_skeleton.pdf"
   }
 }
