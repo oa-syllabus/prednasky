@@ -52,6 +52,18 @@ importers:
         specifier: ^8.8.5
         version: 8.8.5
 
+  courses/scm/slides/00_skeleton: {}
+
+  courses/scm/slides/10_markdown: {}
+
+  courses/scm/slides/20_git_uvod_do_git: {}
+
+  courses/scm/slides/21_git_pokrocile: {}
+
+  courses/scm/slides/31_testovani: {}
+
+  courses/scm/slides/32_git_actions_testovani: {}
+
 packages:
 
   '@antfu/install-pkg@1.1.0':
