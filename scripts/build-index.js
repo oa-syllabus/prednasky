@@ -27,6 +27,7 @@ const readmeSections = []
 const hubCourses = []
 
 const perCourse = await listSlidesByCourse({ config, rootDir })
+const width = String(Math.max(...perCourse.map(({ entries }) => entries.length))).length
 
 for (const { course, entries } of perCourse) {
     const courseDist = courseDistDir(rootDir, course.id)
@@ -37,7 +38,7 @@ for (const { course, entries } of perCourse) {
     )
 
     hubCourses.push({ id: course.id, title: course.title, entryCount: entries.length })
-    readmeSections.push(renderReadmeSection({ course, entries, ghPagesUrl: config.ghPagesUrl, repoName: config.repoName, computeLiveUrl }))
+    readmeSections.push(renderReadmeSection({ course, entries, ghPagesUrl: config.ghPagesUrl, repoName: config.repoName, computeLiveUrl, width }))
 
     console.log(`✅ ${course.id}/index.html hotovo (${entries.length} přednášek)`)
 }
@@ -55,5 +56,6 @@ await fs.writeFile(
 )
 console.log('✅ README.md hotovo')
 
-await fse.copy(path.join(PUBLIC_PATH, 'styles.css'), path.join(OUTPUT_PATH, 'styles.css'))
-await fse.copy(path.join(PUBLIC_PATH, 'logo.png'),   path.join(OUTPUT_PATH, 'logo.png'))
+await fse.copy(path.join(PUBLIC_PATH, 'theme.css'), path.join(OUTPUT_PATH, 'theme.css'))
+await fse.copy(path.join(PUBLIC_PATH, 'theme-toggle.js'), path.join(OUTPUT_PATH, 'theme-toggle.js'))
+await fse.copy(path.join(PUBLIC_PATH, 'logo.png'), path.join(OUTPUT_PATH, 'logo.png'))
