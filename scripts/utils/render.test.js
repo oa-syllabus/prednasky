@@ -42,6 +42,17 @@ test('renderCourseIndexHtml pins the Bootstrap link with an SRI integrity attrib
     assert.match(html, /crossorigin="anonymous"/)
 })
 
+test('renderCourseIndexHtml never reuses the Bootstrap-colliding .row class name', () => {
+    const html = renderCourseIndexHtml({
+        title: 'X',
+        entries: [{ name: '01_a', title: 'A' }],
+        year: 2026,
+    })
+
+    assert.match(html, /class="deck-row"/)
+    assert.doesNotMatch(html, /class="row"/)
+})
+
 test('renderHubIndexHtml lists every course with a link and entry count', () => {
     const html = renderHubIndexHtml({
         courses: [{ id: 'scm', title: 'SCM | Programování a vývoj aplikací', entryCount: 6 }],
@@ -66,6 +77,18 @@ test('renderHubIndexHtml links theme.css and theme-toggle.js at the same level',
 
     assert.match(html, /href="theme\.css"/)
     assert.match(html, /src="theme-toggle\.js"/)
+})
+
+test('renderHubIndexHtml never reuses Bootstrap-colliding class names', () => {
+    const html = renderHubIndexHtml({
+        courses: [{ id: 'x', title: 'X', entryCount: 1 }],
+        year: 2026,
+    })
+
+    assert.match(html, /class="deck-card"/)
+    assert.match(html, /class="deck-cards"/)
+    assert.doesNotMatch(html, /class="card"/)
+    assert.doesNotMatch(html, /class="cards"/)
 })
 
 test('renderReadmeSection renders a markdown table with live and PDF links using the provided width', () => {

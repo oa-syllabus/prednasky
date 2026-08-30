@@ -27,7 +27,7 @@ const readmeSections = []
 const hubCourses = []
 
 const perCourse = await listSlidesByCourse({ config, rootDir })
-const width = String(Math.max(...perCourse.map(({ entries }) => entries.length))).length
+const width = String(perCourse.length === 0 ? 1 : Math.max(...perCourse.map(({ entries }) => entries.length))).length
 
 for (const { course, entries } of perCourse) {
     const courseDist = courseDistDir(rootDir, course.id)
