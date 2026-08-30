@@ -31,7 +31,7 @@ export function renderCourseIndexHtml({ title, entries, year }) {
     const listHtml = entries.map((e, i) => {
         const n = String(i + 1).padStart(width, '0')
         return `
-      <div class="row">
+      <div class="deck-row">
         <span class="idx">${n}</span>
         <a href="./${escapeHtml(e.name)}">${escapeHtml(e.title)}</a>
         <a class="pdf" href="./${escapeHtml(e.name)}/${escapeHtml(e.name)}.pdf">PDF</a>
@@ -71,7 +71,7 @@ export function renderCourseIndexHtml({ title, entries, year }) {
 
 export function renderHubIndexHtml({ courses, year }) {
     const cardsHtml = courses.map(c => `
-      <a class="card" href="./${escapeHtml(c.id)}/">
+      <a class="deck-card" href="./${escapeHtml(c.id)}/">
         <span class="name">${escapeHtml(c.title)}</span>
         <span class="count">${c.entryCount} přednášek</span>
       </a>`).join('')
@@ -93,7 +93,7 @@ export function renderHubIndexHtml({ courses, year }) {
       <div class="screen">
         <h1>Programování &amp; výuka</h1>
         <p class="sub">Vyberte kurz</p>
-        <div class="cards">${cardsHtml}
+        <div class="deck-cards">${cardsHtml}
         </div>
       </div>
     </div>
