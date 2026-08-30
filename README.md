@@ -1,6 +1,6 @@
 # Seznam přednášek
 
-## PVA2 | Programování a vývoj aplikací
+## PVA2 \| Programování a vývoj aplikací
 
 | # | Přednáška | PDF |
 |---:|-----------|-----|
@@ -26,7 +26,7 @@
 | 20 | [Privátní funkce](https://oa-syllabus.github.io/prednasky/pva2/43_privatni_funkce/) | [PDF](https://oa-syllabus.github.io/prednasky/pva2/43_privatni_funkce/43_privatni_funkce.pdf) |
 | 21 | [OOP Dědičnost](https://oa-syllabus.github.io/prednasky/pva2/44_dedicnost/) | [PDF](https://oa-syllabus.github.io/prednasky/pva2/44_dedicnost/44_dedicnost.pdf) |
 | 22 | [Týmová aplikace](https://oa-syllabus.github.io/prednasky/pva2/60_team_app/) | [PDF](https://oa-syllabus.github.io/prednasky/pva2/60_team_app/60_team_app.pdf) |
-## PVA4 | Programování a vývoj aplikací
+## PVA4 \| Programování a vývoj aplikací
 
 | # | Přednáška | PDF |
 |---:|-----------|-----|
@@ -50,12 +50,12 @@
 | 18 | [Markdown syntaxe](https://oa-syllabus.github.io/prednasky/pva4/35_git_markdown/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/35_git_markdown/35_git_markdown.pdf) |
 | 19 | [OOP Úvod Třída Objekt](https://oa-syllabus.github.io/prednasky/pva4/40_OOP_Uvod_Trida_Objekt/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/40_OOP_Uvod_Trida_Objekt/40_OOP_Uvod_Trida_Objekt.pdf) |
 | 20 | [OOP Dědičnost](https://oa-syllabus.github.io/prednasky/pva4/41_OOP_dedicnost/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/41_OOP_dedicnost/41_OOP_dedicnost.pdf) |
-## SCM | Programování a vývoj aplikací
+## SCM \| Programování a vývoj aplikací
 
 | # | Přednáška | PDF |
 |---:|-----------|-----|
-| 1 | [Markdown syntaxe](https://oa-syllabus.github.io/prednasky/scm/10_markdown/) | [PDF](https://oa-syllabus.github.io/prednasky/scm/10_markdown/10_markdown.pdf) |
-| 2 | [Úvod do Git](https://oa-syllabus.github.io/prednasky/scm/20_git_uvod_do_git/) | [PDF](https://oa-syllabus.github.io/prednasky/scm/20_git_uvod_do_git/20_git_uvod_do_git.pdf) |
-| 3 | [GIT pokročilé](https://oa-syllabus.github.io/prednasky/scm/21_git_pokrocile/) | [PDF](https://oa-syllabus.github.io/prednasky/scm/21_git_pokrocile/21_git_pokrocile.pdf) |
-| 4 | [Testování](https://oa-syllabus.github.io/prednasky/scm/31_testovani/) | [PDF](https://oa-syllabus.github.io/prednasky/scm/31_testovani/31_testovani.pdf) |
-| 5 | [Testování pomocí GitHub Actions](https://oa-syllabus.github.io/prednasky/scm/32_git_actions_testovani/) | [PDF](https://oa-syllabus.github.io/prednasky/scm/32_git_actions_testovani/32_git_actions_testovani.pdf) |
+| 01 | [Markdown syntaxe](https://oa-syllabus.github.io/prednasky/scm/10_markdown/) | [PDF](https://oa-syllabus.github.io/prednasky/scm/10_markdown/10_markdown.pdf) |
+| 02 | [Úvod do Git](https://oa-syllabus.github.io/prednasky/scm/20_git_uvod_do_git/) | [PDF](https://oa-syllabus.github.io/prednasky/scm/20_git_uvod_do_git/20_git_uvod_do_git.pdf) |
+| 03 | [GIT pokročilé](https://oa-syllabus.github.io/prednasky/scm/21_git_pokrocile/) | [PDF](https://oa-syllabus.github.io/prednasky/scm/21_git_pokrocile/21_git_pokrocile.pdf) |
+| 04 | [Testování](https://oa-syllabus.github.io/prednasky/scm/31_testovani/) | [PDF](https://oa-syllabus.github.io/prednasky/scm/31_testovani/31_testovani.pdf) |
+| 05 | [Testování pomocí GitHub Actions](https://oa-syllabus.github.io/prednasky/scm/32_git_actions_testovani/) | [PDF](https://oa-syllabus.github.io/prednasky/scm/32_git_actions_testovani/32_git_actions_testovani.pdf) |
