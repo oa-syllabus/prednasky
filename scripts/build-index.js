@@ -4,7 +4,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import fse from 'fs-extra'
 import { loadCoursesConfig } from './utils/courses.js'
-import { computeLiveUrl } from './utils/paths.js'
+import { computeCourseBaseUrl, computeLiveUrl } from './utils/paths.js'
 import { renderCourseIndexHtml, renderHubIndexHtml, renderReadmeSection } from './utils/render.js'
 import { listSlidesByCourse } from './utils/listSlides.js'
 import { distDir, courseDistDir } from './utils/coursePaths.js'
@@ -34,7 +34,12 @@ for (const { course, entries } of perCourse) {
     await fse.ensureDir(courseDist)
     await fs.writeFile(
         path.join(courseDist, 'index.html'),
-        renderCourseIndexHtml({ title: course.title, entries, year: currentYear }),
+        renderCourseIndexHtml({
+            title: course.title,
+            entries,
+            year: currentYear,
+            liveBaseUrl: computeCourseBaseUrl(config.ghPagesUrl, config.repoName, course.id),
+        }),
     )
 
     hubCourses.push({ id: course.id, title: course.title, entryCount: entries.length })
@@ -58,4 +63,5 @@ console.log('✅ README.md hotovo')
 
 await fse.copy(path.join(PUBLIC_PATH, 'theme.css'), path.join(OUTPUT_PATH, 'theme.css'))
 await fse.copy(path.join(PUBLIC_PATH, 'theme-toggle.js'), path.join(OUTPUT_PATH, 'theme-toggle.js'))
+await fse.copy(path.join(PUBLIC_PATH, 'copy-link.js'), path.join(OUTPUT_PATH, 'copy-link.js'))
 await fse.copy(path.join(PUBLIC_PATH, 'logo.png'), path.join(OUTPUT_PATH, 'logo.png'))
