@@ -128,7 +128,7 @@ test('renderCourseIndexHtml renders a copy-link button carrying the absolute liv
         liveBaseUrl: 'https://oa-syllabus.github.io/prednasky/pva4/',
     })
 
-    assert.match(html, /class="copy"/)
+    assert.match(html, /class="deck-action copy"/)
     assert.match(html, /data-copy-url="https:\/\/oa-syllabus\.github\.io\/prednasky\/pva4\/00_uvodni_hodina\/"/)
     assert.match(html, /aria-label="Kopírovat odkaz na přednášku Úvodní hodina"/)
 })
@@ -168,7 +168,7 @@ test('renderHubIndexHtml renders no copy button — copying is a per-lecture act
         year: 2026,
     })
 
-    assert.doesNotMatch(html, /class="copy"/)
+    assert.doesNotMatch(html, /deck-action/)
 })
 
 test('renderCourseIndexHtml places the copy button at the end of the row, after the PDF link', () => {
@@ -179,8 +179,8 @@ test('renderCourseIndexHtml places the copy button at the end of the row, after 
         liveBaseUrl: 'https://example.test/',
     })
 
-    const pdfAt  = html.indexOf('class="pdf"')
-    const copyAt = html.indexOf('class="copy"')
+    const pdfAt  = html.indexOf('class="deck-action pdf"')
+    const copyAt = html.indexOf('class="deck-action copy"')
 
     assert.ok(pdfAt > -1 && copyAt > -1)
     assert.ok(copyAt > pdfAt, 'tlačítko kopírování musí být v HTML až za odkazem na PDF')
@@ -208,4 +208,44 @@ test('renderCourseIndexHtml escapes the lecture title inside the copy button lab
 
     assert.doesNotMatch(html, /" onmouseover="/)
     assert.match(html, /aria-label="Kopírovat odkaz na přednášku A&quot; onmouseover=&quot;alert\(1\)"/)
+})
+
+test('renderCourseIndexHtml renders the PDF link as an icon action, not the literal text PDF', () => {
+    const html = renderCourseIndexHtml({
+        title: 'X',
+        entries: [{ name: '01_a', title: 'Markdown' }],
+        year: 2026,
+        liveBaseUrl: 'https://example.test/',
+    })
+
+    assert.match(html, /class="deck-action pdf"/)
+    assert.doesNotMatch(html, />PDF</)
+    assert.match(html, /aria-label="Stáhnout PDF přednášky Markdown"/)
+    assert.match(html, /href="\.\/01_a\/01_a\.pdf"/)
+})
+
+test('renderCourseIndexHtml wraps both row actions in a single .deck-actions group', () => {
+    const html = renderCourseIndexHtml({
+        title: 'X',
+        entries: [{ name: '01_a', title: 'A' }],
+        year: 2026,
+        liveBaseUrl: 'https://example.test/',
+    })
+
+    const group = html.match(/<span class="deck-actions">[\s\S]*?<\/span>\s*<\/div>/)
+    assert.ok(group, 'řádek musí obsahovat skupinu .deck-actions')
+    assert.match(group[0], /class="deck-action pdf"/)
+    assert.match(group[0], /class="deck-action copy"/)
+})
+
+test('renderCourseIndexHtml escapes the lecture title inside the PDF label', () => {
+    const html = renderCourseIndexHtml({
+        title: 'X',
+        entries: [{ name: '01_a', title: 'A" onfocus="alert(1)' }],
+        year: 2026,
+        liveBaseUrl: 'https://example.test/',
+    })
+
+    assert.doesNotMatch(html, /" onfocus="/)
+    assert.match(html, /aria-label="Stáhnout PDF přednášky A&quot; onfocus=&quot;alert\(1\)"/)
 })

@@ -21,10 +21,21 @@ const CHECK_ICON_SVG = '<svg viewBox="0 0 24 24" width="14" height="14" fill="no
     + '<path d="M20 6 9 17l-5-5" />'
     + '</svg>'
 
+// Dokument se šipkou dolů — od schránky odlišitelný na první pohled.
+const PDF_ICON_SVG = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+    + '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" /><path d="M14 3v5h5" />'
+    + '<path d="M12 12v5" /><path d="m9.5 14.5 2.5 2.5 2.5-2.5" />'
+    + '</svg>'
+
 function renderCopyButton(url, entryTitle) {
     // Popisek nese název přednášky — čtečka jinak přečte u všech řádků totéž.
     const label = `Kopírovat odkaz na přednášku ${entryTitle}`
-    return `<button class="copy" type="button" data-copy-url="${escapeHtml(url)}" aria-label="${escapeHtml(label)}" title="Kopírovat odkaz"><span class="copy-idle">${COPY_ICON_SVG}</span><span class="copy-done">${CHECK_ICON_SVG}</span></button>`
+    return `<button class="deck-action copy" type="button" data-copy-url="${escapeHtml(url)}" aria-label="${escapeHtml(label)}" title="Kopírovat odkaz"><span class="copy-idle">${COPY_ICON_SVG}</span><span class="copy-done">${CHECK_ICON_SVG}</span></button>`
+}
+
+function renderPdfLink(name, entryTitle) {
+    const label = `Stáhnout PDF přednášky ${entryTitle}`
+    return `<a class="deck-action pdf" href="./${escapeHtml(name)}/${escapeHtml(name)}.pdf" aria-label="${escapeHtml(label)}" title="Stáhnout PDF">${PDF_ICON_SVG}</a>`
 }
 
 function renderTitlebar() {
@@ -50,8 +61,7 @@ export function renderCourseIndexHtml({ title, entries, year, liveBaseUrl }) {
       <div class="deck-row">
         <span class="idx">${n}</span>
         <a href="./${escapeHtml(e.name)}">${escapeHtml(e.title)}</a>
-        <a class="pdf" href="./${escapeHtml(e.name)}/${escapeHtml(e.name)}.pdf">PDF</a>
-        ${renderCopyButton(copyUrl, e.title)}
+        <span class="deck-actions">${renderPdfLink(e.name, e.title)}${renderCopyButton(copyUrl, e.title)}</span>
       </div>`
     }).join('')
 
