@@ -55,7 +55,7 @@ layout: default
 # Lektor
 
 ## Adam Fišer
-Software & solutions architect, analyst and occasional teacher with a passion for 🪴plants, IoT, FVE and economy
+> Software & solutions architect, analyst and occasional teacher with a passion for 🏃running, 🚲bike, 🪴plants, IoT, FVE and finance
 
 * Senior Software architect
 * PKP CARGO INTERNATIONAL, a. s.
@@ -212,7 +212,8 @@ layout: two-cols-header
 * Exceptions
 * Datum a čas
 * OOP (Třída, objekt, metody, property)
-* Tkinter
+* Balíčky, Frameworky, Tkinter
+* Umělá inteligence a strojové učení
 
 </v-click>
 
@@ -233,7 +234,7 @@ layout: two-cols-header
 - Jídlo a pití dle libosti, ale v rámci mezí slušného chování
 - Na toaletu v průběhu hodin, neptáme se, oznámíme, ale vždy jen jednotlivě
 - Všechny židle budou vždy dole
-- Na konci hodiny, židle nahoru, zavřená okna - odpovídá služba.
+- Odpoledne, na konci hodiny, úklid, židle nahoru, zavřená okna - odpovídá služba.
 
 ---
 
@@ -241,9 +242,11 @@ layout: two-cols-header
 
 Známky získáváte za:
 
+- Minimálně tři známky
 - Průběžná práce a aktivita v hodinách
 - Všechny vypracované cvičení a úkoly (Cvičení na sebe navazují)
 - Projekty a skupinová cvičení
+- Prezentace a code review
 - Opravy a zlepšení známky
     - Komu se nepovede známka, může si vylepšit opravou. (původní známka zůstává)
     - Domluvě a vlastní iniciativě se meze nekladou.
@@ -256,11 +259,13 @@ Známky získáváte za:
   - Výukové materiály dovoleny, není-li uvedeno jinak.
   - Kopírování, opisování a AI nikoli.
   - Každý zahájený test znamená jeho známkování (ikdyž není určen pro Vás).
-- Absance testu
+- Absance testu/zkoušky/známky
   - Není-li psán test v řádném termínu, po návratu do dvou vyučovacích hodin požádat o náhradní termín.
   - Žádáme minimálně 2 pracovní dny předem.
   - U delší objektivní absence dle domluvy.
   - Svou klasifikaci si hlídáte sami.
+  - Neabsolvování hodnocení ani v náhradním termínu znamená hodnocení nedostatečně.
+
 
 ---
 
@@ -275,6 +280,8 @@ Známky získáváte za:
 | **5 – nedostatečný** | 39–0%      | Program nefunguje nebo zcela chybí. Zadání není splněno.                                                               |
 
 ---
+layout: two-cols
+---
 
 # Kritéria hodnocení
 
@@ -285,6 +292,10 @@ Známky získáváte za:
 
 2. Splnění zadání
    - Implementace všech požadovaných funkcionalit
+   - Logické a správné řešení problému
+   - Dodržení best practices a doporučených postupů
+
+::right::
 
 3. Styl kódu:
    - Přehledné odsazení
@@ -331,9 +342,9 @@ image: /predstaveni.jpg
 Registrace kurzu na Moodle:
 
 * Přejděte na www.oa-opava.net
-* Zapište se do kurzu **pva2 2025/2026** - Programování a vývoj aplikací
+* Zapište se do kurzu **pva2 2026/2027** - Programování a vývoj aplikací
   (sekce Informační technologie\Adam Fišer\)
-* Nastavte si profilovou fotku.
+* Nastavte si profilovou fotku. (své jméno - Profil - Nastavení - Profilová fotka)
 
 ---
 src: '../../pages/thanku.md'
