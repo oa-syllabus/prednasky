@@ -21,8 +21,10 @@ const CHECK_ICON_SVG = '<svg viewBox="0 0 24 24" width="14" height="14" fill="no
     + '<path d="M20 6 9 17l-5-5" />'
     + '</svg>'
 
-function renderCopyButton(url) {
-    return `<button class="copy" type="button" data-copy-url="${escapeHtml(url)}" aria-label="Kopírovat odkaz na přednášku" title="Kopírovat odkaz na přednášku"><span class="copy-idle">${COPY_ICON_SVG}</span><span class="copy-done">${CHECK_ICON_SVG}</span></button>`
+function renderCopyButton(url, entryTitle) {
+    // Popisek nese název přednášky — čtečka jinak přečte u všech řádků totéž.
+    const label = `Kopírovat odkaz na přednášku ${entryTitle}`
+    return `<button class="copy" type="button" data-copy-url="${escapeHtml(url)}" aria-label="${escapeHtml(label)}" title="Kopírovat odkaz"><span class="copy-idle">${COPY_ICON_SVG}</span><span class="copy-done">${CHECK_ICON_SVG}</span></button>`
 }
 
 function renderTitlebar() {
@@ -48,8 +50,8 @@ export function renderCourseIndexHtml({ title, entries, year, liveBaseUrl }) {
       <div class="deck-row">
         <span class="idx">${n}</span>
         <a href="./${escapeHtml(e.name)}">${escapeHtml(e.title)}</a>
-        ${renderCopyButton(copyUrl)}
         <a class="pdf" href="./${escapeHtml(e.name)}/${escapeHtml(e.name)}.pdf">PDF</a>
+        ${renderCopyButton(copyUrl, e.title)}
       </div>`
     }).join('')
 

@@ -4,7 +4,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import fse from 'fs-extra'
 import { loadCoursesConfig } from './utils/courses.js'
-import { computeLiveUrl } from './utils/paths.js'
+import { computeCourseBaseUrl, computeLiveUrl } from './utils/paths.js'
 import { renderCourseIndexHtml, renderHubIndexHtml, renderReadmeSection } from './utils/render.js'
 import { listSlidesByCourse } from './utils/listSlides.js'
 import { distDir, courseDistDir } from './utils/coursePaths.js'
@@ -38,7 +38,7 @@ for (const { course, entries } of perCourse) {
             title: course.title,
             entries,
             year: currentYear,
-            liveBaseUrl: `${config.ghPagesUrl}${config.repoName}/${course.id}/`,
+            liveBaseUrl: computeCourseBaseUrl(config.ghPagesUrl, config.repoName, course.id),
         }),
     )
 

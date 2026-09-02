@@ -130,7 +130,7 @@ test('renderCourseIndexHtml renders a copy-link button carrying the absolute liv
 
     assert.match(html, /class="copy"/)
     assert.match(html, /data-copy-url="https:\/\/oa-syllabus\.github\.io\/prednasky\/pva4\/00_uvodni_hodina\/"/)
-    assert.match(html, /aria-label="Kopírovat odkaz na přednášku"/)
+    assert.match(html, /aria-label="Kopírovat odkaz na přednášku Úvodní hodina"/)
 })
 
 test('renderCourseIndexHtml falls back to the relative link when no liveBaseUrl is given', () => {
@@ -169,4 +169,43 @@ test('renderHubIndexHtml renders no copy button — copying is a per-lecture act
     })
 
     assert.doesNotMatch(html, /class="copy"/)
+})
+
+test('renderCourseIndexHtml places the copy button at the end of the row, after the PDF link', () => {
+    const html = renderCourseIndexHtml({
+        title: 'X',
+        entries: [{ name: '01_a', title: 'A' }],
+        year: 2026,
+        liveBaseUrl: 'https://example.test/',
+    })
+
+    const pdfAt  = html.indexOf('class="pdf"')
+    const copyAt = html.indexOf('class="copy"')
+
+    assert.ok(pdfAt > -1 && copyAt > -1)
+    assert.ok(copyAt > pdfAt, 'tlačítko kopírování musí být v HTML až za odkazem na PDF')
+})
+
+test('renderCourseIndexHtml gives each copy button a label naming its own lecture', () => {
+    const html = renderCourseIndexHtml({
+        title: 'X',
+        entries: [{ name: '01_a', title: 'Markdown' }, { name: '02_b', title: 'Úvod do Git' }],
+        year: 2026,
+        liveBaseUrl: 'https://example.test/',
+    })
+
+    assert.match(html, /aria-label="Kopírovat odkaz na přednášku Markdown"/)
+    assert.match(html, /aria-label="Kopírovat odkaz na přednášku Úvod do Git"/)
+})
+
+test('renderCourseIndexHtml escapes the lecture title inside the copy button label', () => {
+    const html = renderCourseIndexHtml({
+        title: 'X',
+        entries: [{ name: '01_a', title: 'A" onmouseover="alert(1)' }],
+        year: 2026,
+        liveBaseUrl: 'https://example.test/',
+    })
+
+    assert.doesNotMatch(html, /" onmouseover="/)
+    assert.match(html, /aria-label="Kopírovat odkaz na přednášku A&quot; onmouseover=&quot;alert\(1\)"/)
 })

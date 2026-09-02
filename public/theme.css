@@ -240,6 +240,7 @@ h1 {
     color: var(--text-dim);
     cursor: pointer;
     opacity: 0;
+    margin-left: -4px;
     transition: opacity 0.12s ease, color 0.12s ease, background 0.12s ease;
 }
 
