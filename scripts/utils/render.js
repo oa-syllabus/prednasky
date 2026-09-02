@@ -13,6 +13,18 @@ function escapeMdCell(value) {
 
 const BOOTSTRAP_SRI = 'sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH'
 
+const COPY_ICON_SVG = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+    + '<rect x="9" y="9" width="11" height="11" rx="2" /><path d="M14 5H6a2 2 0 0 0-2 2v8" />'
+    + '</svg>'
+
+const CHECK_ICON_SVG = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+    + '<path d="M20 6 9 17l-5-5" />'
+    + '</svg>'
+
+function renderCopyButton(url) {
+    return `<button class="copy" type="button" data-copy-url="${escapeHtml(url)}" aria-label="Kopírovat odkaz na přednášku" title="Kopírovat odkaz na přednášku"><span class="copy-idle">${COPY_ICON_SVG}</span><span class="copy-done">${CHECK_ICON_SVG}</span></button>`
+}
+
 function renderTitlebar() {
     return `
     <div class="titlebar">
@@ -26,14 +38,17 @@ function renderTitlebar() {
     </div>`
 }
 
-export function renderCourseIndexHtml({ title, entries, year }) {
+export function renderCourseIndexHtml({ title, entries, year, liveBaseUrl }) {
     const width = String(entries.length).length
     const listHtml = entries.map((e, i) => {
         const n = String(i + 1).padStart(width, '0')
+        // Bez liveBaseUrl zbyde relativní cesta — copy-link.js ji dopočítá proti location.href.
+        const copyUrl = liveBaseUrl ? `${liveBaseUrl}${e.name}/` : `./${e.name}/`
         return `
       <div class="deck-row">
         <span class="idx">${n}</span>
         <a href="./${escapeHtml(e.name)}">${escapeHtml(e.title)}</a>
+        ${renderCopyButton(copyUrl)}
         <a class="pdf" href="./${escapeHtml(e.name)}/${escapeHtml(e.name)}.pdf">PDF</a>
       </div>`
     }).join('')
@@ -64,6 +79,7 @@ export function renderCourseIndexHtml({ title, entries, year }) {
       <p>&copy; ${year} Adam Fišer | Wanex. Všechna práva vyhrazena.</p>
     </footer>
     <script src="../theme-toggle.js" defer></script>
+    <script src="../copy-link.js" defer></script>
   </body>
 </html>
 `

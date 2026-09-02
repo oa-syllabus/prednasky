@@ -119,3 +119,54 @@ test('renderReadmeSection escapes pipe characters in course and entry titles', (
     assert.match(md, /## PVA2 \\\| Programování/)
     assert.match(md, /Kurz \\\| s čárou/)
 })
+
+test('renderCourseIndexHtml renders a copy-link button carrying the absolute live URL', () => {
+    const html = renderCourseIndexHtml({
+        title: 'PVA4',
+        entries: [{ name: '00_uvodni_hodina', title: 'Úvodní hodina' }],
+        year: 2026,
+        liveBaseUrl: 'https://oa-syllabus.github.io/prednasky/pva4/',
+    })
+
+    assert.match(html, /class="copy"/)
+    assert.match(html, /data-copy-url="https:\/\/oa-syllabus\.github\.io\/prednasky\/pva4\/00_uvodni_hodina\/"/)
+    assert.match(html, /aria-label="Kopírovat odkaz na přednášku"/)
+})
+
+test('renderCourseIndexHtml falls back to the relative link when no liveBaseUrl is given', () => {
+    const html = renderCourseIndexHtml({
+        title: 'PVA4',
+        entries: [{ name: '00_uvodni_hodina', title: 'Úvodní hodina' }],
+        year: 2026,
+    })
+
+    assert.match(html, /data-copy-url="\.\/00_uvodni_hodina\/"/)
+})
+
+test('renderCourseIndexHtml escapes quotes in the copy URL', () => {
+    const html = renderCourseIndexHtml({
+        title: 'X',
+        entries: [{ name: '01_a"onmouseover=alert(1)', title: 'A' }],
+        year: 2026,
+        liveBaseUrl: 'https://example.test/',
+    })
+
+    // Surová uvozovka by atribut ukončila a udělala z payloadu další atribut.
+    assert.doesNotMatch(html, /"onmouseover=/)
+    assert.match(html, /data-copy-url="https:\/\/example\.test\/01_a&quot;onmouseover=alert\(1\)\/"/)
+})
+
+test('renderCourseIndexHtml loads copy-link.js one level up', () => {
+    const html = renderCourseIndexHtml({ title: 'X', entries: [], year: 2026 })
+
+    assert.match(html, /src="\.\.\/copy-link\.js"/)
+})
+
+test('renderHubIndexHtml renders no copy button — copying is a per-lecture action', () => {
+    const html = renderHubIndexHtml({
+        courses: [{ id: 'x', title: 'X', entryCount: 1 }],
+        year: 2026,
+    })
+
+    assert.doesNotMatch(html, /class="copy"/)
+})
