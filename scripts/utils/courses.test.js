@@ -101,3 +101,77 @@ test('loadCoursesConfig throws with configPath included when JSON is malformed',
     return true
   })
 })
+
+test('loadCoursesConfig accepts a course with a valid sectionOrder', async () => {
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'courses-config-'))
+  const configPath = path.join(tmpDir, 'courses.config.json')
+  await fs.writeFile(configPath, JSON.stringify({
+    repoName: 'prednasky',
+    ghPagesUrl: 'https://oa-syllabus.github.io/',
+    courses: [{ id: 'pva4', title: 'PVA4', sectionOrder: ['Databáze', 'PHP'] }],
+  }))
+
+  const config = await loadCoursesConfig(configPath)
+
+  assert.deepEqual(config.courses[0].sectionOrder, ['Databáze', 'PHP'])
+})
+
+test('loadCoursesConfig accepts a course without sectionOrder — the field is optional', async () => {
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'courses-config-'))
+  const configPath = path.join(tmpDir, 'courses.config.json')
+  await fs.writeFile(configPath, JSON.stringify({
+    repoName: 'prednasky',
+    ghPagesUrl: 'https://oa-syllabus.github.io/',
+    courses: [{ id: 'scm', title: 'SCM' }],
+  }))
+
+  const config = await loadCoursesConfig(configPath)
+
+  assert.equal(config.courses[0].sectionOrder, undefined)
+})
+
+test('loadCoursesConfig throws when sectionOrder is not an array', async () => {
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'courses-config-'))
+  const configPath = path.join(tmpDir, 'courses.config.json')
+  await fs.writeFile(configPath, JSON.stringify({
+    repoName: 'prednasky',
+    ghPagesUrl: 'https://oa-syllabus.github.io/',
+    courses: [{ id: 'pva4', title: 'PVA4', sectionOrder: 'PHP' }],
+  }))
+
+  await assert.rejects(() => loadCoursesConfig(configPath), (err) => {
+    assert.match(err.message, /sectionOrder/)
+    assert.match(err.message, /pva4/)
+    return true
+  })
+})
+
+test('loadCoursesConfig throws when sectionOrder contains a blank entry', async () => {
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'courses-config-'))
+  const configPath = path.join(tmpDir, 'courses.config.json')
+  await fs.writeFile(configPath, JSON.stringify({
+    repoName: 'prednasky',
+    ghPagesUrl: 'https://oa-syllabus.github.io/',
+    courses: [{ id: 'pva4', title: 'PVA4', sectionOrder: ['PHP', '  '] }],
+  }))
+
+  await assert.rejects(() => loadCoursesConfig(configPath), (err) => {
+    assert.match(err.message, /sectionOrder/)
+    return true
+  })
+})
+
+test('loadCoursesConfig throws when sectionOrder repeats a section', async () => {
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'courses-config-'))
+  const configPath = path.join(tmpDir, 'courses.config.json')
+  await fs.writeFile(configPath, JSON.stringify({
+    repoName: 'prednasky',
+    ghPagesUrl: 'https://oa-syllabus.github.io/',
+    courses: [{ id: 'pva4', title: 'PVA4', sectionOrder: ['PHP', 'Databáze', 'PHP'] }],
+  }))
+
+  await assert.rejects(() => loadCoursesConfig(configPath), (err) => {
+    assert.match(err.message, /PHP/)
+    return true
+  })
+})
