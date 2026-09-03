@@ -1,6 +1,7 @@
 {
   "name": "06_prikazy_include_require",
   "title": "Příkazy Inlcude a Require",
+  "section": "PHP",
   "author": { "name": "Adam Fišer" },
   "type": "module",
   "version": "0.0.1",

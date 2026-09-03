@@ -1,6 +1,7 @@
 {
   "name": "00_skeleton",
   "title": "Skeleton",
+  "section": "PHP",
   "author": { "name": "Adam Fišer" },
   "type": "module",
   "version": "0.0.1",

@@ -39,6 +39,7 @@ for (const { course, entries } of perCourse) {
             entries,
             year: currentYear,
             liveBaseUrl: computeCourseBaseUrl(config.ghPagesUrl, config.repoName, course.id),
+            sectionOrder: course.sectionOrder ?? [],
         }),
     )
 

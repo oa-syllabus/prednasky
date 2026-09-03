@@ -3,7 +3,11 @@
   "ghPagesUrl": "https://oa-syllabus.github.io/",
   "courses": [
     { "id": "pva2", "title": "PVA2 | Programování a vývoj aplikací" },
-    { "id": "pva4", "title": "PVA4 | Programování a vývoj aplikací" },
+    {
+      "id": "pva4",
+      "title": "PVA4 | Programování a vývoj aplikací",
+      "sectionOrder": ["PHP", "Databáze", "Nástroje", "OOP"]
+    },
     { "id": "scm", "title": "SCM | Programování a vývoj aplikací" }
   ]
 }

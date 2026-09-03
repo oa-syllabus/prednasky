@@ -63,3 +63,21 @@ test('getSlidesSorted throws when a deck package.json is missing "name"', async 
         return true
     })
 })
+
+test('getSlidesSorted reads the section field from package.json', async () => {
+    const slidesDir = await fs.mkdtemp(path.join(os.tmpdir(), 'slides-section-'))
+    await makeSlide(slidesDir, '20_DB_nastaveni', { name: '20_DB_nastaveni', section: 'Databáze' })
+
+    const entries = await getSlidesSorted(slidesDir)
+
+    assert.equal(entries[0].section, 'Databáze')
+})
+
+test('getSlidesSorted falls back to null when section is missing', async () => {
+    const slidesDir = await fs.mkdtemp(path.join(os.tmpdir(), 'slides-no-section-'))
+    await makeSlide(slidesDir, '01_deck', { name: '01_deck' })
+
+    const entries = await getSlidesSorted(slidesDir)
+
+    assert.equal(entries[0].section, null)
+})

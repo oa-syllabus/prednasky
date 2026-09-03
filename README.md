@@ -28,6 +28,8 @@
 | 22 | [Týmová aplikace](https://oa-syllabus.github.io/prednasky/pva2/60_team_app/) | [PDF](https://oa-syllabus.github.io/prednasky/pva2/60_team_app/60_team_app.pdf) |
 ## PVA4 \| Programování a vývoj aplikací
 
+### PHP
+
 | # | Přednáška | PDF |
 |---:|-----------|-----|
 | 01 | [Úvod do PHP](https://oa-syllabus.github.io/prednasky/pva4/02_uvod_do_php/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/02_uvod_do_php/02_uvod_do_php.pdf) |
@@ -40,16 +42,31 @@
 | 08 | [Sessions](https://oa-syllabus.github.io/prednasky/pva4/10_sessions/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/10_sessions/10_sessions.pdf) |
 | 09 | [Header](https://oa-syllabus.github.io/prednasky/pva4/11_header/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/11_header/11_header.pdf) |
 | 10 | [Email](https://oa-syllabus.github.io/prednasky/pva4/12_email/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/12_email/12_email.pdf) |
-| 11 | [Nastavení prostředí](https://oa-syllabus.github.io/prednasky/pva4/20_DB_nastaveni/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/20_DB_nastaveni/20_DB_nastaveni.pdf) |
-| 12 | [SQL vs PHP](https://oa-syllabus.github.io/prednasky/pva4/21_DB_SQLvsPHP/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/21_DB_SQLvsPHP/21_DB_SQLvsPHP.pdf) |
-| 13 | [DB select](https://oa-syllabus.github.io/prednasky/pva4/22_DB_select/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/22_DB_select/22_DB_select.pdf) |
-| 14 | [DB Relace](https://oa-syllabus.github.io/prednasky/pva4/23_DB_relace/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/23_DB_relace/23_DB_relace.pdf) |
-| 15 | [DB Agregace](https://oa-syllabus.github.io/prednasky/pva4/24_DB_agregace/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/24_DB_agregace/24_DB_agregace.pdf) |
-| 16 | [DB Tabulky](https://oa-syllabus.github.io/prednasky/pva4/25_DB_tabulky/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/25_DB_tabulky/25_DB_tabulky.pdf) |
-| 17 | [DB Insert](https://oa-syllabus.github.io/prednasky/pva4/26_DB_insert/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/26_DB_insert/26_DB_insert.pdf) |
-| 18 | [Markdown syntaxe](https://oa-syllabus.github.io/prednasky/pva4/35_git_markdown/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/35_git_markdown/35_git_markdown.pdf) |
-| 19 | [OOP Úvod Třída Objekt](https://oa-syllabus.github.io/prednasky/pva4/40_OOP_Uvod_Trida_Objekt/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/40_OOP_Uvod_Trida_Objekt/40_OOP_Uvod_Trida_Objekt.pdf) |
-| 20 | [OOP Dědičnost](https://oa-syllabus.github.io/prednasky/pva4/41_OOP_dedicnost/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/41_OOP_dedicnost/41_OOP_dedicnost.pdf) |
+
+### Databáze
+
+| # | Přednáška | PDF |
+|---:|-----------|-----|
+| 01 | [Nastavení prostředí](https://oa-syllabus.github.io/prednasky/pva4/20_DB_nastaveni/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/20_DB_nastaveni/20_DB_nastaveni.pdf) |
+| 02 | [SQL vs PHP](https://oa-syllabus.github.io/prednasky/pva4/21_DB_SQLvsPHP/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/21_DB_SQLvsPHP/21_DB_SQLvsPHP.pdf) |
+| 03 | [DB select](https://oa-syllabus.github.io/prednasky/pva4/22_DB_select/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/22_DB_select/22_DB_select.pdf) |
+| 04 | [DB Relace](https://oa-syllabus.github.io/prednasky/pva4/23_DB_relace/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/23_DB_relace/23_DB_relace.pdf) |
+| 05 | [DB Agregace](https://oa-syllabus.github.io/prednasky/pva4/24_DB_agregace/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/24_DB_agregace/24_DB_agregace.pdf) |
+| 06 | [DB Tabulky](https://oa-syllabus.github.io/prednasky/pva4/25_DB_tabulky/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/25_DB_tabulky/25_DB_tabulky.pdf) |
+| 07 | [DB Insert](https://oa-syllabus.github.io/prednasky/pva4/26_DB_insert/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/26_DB_insert/26_DB_insert.pdf) |
+
+### Nástroje
+
+| # | Přednáška | PDF |
+|---:|-----------|-----|
+| 01 | [Markdown syntaxe](https://oa-syllabus.github.io/prednasky/pva4/35_git_markdown/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/35_git_markdown/35_git_markdown.pdf) |
+
+### OOP
+
+| # | Přednáška | PDF |
+|---:|-----------|-----|
+| 01 | [OOP Úvod Třída Objekt](https://oa-syllabus.github.io/prednasky/pva4/40_OOP_Uvod_Trida_Objekt/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/40_OOP_Uvod_Trida_Objekt/40_OOP_Uvod_Trida_Objekt.pdf) |
+| 02 | [OOP Dědičnost](https://oa-syllabus.github.io/prednasky/pva4/41_OOP_dedicnost/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/41_OOP_dedicnost/41_OOP_dedicnost.pdf) |
 ## SCM \| Programování a vývoj aplikací
 
 | # | Přednáška | PDF |

@@ -249,3 +249,147 @@ test('renderCourseIndexHtml escapes the lecture title inside the PDF label', () 
     assert.doesNotMatch(html, /" onfocus="/)
     assert.match(html, /aria-label="Stáhnout PDF přednášky A&quot; onfocus=&quot;alert\(1\)"/)
 })
+
+test('renderCourseIndexHtml renders a heading before each section', () => {
+    const html = renderCourseIndexHtml({
+        title: 'PVA4',
+        entries: [
+            { name: '02_php', title: 'Úvod do PHP', section: 'PHP' },
+            { name: '20_db', title: 'Nastavení', section: 'Databáze' },
+        ],
+        year: 2026,
+    })
+
+    assert.match(html, /class="deck-section"[^>]*>PHP</)
+    assert.match(html, /class="deck-section"[^>]*>Databáze</)
+})
+
+test('renderCourseIndexHtml restarts numbering at 01 in every section', () => {
+    const html = renderCourseIndexHtml({
+        title: 'PVA4',
+        entries: [
+            { name: '02_php', title: 'A', section: 'PHP' },
+            { name: '03_php', title: 'B', section: 'PHP' },
+            { name: '20_db', title: 'C', section: 'Databáze' },
+        ],
+        year: 2026,
+    })
+
+    const indexes = [...html.matchAll(/<span class="idx">(\d+)<\/span>/g)].map(m => m[1])
+    assert.deepEqual(indexes, ['1', '2', '1'])
+})
+
+test('renderCourseIndexHtml renders no section heading when no deck declares a section', () => {
+    const html = renderCourseIndexHtml({
+        title: 'PVA2',
+        entries: [{ name: '01_a', title: 'A' }, { name: '02_b', title: 'B' }],
+        year: 2026,
+    })
+
+    assert.doesNotMatch(html, /deck-section/)
+    const indexes = [...html.matchAll(/<span class="idx">(\d+)<\/span>/g)].map(m => m[1])
+    assert.deepEqual(indexes, ['1', '2'])
+})
+
+test('renderCourseIndexHtml orders sections by the given sectionOrder', () => {
+    const html = renderCourseIndexHtml({
+        title: 'PVA4',
+        entries: [
+            { name: '02_php', title: 'A', section: 'PHP' },
+            { name: '20_db', title: 'B', section: 'Databáze' },
+        ],
+        year: 2026,
+        sectionOrder: ['Databáze', 'PHP'],
+    })
+
+    assert.ok(html.indexOf('>Databáze<') < html.indexOf('>PHP<'), 'Databáze musí předcházet PHP')
+})
+
+test('renderCourseIndexHtml escapes HTML-special characters in a section title', () => {
+    const html = renderCourseIndexHtml({
+        title: 'X',
+        entries: [{ name: '01_a', title: 'A', section: 'PHP <b>&</b>' }],
+        year: 2026,
+    })
+
+    assert.match(html, /PHP &lt;b&gt;&amp;&lt;\/b&gt;/)
+})
+
+test('renderReadmeSection renders a sub-heading and its own table per section', () => {
+    const md = renderReadmeSection({
+        course: { id: 'pva4', title: 'PVA4' },
+        entries: [
+            { name: '02_php', title: 'Úvod do PHP', section: 'PHP' },
+            { name: '20_db', title: 'Nastavení', section: 'Databáze' },
+        ],
+        ghPagesUrl: 'https://oa-syllabus.github.io/',
+        repoName: 'prednasky',
+        computeLiveUrl,
+        width: 2,
+    })
+
+    assert.match(md, /^### PHP$/m)
+    assert.match(md, /^### Databáze$/m)
+    assert.equal(md.match(/\| # \| Přednáška \| PDF \|/g).length, 2)
+})
+
+test('renderReadmeSection restarts numbering at 01 in every section', () => {
+    const md = renderReadmeSection({
+        course: { id: 'pva4', title: 'PVA4' },
+        entries: [
+            { name: '02_php', title: 'A', section: 'PHP' },
+            { name: '03_php', title: 'B', section: 'PHP' },
+            { name: '20_db', title: 'C', section: 'Databáze' },
+        ],
+        ghPagesUrl: 'https://oa-syllabus.github.io/',
+        repoName: 'prednasky',
+        computeLiveUrl,
+        width: 2,
+    })
+
+    const numbers = [...md.matchAll(/^\| (\d+) \|/gm)].map(m => m[1])
+    assert.deepEqual(numbers, ['01', '02', '01'])
+})
+
+test('renderReadmeSection renders one table without sub-headings when no deck declares a section', () => {
+    const md = renderReadmeSection({
+        course: { id: 'scm', title: 'SCM' },
+        entries: [{ name: '10_markdown', title: 'Markdown' }],
+        ghPagesUrl: 'https://oa-syllabus.github.io/',
+        repoName: 'prednasky',
+        computeLiveUrl,
+        width: 2,
+    })
+
+    assert.doesNotMatch(md, /^### /m)
+    assert.equal(md.match(/\| # \| Přednáška \| PDF \|/g).length, 1)
+})
+
+test('renderReadmeSection escapes pipe characters in a section title', () => {
+    const md = renderReadmeSection({
+        course: { id: 'x', title: 'X' },
+        entries: [{ name: '01_a', title: 'A', section: 'PHP | SQL' }],
+        ghPagesUrl: 'https://oa-syllabus.github.io/',
+        repoName: 'prednasky',
+        computeLiveUrl,
+        width: 2,
+    })
+
+    assert.match(md, /### PHP \\| SQL/)
+})
+
+test('renderReadmeSection orders sections by the given sectionOrder', () => {
+    const md = renderReadmeSection({
+        course: { id: 'pva4', title: 'PVA4', sectionOrder: ['Databáze', 'PHP'] },
+        entries: [
+            { name: '02_php', title: 'A', section: 'PHP' },
+            { name: '20_db', title: 'B', section: 'Databáze' },
+        ],
+        ghPagesUrl: 'https://oa-syllabus.github.io/',
+        repoName: 'prednasky',
+        computeLiveUrl,
+        width: 2,
+    })
+
+    assert.ok(md.indexOf('### Databáze') < md.indexOf('### PHP'), 'Databáze musí předcházet PHP')
+})

@@ -3,7 +3,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 
 // Získá seznam přednášek (složek se slides) seřazených podle názvu složky
-// Vrací pole objektů { dir, name, title, author, folder }
+// Vrací pole objektů { dir, name, title, section, author, folder }
 export async function getSlidesSorted(slidesDir) {
     const pkgFiles = await fg(['*/package.json'], { cwd: slidesDir, absolute: true })
     const entries = await Promise.all(pkgFiles.map(async p => {
@@ -13,6 +13,7 @@ export async function getSlidesSorted(slidesDir) {
             dir,
             name:  pkg.name,
             title: pkg.title ?? pkg.name,
+            section: pkg.section ?? null,
             author: pkg.author ?? null,
             folder: path.basename(dir),
         }

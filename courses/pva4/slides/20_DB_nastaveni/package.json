@@ -1,6 +1,7 @@
 {
   "name": "20_DB_nastaveni",
   "title": "Nastavení prostředí",
+  "section": "Databáze",
   "author": { "name": "Adam Fišer" },
   "type": "module",
   "version": "0.0.1",

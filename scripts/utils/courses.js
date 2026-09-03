@@ -4,6 +4,27 @@ function isNonEmptyString(value) {
     return typeof value === 'string' && value.trim().length > 0
 }
 
+function validateSectionOrder(course, configPath) {
+    const { sectionOrder } = course
+    if (sectionOrder === undefined) {
+        return
+    }
+
+    if (!Array.isArray(sectionOrder)) {
+        throw new Error(`courses.config.json: "sectionOrder" kurzu "${course.id}" musí být pole názvů sekcí: ${configPath}`)
+    }
+    const seen = new Set()
+    for (const title of sectionOrder) {
+        if (!isNonEmptyString(title)) {
+            throw new Error(`courses.config.json: "sectionOrder" kurzu "${course.id}" obsahuje prázdný název sekce: ${configPath}`)
+        }
+        if (seen.has(title)) {
+            throw new Error(`courses.config.json: "sectionOrder" kurzu "${course.id}" uvádí sekci "${title}" dvakrát: ${configPath}`)
+        }
+        seen.add(title)
+    }
+}
+
 export async function loadCoursesConfig(configPath) {
     const raw = await fs.readFile(configPath, 'utf8')
 
@@ -30,6 +51,7 @@ export async function loadCoursesConfig(configPath) {
         if (!isNonEmptyString(course?.title)) {
             throw new Error(`courses.config.json obsahuje kurz (id: ${course.id}) bez platného "title": ${configPath}`)
         }
+        validateSectionOrder(course, configPath)
     }
 
     return parsed
