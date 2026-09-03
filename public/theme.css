@@ -196,6 +196,20 @@ h1 {
     flex-direction: column;
 }
 
+/* Nadpis bloku přednášek (PHP, Databáze, …). Kurz bez sekcí žádný nevykresluje. */
+.deck-section {
+    margin: 24px 0 2px;
+    color: var(--accent-1);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.deck-section:first-child {
+    margin-top: 0;
+}
+
 .deck-row {
     display: flex;
     align-items: baseline;

@@ -1,3 +1,5 @@
+import { groupBySection } from './sections.js'
+
 function escapeHtml(value) {
     return String(value)
         .replace(/&/g, '&amp;')
@@ -51,18 +53,27 @@ function renderTitlebar() {
     </div>`
 }
 
-export function renderCourseIndexHtml({ title, entries, year, liveBaseUrl }) {
+export function renderCourseIndexHtml({ title, entries, year, liveBaseUrl, sectionOrder = [] }) {
+    // Šířka se drží počtu přednášek celého kurzu, aby čísla lícovala i napříč bloky.
     const width = String(entries.length).length
-    const listHtml = entries.map((e, i) => {
-        const n = String(i + 1).padStart(width, '0')
-        // Bez liveBaseUrl zbyde relativní cesta — copy-link.js ji dopočítá proti location.href.
-        const copyUrl = liveBaseUrl ? `${liveBaseUrl}${e.name}/` : `./${e.name}/`
-        return `
+    const listHtml = groupBySection(entries, sectionOrder).map(group => {
+        // title === null je kurz bez sekcí — vykreslí se jako jeden souvislý seznam bez nadpisu.
+        const heading = group.title === null
+            ? ''
+            : `
+      <div class="deck-section">${escapeHtml(group.title)}</div>`
+        const rows = group.entries.map((e, i) => {
+            const n = String(i + 1).padStart(width, '0')
+            // Bez liveBaseUrl zbyde relativní cesta — copy-link.js ji dopočítá proti location.href.
+            const copyUrl = liveBaseUrl ? `${liveBaseUrl}${e.name}/` : `./${e.name}/`
+            return `
       <div class="deck-row">
         <span class="idx">${n}</span>
         <a href="./${escapeHtml(e.name)}">${escapeHtml(e.title)}</a>
         <span class="deck-actions">${renderPdfLink(e.name, e.title)}${renderCopyButton(copyUrl, e.title)}</span>
       </div>`
+        }).join('')
+        return heading + rows
     }).join('')
 
     return `<!DOCTYPE html>
@@ -135,17 +146,24 @@ export function renderHubIndexHtml({ courses, year }) {
 }
 
 export function renderReadmeSection({ course, entries, ghPagesUrl, repoName, computeLiveUrl, width }) {
-    const lines = [
-        `## ${escapeMdCell(course.title)}`,
-        '',
-        '| # | Přednáška | PDF |',
-        '|---:|-----------|-----|',
-        ...entries.map((e, i) => {
+    const lines = [`## ${escapeMdCell(course.title)}`, '']
+
+    groupBySection(entries, course.sectionOrder ?? []).forEach((group, groupIndex) => {
+        if (groupIndex > 0) {
+            lines.push('')
+        }
+        // title === null je kurz bez sekcí — zůstane u jedné tabulky bez podnadpisu.
+        if (group.title !== null) {
+            lines.push(`### ${escapeMdCell(group.title)}`, '')
+        }
+        lines.push('| # | Přednáška | PDF |', '|---:|-----------|-----|')
+        lines.push(...group.entries.map((e, i) => {
             const n = String(i + 1).padStart(width, '0')
             const live = computeLiveUrl(ghPagesUrl, repoName, course.id, e.name)
             const pdf  = `${live}${e.name}.pdf`
             return `| ${n} | [${escapeMdCell(e.title)}](${live}) | [PDF](${pdf}) |`
-        }),
-    ]
+        }))
+    })
+
     return lines.join('\n')
 }
