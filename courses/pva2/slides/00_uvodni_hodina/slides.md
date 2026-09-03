@@ -66,7 +66,7 @@ layout: default
 * Výhradně jen Teamsy (přes bakaláře **nepište**)
 * Email: adam.fiser@wanex.cz
 * Tel: +420 777 052 248
-* Konzultace: Teamsy, místnost 117, kdykoli po domluvě
+* Konzultace: Teamsy, místnost 357, kdykoli po domluvě
 
 ---
 
