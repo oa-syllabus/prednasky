@@ -1,6 +1,7 @@
 {
   "name": "04_konstrukt2_datovetypy_promenne_operator",
   "title": "Konstrukt 2: Datové typy, proměnné, operátory",
+  "section": "PHP",
   "author": { "name": "Adam Fišer" },
   "type": "module",
   "version": "0.0.1",

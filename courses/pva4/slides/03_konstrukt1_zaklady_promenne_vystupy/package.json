@@ -1,6 +1,7 @@
 {
   "name": "03_konstrukt1_zaklady_promenne_vystupy",
   "title": "Konstrukt 1 - Základy, proměnné, výstupy",
+  "section": "PHP",
   "author": { "name": "Adam Fišer" },
   "type": "module",
   "version": "0.0.1",
