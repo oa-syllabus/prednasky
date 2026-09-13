@@ -290,23 +290,61 @@ layout: two-cols
 </v-click>
 
 ---
-layout: default
+layout: two-cols-header
 ---
 # Obrázky
 
-- Inline obrázek: `![alt text](url)`
-- Reference obrázek:
-  ```md
-  ![alt text][label]
-  [label]: url
-  ```
+- Syntaxe: `![alt text](url)`
+- Uvnitř `[]` je alternativní text zobrazený, pokud se obrázek nenačte
+- Url obrázku je v `()`, může být relativní (pro lokální soubory) nebo absolutní (celá URL adresa)
+
+::left::
 ## Syntaxe
 ```md
-- Inline obrázek: ![GitHub Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png)
-- Reference obrázek:
-  ![GitHub Logo][2]
-  [2]: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+![GitHub Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png)
 ```
+
+::right::
+## Náhled
+
+![GitHub Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png){width=120px}
+
+---
+layout: two-cols-header
+---
+# Obrázky s referencí
+
+
+
+::left::
+- Syntaxe:
+ ```md
+![alt text][label]
+![alt text][label]
+...
+[label]: url
+ ```
+ 
+
+- Odkaz na obrázek je definován samostatně, lze ho použít vícekrát
+
+## Syntaxe
+```md
+První výskyt: ![GitHub Logo][logo_github]
+
+Druhý výskyt: ![GitHub Logo][logo_github]
+
+[logo_github]: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+```
+
+::right::
+### Náhled
+
+První výskyt: ![GitHub Logo][logo_github]
+
+Druhý výskyt: ![GitHub Logo][logo_github]
+
+[logo_github]: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
 
 
 ---

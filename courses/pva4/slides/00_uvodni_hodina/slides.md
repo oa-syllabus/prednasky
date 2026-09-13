@@ -152,7 +152,7 @@ image: https://cover.sli.dev
 hideInToc: true
 ---
 
-# PVA2 Programování a vývoj aplikací
+# PVA4 Programování a vývoj aplikací
 
 ---
 layout: image-right
