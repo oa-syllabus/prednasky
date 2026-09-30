@@ -74,14 +74,14 @@ Z kontextu se datový typ rozpozná také při operacích, příkladem může b�
 - Apostrof - `'`
 - Dvojité uvozovky - `"`
 - Výhoda dvojitých uvozovek je možnost vkládat proměnné do řetězce
-- Nevýhoda dvojitých uvozovek je, že PHP musí prohledat řetězec a nahradit proměnné za jejich hodnoty + zpracovat escape sekvence
+- Jednoduché uvozovky se hodí pro prostý text, dvojité pro text s proměnnými (rozdíl ve výkonu je zanedbatelný)
 - V případě potřeby můžeme text rozdělit do více řádků
 - Skládání řetězců pomocí tečky `.`
 
 
 <v-click>
 
-> Na české klávesnici můžete napsat znak apostrofu `'` stisknutím klávesy <kbd>Shift</kbd> a <kbd>'</kbd> klávesy s apostrofem, která se nachází vedle klávesy Backspace.
+> Na české klávesnici můžete napsat znak apostrofu `'` stisknutím kláves <kbd>Shift</kbd> + <kbd>¨</kbd> (klávesa s přehláskou vedle klávesy Enter).
 
 </v-click>
 
@@ -101,7 +101,7 @@ echo $jmeno; // PVA
 ### Spojování řetězců
 
 - Spojení řetězců pomocí tečky `.`
-- Tečka slouží k spojení dvou nebo více řetězců
+- Tečka slouží ke spojení dvou nebo více řetězců
 
 ```php {all|1-4|6|7|8|all}
 $jmeno = 'PVA';
@@ -112,7 +112,7 @@ echo $promenna; // Hello, world!
 echo 'Hello, world ' . 'PVA';          // Hello, world PVA
 echo 'Hello, world ' . $jmeno;          // Hello, world PVA
 echo 'Hello, world ' . $jmeno . '!';    // Hello, world PVA!
-echo 'Hello, world <strong>' . $jmeno . '</strong>!';    // Hello, world PVA!
+echo 'Hello, world <strong>' . $jmeno . '</strong>!';    // Hello, world <strong>PVA</strong>! (prohlížeč zobrazí PVA tučně)
 ```
 
 </v-click>
@@ -125,6 +125,7 @@ echo 'Hello, world <strong>' . $jmeno . '</strong>!';    // Hello, world PVA!
 $jmeno = "PVA";
 $promenna = "Hello, world $jmeno!";
 echo $promenna; // Hello, world PVA!
+echo "Kurz {$jmeno}4"; // Kurz PVA4 (bez složených závorek by PHP hledalo proměnnou $jmeno4)
 ```
 
 </v-click>
@@ -136,14 +137,13 @@ echo $promenna; // Hello, world PVA!
 - Celé číslo
 - Může být záporné nebo kladné
 - Bez desetinné čárky
-- Bez uvozovek
-- Bez mezer
-- Bez závorek
+- Pro lepší čitelnost lze číslice oddělit podtržítkem: `1_000_000` (od PHP 7.4)
 
 <v-click>
 
-- 32bit: -2,147,483,648 až 2,147,483,647
-- 64bit: -9,223,372,036,854,775,808 až 9,223,372,036,854,775,807
+- 32bit: -2 147 483 648 až 2 147 483 647
+- 64bit: -9 223 372 036 854 775 808 až 9 223 372 036 854 775 807
+- Největší hodnota je v konstantě `PHP_INT_MAX`, po jejím překročení se číslo změní na `float`
 
 </v-click>
 
@@ -161,13 +161,9 @@ var_dump($cislo); // int(42)
 
 # `Float`
 
-- Datový typ pro reálná čísla s plovoucí desetinnou čárkou
-- Desetinné číslo
+- Desetinné číslo s plovoucí desetinnou čárkou
 - Může být záporné nebo kladné
-- S desetinnou čárkou, ale pozor, **píšeme s tečkou**
-- Bez uvozovek
-- Bez mezer
-- Bez závorek
+- Desetinnou čárku ale **píšeme jako tečku**: `3.14`, ne `3,14`
 
 <v-click>
 
@@ -220,7 +216,7 @@ $pravda = true;
 $nepravda = false;
 
 echo $pravda; // 1
-echo $nepravda; // (nic nevrací)
+echo $nepravda; // (nevypíše nic)
 
 var_dump($pravda); // bool(true)
 var_dump($nepravda); // bool(false)
@@ -233,7 +229,6 @@ var_dump($nepravda); // bool(false)
 # `NULL`
 
 - Speciální hodnota, která znamená, že proměnná nemá žádnou hodnotu
-- V PHP je možné použít i hodnotu `null`
 - Hodnota `null` je case-insensitive
 - Proměnná, která nebyla inicializována, má hodnotu `null`, ale PHP vypíše `Warning: Undefined variable`
 - Proměnnou můžeme nastavit na hodnotu `null` kdykoliv
@@ -242,7 +237,7 @@ var_dump($nepravda); // bool(false)
 
 ```php
 $promenna = null;
-echo $promenna; // (nic nevrací)
+echo $promenna; // (nevypíše nic)
 var_dump($promenna); // NULL
 ```
 
@@ -252,11 +247,11 @@ var_dump($promenna); // NULL
 
 # Operátor
 
-- Symbol, který provádí operaci mezi dvěma hodnotami
+- Symbol, který provádí operaci s jednou nebo více hodnotami (operandy)
 - Operátor `==` porovnává hodnoty proměnných
 - Operátor `===` porovnává hodnoty a datové typy proměnných
 - Operátor `!=` porovnává, zda se hodnoty nerovnají
-- Operátor `!==` porovnává, zda se hodnoty a datové typy nerovnají
+- Operátor `!==` porovnává, zda se liší hodnota nebo datový typ
 - Operátor `<>` porovnává, zda se hodnoty nerovnají
 - Operátor `>` vrací `true`, pokud je první hodnota větší než druhá
 - Operátor `<` vrací `true`, pokud je první hodnota menší než druhá
@@ -273,7 +268,15 @@ hideInToc: true
 - Operátor `||` vrací `true`, pokud je alespoň jeden výraz pravdivý
 - Operátor `!` vrací `true`, pokud je výraz nepravdivý
 - Operátor `xor` vrací `true`, pokud je jeden z výrazů pravdivý a druhý nepravdivý
-- Operátor `??` vrací první hodnotu, pokud je definovaná, jinak druhou hodnotu
+- Operátor `??` vrací první hodnotu, pokud existuje a není `null`, jinak druhou hodnotu
+
+<v-click>
+
+```php
+$jmeno = $_GET['jmeno'] ?? 'host'; // 'host', pokud parametr v URL chybí
+```
+
+</v-click>
 
 ---
 layout: image-right
@@ -291,7 +294,7 @@ image: https://cover.sli.dev
 - Každá hodnota má svůj klíč
   - klíčem může být číslo nebo řetězec znaků
   - indexovány (číslovány) od 0
-- Hodnota pole může obsahovat různé datové pole vč. jiného pole (multidimenzionální pole)
+- Hodnota pole může obsahovat různé datové typy vč. jiného pole (multidimenzionální pole)
 - Na prvek pole lze přistupovat přes index, nebo u asociativních polí i přes klíč
 
 <v-click>
