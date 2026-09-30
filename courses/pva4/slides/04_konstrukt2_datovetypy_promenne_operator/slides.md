@@ -180,8 +180,8 @@ $text = '  Ahoj, světe!  ';
 
 echo trim($text);                             // Ahoj, světe! (odstraní mezery na krajích)
 
-echo strlen('Fišer');                         // 6 – počítá bajty, znak š zabírá 2
-echo mb_strlen('Fišer');                      // 5 – počítá znaky
+echo strlen('kůň');                           // 5 – počítá bajty, znaky ů a ň zabírají po 2
+echo mb_strlen('kůň');                        // 3 – počítá znaky
 
 echo strtoupper('čeština');                   // čEšTINA – nezvládne diakritiku
 echo mb_strtoupper('čeština');                // ČEŠTINA
