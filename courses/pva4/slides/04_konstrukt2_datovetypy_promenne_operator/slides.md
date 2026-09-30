@@ -187,20 +187,20 @@ Jde o variantu čísla s plovoucí řádovou čárkou, pro které platí pravidl
 
 # Integer vs Float
 
-```php {all|1-3|5-7|8-9|11-13}
-// proměnná je int
+```php {all|1-3|5-6|8-10|12-13}
+// proměnné jsou typu int
 $var1 = 5;
 $var2 = 1;
 
 // proměnná je typu float
-$var3 = 5.0; 
+$var3 = 5.0;
 
-// int/int - výsledek se nám vrátí jako datový typ float
-$var1 / $var2; 
+// int/int - beze zbytku vrací int, se zbytkem float
+var_dump($var1 / $var2); // int(5)
+var_dump($var1 / 2);     // float(2.5)
 
-// int/float - výsledek se nám také vrátí jako float,
-// i když je výsledek celočíselná hodnota
-$var1 / $var3; 
+// int/float - výsledek je vždy float, i když je celočíselný
+var_dump($var1 / $var3); // float(1)
 ```
 
 ---
@@ -209,7 +209,8 @@ $var1 / $var3;
 
 - Logický datový typ
 - Může nabývat hodnot `true` nebo `false`
-- V PHP je možné použít i hodnoty `1` a `0`
+- Na `false` se převádí tzv. falsy hodnoty: `0`, `0.0`, `""`, `"0"`, `[]`, `null`
+- Všechny ostatní hodnoty se převádí na `true` (např. `1`, `"abc"`, `-5`)
 - Hodnoty `true` a `false` jsou case-insensitive
 
 <v-click>
@@ -224,6 +225,26 @@ echo $nepravda; // (nic nevrací)
 var_dump($pravda); // bool(true)
 var_dump($nepravda); // bool(false)
 ``` 
+
+</v-click>
+
+---
+
+# `NULL`
+
+- Speciální hodnota, která znamená, že proměnná nemá žádnou hodnotu
+- V PHP je možné použít i hodnotu `null`
+- Hodnota `null` je case-insensitive
+- Proměnná, která nebyla inicializována, má hodnotu `null`, ale PHP vypíše `Warning: Undefined variable`
+- Proměnnou můžeme nastavit na hodnotu `null` kdykoliv
+
+<v-click>
+
+```php
+$promenna = null;
+echo $promenna; // (nic nevrací)
+var_dump($promenna); // NULL
+```
 
 </v-click>
 
@@ -253,26 +274,6 @@ hideInToc: true
 - Operátor `!` vrací `true`, pokud je výraz nepravdivý
 - Operátor `xor` vrací `true`, pokud je jeden z výrazů pravdivý a druhý nepravdivý
 - Operátor `??` vrací první hodnotu, pokud je definovaná, jinak druhou hodnotu
-
----
-
-# `NULL`
-
-- Speciální hodnota, která znamená, že proměnná nemá žádnou hodnotu
-- V PHP je možné použít i hodnotu `null`
-- Hodnota `null` je case-insensitive
-- Proměnná, která nebyla inicializována, má hodnotu `null`
-- Proměnnou můžeme nastavit na hodnotu `null` kdykoliv
-
-<v-click>
-
-```php
-$promenna = null;
-echo $promenna; // (nic nevrací)
-var_dump($promenna); // NULL
-```
-
-</v-click>
 
 ---
 layout: image-right
@@ -317,12 +318,13 @@ echo $poleKlic["jmeno"]; // Adam
 - Klíče jsou
   - unikátní
   - jsou case-sensitive
-  - mohou být libovolného datového typu, typicky string nebo integer
+  - mohou být pouze typu `string` nebo `int`
+  - jiné typy PHP převede, např. `true` → `1`, `null` → `""`
  
 <v-click>
 
 ```php
-$pole = array(klic => hodnota);
+$pole = array("klic" => "hodnota");
 
 $vek = ["Peter" => 35, "Ben" => 37, "Joe" => 43];
 echo 'Peter is ' . $vek["Peter"] . ' years old.'; // Peter is 35 years old.
@@ -398,8 +400,8 @@ echo $cars[3][0].': In stock: '.$cars[3][1].', sold: '.$cars[3][2].'.<br>'; // L
 ```php
 $zakaznik = array(
     array("firma" => "Nezávislí Dev, v.o.s.", "obrat" => 150450, "aktivni" => true),
-    array("firma" => "Nová vývojová, a.s.", "obrat" => 5978949), "aktivni" => true,
-    array("firma" => "Dvořákova aplikační, s.r.o.", "obrat" => 123456, "aktivni" => false) // bez čárky na konci posledního prvku
+    array("firma" => "Nová vývojová, a.s.", "obrat" => 5978949, "aktivni" => true),
+    array("firma" => "Dvořákova aplikační, s.r.o.", "obrat" => 123456, "aktivni" => false), // čárka za posledním prvkem je povolená
 );
 echo $zakaznik[0]["firma"] . " má obrat " . $zakaznik[0]["obrat"]; // Nezávislí Dev, v.o.s. má obrat 150450
 ```
