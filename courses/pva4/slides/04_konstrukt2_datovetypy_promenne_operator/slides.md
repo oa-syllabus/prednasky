@@ -89,21 +89,36 @@ Z kontextu se datový typ rozpozná také při operacích, příkladem může b�
 hideInToc: true
 ---
 
-# `String`
+# Apostrof vs. uvozovky
 
-```php
+```php {all|1-4|6-8|10-11}
 $jmeno = 'PVA';
-echo $jmeno; // PVA
+
+echo 'Ahoj $jmeno';        // Ahoj $jmeno (proměnná se nenahradí)
+echo "Ahoj $jmeno";        // Ahoj PVA
+
+echo 'It\'s PHP';          // It's PHP (escapovaný apostrof)
+echo "Řekl: \"Ahoj\"";     // Řekl: "Ahoj"
+echo "Cena: \$100";        // Cena: $100 (escapovaný dolar)
+
+echo "Řádek 1\nŘádek 2";   // \n se převede na nový řádek
+echo 'Řádek 1\nŘádek 2';   // Řádek 1\nŘádek 2 (v apostrofech se \n nezpracuje)
 ```
 
 <v-click>
 
-### Spojování řetězců
+> V prohlížeči se `\n` zobrazí jen jako mezera, protože HTML zalomení řádků ignoruje. Pro nový řádek na stránce použij `<br>`.
+
+</v-click>
+
+---
+
+# Spojování řetězců
 
 - Spojení řetězců pomocí tečky `.`
 - Tečka slouží ke spojení dvou nebo více řetězců
 
-```php {all|1-4|6|7|8|all}
+```php {all|1-4|6|7|8|9-10|all}
 $jmeno = 'PVA';
 $promenna = 'Hello, world!';
 echo $jmeno;    // PVA
@@ -113,9 +128,9 @@ echo 'Hello, world ' . 'PVA';          // Hello, world PVA
 echo 'Hello, world ' . $jmeno;          // Hello, world PVA
 echo 'Hello, world ' . $jmeno . '!';    // Hello, world PVA!
 echo 'Hello, world <strong>' . $jmeno . '</strong>!';    // Hello, world <strong>PVA</strong>! (prohlížeč zobrazí PVA tučně)
+echo $promenna . ' <strong>' . $jmeno . '</strong>!';    // Hello, world! <strong>PVA</strong>! (prohlížeč zobrazí PVA tučně)
 ```
 
-</v-click>
 
 <v-click>
 
@@ -127,6 +142,63 @@ $promenna = "Hello, world $jmeno!";
 echo $promenna; // Hello, world PVA!
 echo "Kurz {$jmeno}4"; // Kurz PVA4 (bez složených závorek by PHP hledalo proměnnou $jmeno4)
 ```
+
+</v-click>
+
+---
+hideInToc: true
+---
+
+# Víceřádkový text
+
+- Delší text (např. kus HTML) lze zapsat pomocí **heredoc** nebo **nowdoc**
+- Text začíná `<<<NAZEV` a končí řádkem `NAZEV;`
+
+```php {all|3-7|9-13}
+$jmeno = 'PVA';
+
+// Heredoc – chová se jako dvojité uvozovky
+echo <<<TEXT
+Ahoj $jmeno,
+vítej v kurzu.
+TEXT;                      // Ahoj PVA, vítej v kurzu.
+
+// Nowdoc – chová se jako apostrofy (název v apostrofech)
+echo <<<'TEXT'
+Ahoj $jmeno,
+proměnná se nenahradí.
+TEXT;                      // Ahoj $jmeno, proměnná se nenahradí.
+```
+
+---
+hideInToc: true
+---
+
+# Funkce pro práci s řetězci
+
+```php {all|1-3|5-6|8-9|11-13|15-17}
+$text = '  Ahoj, světe!  ';
+
+echo trim($text);                             // Ahoj, světe! (odstraní mezery na krajích)
+
+echo strlen('kůň');                           // 5 – počítá bajty, znaky ů a ň zabírají po 2
+echo mb_strlen('kůň');                        // 3 – počítá znaky
+
+echo strtoupper('čeština');                   // čEšTINA – nezvládne diakritiku
+echo mb_strtoupper('čeština');                // ČEŠTINA
+
+echo str_replace('PHP', 'PVA', 'Kurz PHP');   // Kurz PVA
+var_dump(str_contains('Kurz PVA', 'PVA'));    // bool(true), od PHP 8
+echo substr('Programování', 0, 7);            // Program
+
+$veta = 'Ahoj';
+$veta .= ', světe';                           // připojení na konec řetězce
+echo $veta;                                   // Ahoj, světe
+```
+
+<v-click>
+
+> Pro texty s diakritikou používej funkce s předponou `mb_` (multibyte).
 
 </v-click>
 
