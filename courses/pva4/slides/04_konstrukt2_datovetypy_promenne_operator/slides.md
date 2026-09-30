@@ -118,7 +118,7 @@ echo 'Řádek 1\nŘádek 2';   // Řádek 1\nŘádek 2 (v apostrofech se \n nezp
 - Spojení řetězců pomocí tečky `.`
 - Tečka slouží ke spojení dvou nebo více řetězců
 
-```php {all|1-4|6|7|8|all}
+```php {all|1-4|6|7|8|9-10|all}
 $jmeno = 'PVA';
 $promenna = 'Hello, world!';
 echo $jmeno;    // PVA
@@ -128,6 +128,7 @@ echo 'Hello, world ' . 'PVA';          // Hello, world PVA
 echo 'Hello, world ' . $jmeno;          // Hello, world PVA
 echo 'Hello, world ' . $jmeno . '!';    // Hello, world PVA!
 echo 'Hello, world <strong>' . $jmeno . '</strong>!';    // Hello, world <strong>PVA</strong>! (prohlížeč zobrazí PVA tučně)
+echo $promenna . ' <strong>' . $jmeno . '</strong>!';    // Hello, world! <strong>PVA</strong>! (prohlížeč zobrazí PVA tučně)
 ```
 
 
