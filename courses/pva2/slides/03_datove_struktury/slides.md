@@ -117,6 +117,27 @@ image: https://cover.sli.dev
 
 ---
 
+# Indexy v seznamu
+
+- Každý prvek má kladný index (od začátku) i záporný index (od konce).
+
+```python
+squares = [1, 4, 9, 16, 25]
+```
+
+| prvek          | 1  | 4  | 9  | 16 | 25 |
+|----------------|----|----|----|----|----|
+| index          | 0  | 1  | 2  | 3  | 4  |
+| záporný index  | -5 | -4 | -3 | -2 | -1 |
+
+- Index mimo rozsah seznamu skončí chybou.
+
+```python
+print( squares[5] )   # IndexError: list index out of range
+```
+
+---
+
 # Přístup k prvkům
 
 - Stejně jako práce s textem, lze vrátit jen část prvků
@@ -182,6 +203,24 @@ print(animals)  # ['elephant', 'cat', 'giraffe', 'monkey', 'dog']
 
 ---
 
+# Vložení a hledání prvku
+
+- Vložení prvku na konkrétní index `seznam.insert(index, prvek)` – ostatní prvky se posunou.
+- Operátor `in` zjistí, zda prvek v seznamu existuje – stejně jako u textu.
+
+```python
+ovoce = ['jablko', 'hruška']
+
+ovoce.insert(0, 'banán')        # vloží na index 0
+print(ovoce)                    # ['banán', 'jablko', 'hruška']
+
+print('jablko' in ovoce)        # True
+print('kiwi' in ovoce)          # False
+print('kiwi' not in ovoce)      # True
+```
+
+---
+
 # Odstranění prvků
 
 - Odstranění prvku
@@ -211,8 +250,29 @@ print(animals) # []
 ```
 
 ---
+hideInToc: true
+---
 
-# Spojení seznamů `+`
+# Odstranění prvků – `remove()` a `pop()`
+
+```python
+animals = ["elephant", "lion", "tiger", "dog"]
+
+animals.remove("lion")      # odstraní první výskyt hodnoty
+print(animals)              # ['elephant', 'tiger', 'dog']
+
+posledni = animals.pop()    # bez indexu odstraní poslední prvek a vrátí ho
+print(posledni)             # dog
+print(animals)              # ['elephant', 'tiger']
+
+prvni = animals.pop(0)      # odstraní prvek na indexu 0 a vrátí ho
+print(prvni)                # elephant
+print(animals)              # ['tiger']
+```
+
+---
+
+# Spojení a opakování seznamů
 
 ```python
 # Spojení seznamů
@@ -224,6 +284,8 @@ print(spojenySeznam)             # [1, 2, 3, 4, 5, 6]
 
 print(spojenySeznam + [7, 8, 9]) # [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
+# Opakování seznamu
+print([0] * 5)                   # [0, 0, 0, 0, 0]
 ```
 
 ---
@@ -300,6 +362,56 @@ nazevTuple[index]
 ```
 
 ---
+
+# Kdy použít tuple
+
+- Pro data, která se po vytvoření **nemají měnit**.
+- Typicky pevný záznam – položky bývají různého typu.
+- Tuple lze použít jako klíč ve slovníku, seznam ne.
+- Funguje indexování, řezy, `len()`, `in` i `count()` – jako u seznamu.
+
+```python
+bod = (3, 5)                    # souřadnice x, y
+barva = (255, 0, 0)             # RGB červená
+datum = (2026, 10, 1)           # rok, měsíc, den
+zak = ('Jana', 17, 'B2')        # jméno, věk, třída
+
+print( zak[0] )                 # Jana
+print( len(barva) )             # 3
+print( 0 in barva )             # True
+```
+
+---
+hideInToc: true
+---
+
+# Tuple – neměnnost a rozbalení
+
+```python
+bod = (3, 5)
+bod[0] = 10     # TypeError: 'tuple' object does not support item assignment
+```
+
+- **Rozbalení** – hodnoty tuple se přiřadí do více proměnných najednou.
+
+```python
+bod = (3, 5)
+x, y = bod
+print(x)        # 3
+print(y)        # 5
+```
+
+- **Pozor na jednoprvkový tuple** – rozhoduje čárka, ne závorky.
+
+```python
+a = (5)
+print(type(a))  # <class 'int'>
+
+b = (5,)
+print(type(b))  # <class 'tuple'>
+```
+
+---
 layout: cover
 background: https://cover.sli.dev
 ---
@@ -359,6 +471,47 @@ print(osobaV3['zeme'])      # Norway
 
 ---
 
+# Přidání, změna a odstranění
+
+- Přiřazení do **nového** klíče položku přidá, do **existujícího** klíče změní její hodnotu.
+- Odstranění položky `del slovnik[klic]` nebo `slovnik.pop(klic)` (vrátí hodnotu).
+
+```python
+osoba = {'jmeno': 'John', 'vek': 36, 'zeme': 'Norway'}
+
+osoba['email'] = 'john@example.com'   # přidání nového klíče
+osoba['vek'] = 37                     # změna hodnoty
+del osoba['zeme']                     # odstranění klíče
+
+print(osoba)        # {'jmeno': 'John', 'vek': 37, 'email': 'john@example.com'}
+print(len(osoba))   # 3
+
+vek = osoba.pop('vek')
+print(vek)          # 37
+print(osoba)        # {'jmeno': 'John', 'email': 'john@example.com'}
+```
+
+---
+hideInToc: true
+---
+
+# Chybějící klíč
+
+- Přístup přes `[]` k neexistujícímu klíči skončí chybou `KeyError`.
+- `get()` chybu nevyhodí – vrátí `None` nebo zadanou výchozí hodnotu.
+
+```python
+osoba = {'jmeno': 'John', 'vek': 36}
+
+print(osoba['prijmeni'])                    # KeyError: 'prijmeni'
+
+print(osoba.get('prijmeni'))                # None
+print(osoba.get('prijmeni', 'neuvedeno'))   # neuvedeno
+print(osoba.get('jmeno', 'neuvedeno'))      # John
+```
+
+---
+
 # Metody
 
 - `keys()` vrátí všechny klíče slovníku
@@ -394,6 +547,38 @@ print('prijmeni' in osoba)          # False
 print('John' in osoba)              # False - 'John' není klíč, ale hodnota
 print('John' in osoba.values())     # True
 ```
+
+---
+layout: cover
+background: https://cover.sli.dev
+---
+
+# Kombinace struktur
+
+---
+hideInToc: true
+---
+
+# Seznam slovníků
+
+- Struktury lze do sebe vnořovat – hodnotou slovníku může být seznam, prvkem seznamu slovník.
+- Přístup se řetězí zleva doprava: nejdřív index v seznamu, pak klíč ve slovníku.
+
+```python
+trida = [
+    {'jmeno': 'Jana', 'vek': 17, 'znamky': [1, 2, 1]},
+    {'jmeno': 'Petr', 'vek': 18, 'znamky': [3, 2]},
+]
+
+print( trida[0]['jmeno'] )          # Jana
+print( trida[1]['znamky'][0] )      # 3
+print( len(trida) )                 # 2
+
+trida.append({'jmeno': 'Eva', 'vek': 17, 'znamky': []})
+print( len(trida) )                 # 3
+```
+
+- Procházení všech žáků najednou umožní cyklus `for` – přednáška Řídicí struktury.
 
 ---
 
