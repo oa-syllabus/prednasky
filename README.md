@@ -26,6 +26,11 @@
 | 20 | [Privátní funkce](https://oa-syllabus.github.io/prednasky/pva2/43_privatni_funkce/) | [PDF](https://oa-syllabus.github.io/prednasky/pva2/43_privatni_funkce/43_privatni_funkce.pdf) |
 | 21 | [OOP Dědičnost](https://oa-syllabus.github.io/prednasky/pva2/44_dedicnost/) | [PDF](https://oa-syllabus.github.io/prednasky/pva2/44_dedicnost/44_dedicnost.pdf) |
 | 22 | [Týmová aplikace](https://oa-syllabus.github.io/prednasky/pva2/60_team_app/) | [PDF](https://oa-syllabus.github.io/prednasky/pva2/60_team_app/60_team_app.pdf) |
+## PVA2 \| Cvičení
+
+| # | Přednáška | PDF |
+|---:|-----------|-----|
+| 01 | [Co umím z PVA1 – zpětná vazba](https://oa-syllabus.github.io/prednasky/pva2_cviceni/01_co_umim_z_pva1/) | [PDF](https://oa-syllabus.github.io/prednasky/pva2_cviceni/01_co_umim_z_pva1/01_co_umim_z_pva1.pdf) |
 ## PVA4 \| Programování a vývoj aplikací
 
 ### PHP
