@@ -82,6 +82,11 @@ print( len(zaci) )               # počet žáků
 - Tuple `tuple` – jako **GPS souřadnice** nebo datum narození: po vytvoření se nemění
 - Slovník `dict` – jako **telefonní seznam**: hledá se podle jména (klíče), ne podle pořadí
 
+```python
+seznam = [1, 2, 3]            # hranaté závorky []
+ntice = (1, 2, 3)             # kulaté závorky ()
+slovnik = {'a': 1, 'b': 2}    # složené závorky {}
+```
 
 ---
 layout: cover
@@ -97,11 +102,16 @@ hideInToc: true
 # Seznam `list`
 
 - Nejuniverzálnější datová struktura Pythonu
-- Zápis čárkou oddělených hodnot v hranatých závorkách
+- Zápis čárkou oddělených hodnot v **hranatých závorkách `[]`**
 - Mohou obsahovat položky různých typů, ale obvykle jsou všechny položky v seznamu stejného typu.
 - Stejně jako text, jsou položky indexovány.
 - První položka má index 0, druhá 1 atd.
 - Položky mohou být měněny, přidávány nebo odebírány.
+
+```python
+zaci = ['Jana', 'Petr', 'Eva']   # seznam se třemi prvky
+prazdny = []                     # prázdný seznam
+```
 
 ---
 
@@ -403,12 +413,15 @@ hideInToc: true
 
 - Tuple je datová struktura Pythonu, která je podobná seznamu.
 - Tuple je typu `immutable` tj. **nelze měnit** jeho obsah.
-- Zápis čárkou oddělených hodnot v kulatých závorkách.
+- Zápis čárkou oddělených hodnot v **kulatých závorkách `()`**.
 - Stejně jako seznamy, jsou položky indexovány.
 
 ```python
 # Vytvoření tuple
 nazevTuple = (prvek, druhyPrvek)
+bod = (3, 5)        # tuple se dvěma prvky
+jeden = (5,)        # jednoprvkový tuple - nutná čárka
+prazdny = ()        # prázdný tuple
 
 # Přístup na konkrétní prvek tuple
 # V hranaté závorce se uvádí index prvku
@@ -507,12 +520,17 @@ hideInToc: true
 
 - Slovník ukládá dvojice **klíč: hodnota** (`key-value`).
 - Slovník je typu `mutable` tj. lze měnit jeho obsah.
-- Zápis dvojic `klíč: hodnota` oddělených čárkou ve složených závorkách `{}`.
+- Zápis dvojic `klíč: hodnota` oddělených čárkou ve **složených závorkách `{}`**.
 - K hodnotám se přistupuje přes **klíč**, ne přes pořadí (index).
 - Klíče ve slovníku jsou jedinečné.
 - Klíčem může být libovolný neměnný typ – nejčastěji řetězec, dále číslo nebo tuple (pokud obsahuje pouze neměnné objekty).
 - Jako klíče nelze použít seznamy.
 - Hodnotou může být cokoliv – text, číslo, seznam i další slovník.
+
+```python
+osoba = {'jmeno': 'Jana', 'vek': 17}   # dvojice klíč: hodnota
+prazdny = {}                           # prázdný slovník
+```
 
 ---
 
