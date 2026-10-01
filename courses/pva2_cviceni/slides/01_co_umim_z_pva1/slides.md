@@ -448,7 +448,7 @@ if zeme in ("CZ", "SK"):
 ✅
 
 ```python
-if body <= 4:          # nebo: body in range(0, 5)
+if body <= 4:
 ```
 
 ✅
