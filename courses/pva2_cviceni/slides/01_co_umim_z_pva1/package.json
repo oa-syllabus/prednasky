@@ -1,0 +1,13 @@
+{
+  "name": "01_co_umim_z_pva1",
+  "title": "Co umím z PVA1 – zpětná vazba",
+  "author": { "name": "Adam Fišer" },
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build",
+    "export": "slidev export --output ../01_co_umim_z_pva1.pdf"
+  }
+}
