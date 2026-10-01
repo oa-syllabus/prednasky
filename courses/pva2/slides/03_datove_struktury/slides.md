@@ -47,15 +47,40 @@ layout: default
 <Toc :columns="2" minDepth="1" maxDepth="1"></Toc>
 ---
 
+# Proč datové struktury?
+
+- Ve třídě je 30 žáků. Vytvoříš pro jejich jména 30 proměnných?
+
+```python
+zak1 = 'Jana'
+zak2 = 'Petr'
+zak3 = 'Eva'
+# ... a dalších 27 proměnných
+```
+
+<v-click>
+
+- Datová struktura uloží všechna jména do **jedné** proměnné.
+
+```python
+zaci = ['Jana', 'Petr', 'Eva']   # a další jména
+print( zaci[1] )                 # Petr
+print( len(zaci) )               # počet žáků
+```
+
+</v-click>
+
+---
+
 # Datové struktury
 
 - **Datová struktura** je způsob, jakým jsou data organizována, uložena a zpracována v počítači.
 - **Datová struktura** je základní stavební prvek programovacích jazyků.
 
 ## Typy datových struktur
-- Seznam `list`
-- Tuple `tuple`
-- Slovník `dict`
+- Seznam `list` – jako **nákupní lístek**: položky mají pořadí, lze je přidávat i škrtat
+- Tuple `tuple` – jako **GPS souřadnice** nebo datum narození: po vytvoření se nemění
+- Slovník `dict` – jako **telefonní seznam**: hledá se podle jména (klíče), ne podle pořadí
 
 
 ---
@@ -167,7 +192,7 @@ layout: two-cols-header
 - Datová struktura list je typu `mutable` tj. lze měnit její obsah.
 - Změna prvku na konkrétním indexu `seznam[index] = novyPrvek`
 - Přidání prvku na konec seznamu `seznam.append(prvek)`
-- Přiřazení je možné k řezům seznamů, stejně jako k jednotlivým prvkům seznamu. Tímto způsobem lze dokonce měnit velikost seznamu nebo jej zcela vymazat.
+- **Bonus** (vpravo): přiřazení do řezu nahradí více prvků najednou a může změnit délku seznamu.
 
 ::left::
 
@@ -335,6 +360,35 @@ print(cisla)      # None
 ```
 
 ---
+hideInToc: true
+---
+
+# Co vypíše? – seznam
+
+```python
+squares = [1, 4, 9, 16, 25]
+
+print( squares[-2] )
+print( squares[1:3] )
+print( 9 in squares )
+
+cisla = [3, 1, 2]
+x = cisla.sort()
+print( x )
+```
+
+<v-click>
+
+```python
+16
+[4, 9]
+True
+None
+```
+
+</v-click>
+
+---
 layout: cover
 background: https://cover.sli.dev
 ---
@@ -410,6 +464,33 @@ print(type(a))  # <class 'int'>
 b = (5,)
 print(type(b))  # <class 'tuple'>
 ```
+
+---
+hideInToc: true
+---
+
+# Co vypíše? – tuple
+
+```python
+datum = (2026, 10, 1)
+rok, mesic, den = datum
+
+print( mesic )
+print( datum[-1] )
+print( type( ('ahoj') ) )
+print( type( ('ahoj',) ) )
+```
+
+<v-click>
+
+```python
+10
+1
+<class 'str'>
+<class 'tuple'>
+```
+
+</v-click>
 
 ---
 layout: cover
@@ -549,6 +630,34 @@ print('John' in osoba.values())     # True
 ```
 
 ---
+hideInToc: true
+---
+
+# Co vypíše? – slovník
+
+```python
+osoba = {'jmeno': 'John', 'vek': 36}
+osoba['vek'] = 37
+osoba['zeme'] = 'Norway'
+
+print( osoba['vek'] )
+print( len(osoba) )
+print( 'John' in osoba )
+print( osoba.get('email', '?') )
+```
+
+<v-click>
+
+```python
+37
+3
+False
+?
+```
+
+</v-click>
+
+---
 layout: cover
 background: https://cover.sli.dev
 ---
@@ -582,11 +691,51 @@ print( len(trida) )                 # 3
 
 ---
 
+# Časté chyby
+
+| Kód | Co se stane | Správně |
+|-----|-------------|---------|
+| `cisla[5]` – seznam s 5 prvky | `IndexError` | `cisla[4]` nebo `cisla[-1]` |
+| `osoba['email']` – klíč chybí | `KeyError` | `osoba.get('email')` |
+| `cisla = cisla.sort()` | v `cisla` je `None` | `cisla.sort()` |
+| `list = [1, 2, 3]` | přepíše funkci `list()` | `cisla = [1, 2, 3]` |
+| `bod = (5)` | vznikne `int` | `bod = (5,)` |
+| `'John' in osoba` | hledá jen klíče | `'John' in osoba.values()` |
+
+---
+
 # Shrnutí
 
-- Seznam `list` je `mutable` tj. lze měnit jeho obsah. Zápis čárkou oddělených hodnot v hranatých závorkách `[]`.
-- Tuple `tuple` je `immutable` tj. **nelze měnit** jeho obsah. Zápis čárkou oddělených hodnot v kulatých závorkách `()`.
-- Slovník `dict` je `mutable` tj. lze měnit jeho obsah a  `key-value` tj. obsahuje klíče a hodnoty. Zápis klíčů a hodnot oddělených dvojtečkou a jednotlivé položky oddělené čárkou v složených závorkách `{}`.
+|  | Seznam `list` | Tuple `tuple` | Slovník `dict` |
+|--|---------------|---------------|----------------|
+| Zápis | `[1, 2, 3]` | `(1, 2, 3)` | `{'a': 1, 'b': 2}` |
+| Měnitelný | ano – `mutable` | ne – `immutable` | ano – `mutable` |
+| Přístup | index `s[0]` | index `t[0]` | klíč `d['a']` |
+| Pořadí prvků | ano | ano | ano (pořadí vložení) |
+| Kdy použít | měnící se kolekce | pevný záznam | hledání podle názvu |
+| Příklad | nákupní seznam | souřadnice, datum | telefonní seznam |
+
+---
+
+# Cvičení 1 – Nákupní seznam
+
+1. Vytvoř seznam `nakup` se třemi položkami.
+2. Přidej na konec `'mléko'` a na začátek `'chléb'`.
+3. Odstraň druhou položku seznamu.
+4. Vypiš počet položek.
+5. Vypiš seznam seřazený podle abecedy – původní seznam se nesmí změnit.
+6. Vypiš, zda je v seznamu `'máslo'` (`True` / `False`).
+
+---
+
+# Cvičení 2 – Telefonní seznam
+
+1. Vytvoř slovník `kontakty` – klíčem je jméno, hodnotou telefonní číslo.
+2. Přidej nový kontakt a změň číslo u jednoho existujícího.
+3. Načti jméno od uživatele pomocí `input()` a vypiš jeho číslo.
+    - Pokud kontakt neexistuje, vypiš `Kontakt nenalezen` – bez `if`, pomocí `get()`.
+4. Vypiš seznam všech jmen (`list` z klíčů slovníku).
+5. Smaž jeden kontakt a vypiš, kolik kontaktů zbylo.
 
 ---
 src: '../../pages/thanku.md'
