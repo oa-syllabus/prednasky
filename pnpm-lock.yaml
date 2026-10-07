@@ -109,9 +109,9 @@ importers:
 
   courses/pva4/slides/04_konstrukt2_datovetypy_promenne_operator: {}
 
-  courses/pva4/slides/05_formulare: {}
+  courses/pva4/slides/05_prikazy_include_require: {}
 
-  courses/pva4/slides/06_prikazy_include_require: {}
+  courses/pva4/slides/06_formulare: {}
 
   courses/pva4/slides/07_ridici_struktury: {}
 

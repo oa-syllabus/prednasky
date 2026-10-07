@@ -28,7 +28,7 @@ export:
 #== Slide Info
 src: '../../pages/index.md'
 title: "Příkazy Inlcude a Require"
-exportFilename: "06_prikazy_include_require"
+exportFilename: "05_prikazy_include_require"
 titleTemplate: "PVA4 %s by Adam Fišer"
 info: |
   ## PVA4 Programování a vývoj aplikací

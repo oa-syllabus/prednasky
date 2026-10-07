@@ -40,8 +40,8 @@
 | 01 | [Úvod do PHP](https://oa-syllabus.github.io/prednasky/pva4/02_uvod_do_php/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/02_uvod_do_php/02_uvod_do_php.pdf) |
 | 02 | [Konstrukt 1 - Základy, proměnné, výstupy](https://oa-syllabus.github.io/prednasky/pva4/03_konstrukt1_zaklady_promenne_vystupy/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/03_konstrukt1_zaklady_promenne_vystupy/03_konstrukt1_zaklady_promenne_vystupy.pdf) |
 | 03 | [Konstrukt 2: Datové typy, proměnné, operátory](https://oa-syllabus.github.io/prednasky/pva4/04_konstrukt2_datovetypy_promenne_operator/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/04_konstrukt2_datovetypy_promenne_operator/04_konstrukt2_datovetypy_promenne_operator.pdf) |
-| 04 | [Formuláře](https://oa-syllabus.github.io/prednasky/pva4/05_formulare/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/05_formulare/05_formulare.pdf) |
-| 05 | [Příkazy Inlcude a Require](https://oa-syllabus.github.io/prednasky/pva4/06_prikazy_include_require/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/06_prikazy_include_require/06_prikazy_include_require.pdf) |
+| 04 | [Příkazy Inlcude a Require](https://oa-syllabus.github.io/prednasky/pva4/05_prikazy_include_require/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/05_prikazy_include_require/05_prikazy_include_require.pdf) |
+| 05 | [Formuláře](https://oa-syllabus.github.io/prednasky/pva4/06_formulare/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/06_formulare/06_formulare.pdf) |
 | 06 | [Řídící struktury](https://oa-syllabus.github.io/prednasky/pva4/07_ridici_struktury/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/07_ridici_struktury/07_ridici_struktury.pdf) |
 | 07 | [Řízení bezpečnosti](https://oa-syllabus.github.io/prednasky/pva4/09_auth/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/09_auth/09_auth.pdf) |
 | 08 | [Sessions](https://oa-syllabus.github.io/prednasky/pva4/10_sessions/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/10_sessions/10_sessions.pdf) |
