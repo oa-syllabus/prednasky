@@ -424,6 +424,22 @@ Fatal error: Uncaught Error: Failed opening required 'neexistuje.php' ...
 
 ---
 
+# Shrnutí
+
+- `include` a `require` vloží obsah jiného souboru – kód se píše jen jednou a používá se opakovaně.
+- Chybějící soubor: `include` → Warning, skript pokračuje; `require` → Fatal error, skript se zastaví.
+- `include_once` a `require_once` vloží soubor jen jednou.
+- Vložený soubor sdílí proměnné se skriptem a může vrátit hodnotu pomocí `return`.
+- Pro spolehlivé cesty používejte `__DIR__`.
+
+## Používejte
+
+- `require` / `require_once` pro nezbytné soubory – konfigurace, funkce, připojení k databázi.
+- `include` pro šablony – hlavička, menu, patička.
+- Soubory obsahující jen PHP kód neukončujte značkou `?>`.
+
+---
+
 # Cvičení – web se společnou šablonou
 
 Vytvořte web o třech stránkách `index.php`, `o-nas.php`, `kontakt.php`.
@@ -440,22 +456,6 @@ Vytvořte web o třech stránkách `index.php`, `o-nas.php`, `kontakt.php`.
 **Bonus:** Přejmenujte `menu.php` a pak `config.php` a porovnejte, co se stane. Vysvětlete rozdíl.
 
 </v-click>
-
----
-
-# Shrnutí
-
-- `include` a `require` vloží obsah jiného souboru – kód se píše jen jednou a používá se opakovaně.
-- Chybějící soubor: `include` → Warning, skript pokračuje; `require` → Fatal error, skript se zastaví.
-- `include_once` a `require_once` vloží soubor jen jednou.
-- Vložený soubor sdílí proměnné se skriptem a může vrátit hodnotu pomocí `return`.
-- Pro spolehlivé cesty používejte `__DIR__`.
-
-## Používejte
-
-- `require` / `require_once` pro nezbytné soubory – konfigurace, funkce, připojení k databázi.
-- `include` pro šablony – hlavička, menu, patička.
-- Soubory obsahující jen PHP kód neukončujte značkou `?>`.
 
 ---
 src: '../../pages/thanku.md'
