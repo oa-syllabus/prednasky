@@ -1,5 +1,5 @@
 {
-  "name": "05_formulare",
+  "name": "06_formulare",
   "title": "Formuláře",
   "section": "PHP",
   "author": { "name": "Adam Fišer" },
@@ -9,6 +9,6 @@
   "scripts": {
     "dev": "slidev",
     "build": "slidev build",
-    "export": "slidev export --output ../05_formulare.pdf"
+    "export": "slidev export --output ../06_formulare.pdf"
   }
 }

@@ -1,6 +1,6 @@
 {
-  "name": "06_prikazy_include_require",
-  "title": "Příkazy Inlcude a Require",
+  "name": "05_prikazy_include_require",
+  "title": "Příkazy include a require",
   "section": "PHP",
   "author": { "name": "Adam Fišer" },
   "type": "module",
@@ -9,6 +9,6 @@
   "scripts": {
     "dev": "slidev",
     "build": "slidev build",
-    "export": "slidev export --output ../06_prikazy_include_require.pdf"
+    "export": "slidev export --output ../05_prikazy_include_require.pdf"
   }
 }
