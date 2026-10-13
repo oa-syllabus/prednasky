@@ -118,12 +118,7 @@ Opakování z přednášky o datových typech.
 - `$a && $b` (<kbd>AltGr</kbd> + <kbd>C</kbd>) - AND, pravda, pokud jsou pravdivé oba
 - `$a || $b` (<kbd>AltGr</kbd> + <kbd>W</kbd>) - OR, pravda, pokud je pravdivý aspoň jeden
 - `$a xor $b` - pravda, pokud je pravdivý právě jeden
-- `$a and $b`, `$a or $b` - totéž co `&&` a `||`, ale s **nižší prioritou než `=`**. Nepoužíváme.
-
-```php
-$x = true and false;    // vyhodnotí se jako ($x = true) and false
-var_dump($x);           // bool(true)
-```
+- `$a and $b`, `$a or $b` - slovní varianty `&&` a `||`. Nepoužíváme, proč ukazuje další slide.
 
 Operátory pro výchozí hodnotu:
 
@@ -134,6 +129,35 @@ Operátory pro výchozí hodnotu:
 $jmeno = $_GET['jmeno'] ?? 'host';    // parametr chybí → 'host'
 $popis = $text ?: 'bez popisu';       // '' nebo '0' → 'bez popisu'
 ```
+
+---
+
+# Proč ne `and` a `or`?
+
+- PHP má pro AND a OR dva zápisy: `&&` / `and` a `||` / `or`. V podmínce `if` fungují stejně.
+- Liší se tím, **co se provede dřív**. Jako v matematice: v `2 + 3 * 4` se nejdřív násobí.
+- `&&` se provede **před** přiřazením `=`. `and` se provede až **po** něm.
+
+```php
+$maVstupenku = true;
+$jePlnolety = false;
+
+$muzeVstoupit = $maVstupenku && $jePlnolety;    // nejdřív &&, pak uložení
+$muzeVstoupit2 = $maVstupenku and $jePlnolety;  // nejdřív uložení, pak and
+```
+
+Co obsahují proměnné?
+
+<v-click>
+
+```
+$muzeVstoupit  = false    ✔ nezletilý neprojde
+$muzeVstoupit2 = true     ✘ do proměnné se uložila jen $maVstupenku
+```
+
+**Pravidlo: vždy píšeme `&&` a `||`.**
+
+</v-click>
 
 ---
 
