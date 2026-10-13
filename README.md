@@ -41,7 +41,7 @@
 | 02 | [Konstrukt 1 - Základy, proměnné, výstupy](https://oa-syllabus.github.io/prednasky/pva4/03_konstrukt1_zaklady_promenne_vystupy/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/03_konstrukt1_zaklady_promenne_vystupy/03_konstrukt1_zaklady_promenne_vystupy.pdf) |
 | 03 | [Konstrukt 2: Datové typy, proměnné, operátory](https://oa-syllabus.github.io/prednasky/pva4/04_konstrukt2_datovetypy_promenne_operator/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/04_konstrukt2_datovetypy_promenne_operator/04_konstrukt2_datovetypy_promenne_operator.pdf) |
 | 04 | [Příkazy include a require](https://oa-syllabus.github.io/prednasky/pva4/05_prikazy_include_require/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/05_prikazy_include_require/05_prikazy_include_require.pdf) |
-| 05 | [Řídící struktury](https://oa-syllabus.github.io/prednasky/pva4/06_ridici_struktury/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/06_ridici_struktury/06_ridici_struktury.pdf) |
+| 05 | [Řídicí struktury](https://oa-syllabus.github.io/prednasky/pva4/06_ridici_struktury/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/06_ridici_struktury/06_ridici_struktury.pdf) |
 | 06 | [Formuláře](https://oa-syllabus.github.io/prednasky/pva4/07_formulare/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/07_formulare/07_formulare.pdf) |
 | 07 | [Header](https://oa-syllabus.github.io/prednasky/pva4/08_header/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/08_header/08_header.pdf) |
 | 08 | [Email](https://oa-syllabus.github.io/prednasky/pva4/09_email/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/09_email/09_email.pdf) |

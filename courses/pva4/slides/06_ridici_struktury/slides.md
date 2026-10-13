@@ -27,7 +27,7 @@ export:
 
 #== Slide Info
 src: '../../pages/index.md'
-title: "Řídící struktury"
+title: "Řídicí struktury"
 exportFilename: "06_ridici_struktury"
 titleTemplate: "PVA4 %s by Adam Fišer"
 info: |
@@ -49,15 +49,17 @@ layout: default
 
 # Úvod
 
+Řídicí struktury určují, **které** příkazy se provedou a **kolikrát**.
+
 - Podmínky
-  - if
-  - switch
-Cykly
-  - for
-  - foreach
-  - while
-
-
+  - `if`, `elseif`, `else`
+  - `switch`, `match`
+- Cykly
+  - `for`, `foreach`, `while`, `do...while`
+  - `break`, `continue`
+- Funkce
+  - definice, parametry, návratová hodnota
+  - `declare(strict_types=1)`, rozsah platnosti proměnných, rekurze
 
 ---
 layout: cover
@@ -70,93 +72,116 @@ background: https://cover.sli.dev
 
 # Podmínky
 
-- podmínka je tvořena klíčovým slovem `if` a definicí podmínky
-- složené závorky `{}` pravý <kbd>alt</kbd> + <kbd>B</kbd> nebo <kbd>N</kbd> obsahují příkazy, které se vykonají, pokud je podmínka splněna
-
+- Podmínku tvoří klíčové slovo `if` a výraz v kulatých závorkách.
+- Složené závorky `{}` (<kbd>AltGr</kbd> + <kbd>B</kbd> / <kbd>N</kbd>) obsahují příkazy, které se provedou, je-li podmínka splněna.
 
 ```php
-if ( podmínka) {
-  // příkazy
+if (podmínka) {
+    // příkazy
 }
-``` 
-
-
-- u jednořádkových příkazů můžeme složené závorky vynechat
-
-```php
-if ($a > $b) 
-  echo "a je větší než b";
-``` 
-
-
-
-**Ternární operátor**
-- zkrácený zápis podmínky
-- `podmínka ? hodnotaTrue : hodnotaFalse`
-```php
-echo ($a > $b) ? "a je větší než b" : "a je menší než b";
 ```
 
+- Složené závorky jde u jednoho příkazu vynechat, ale **vždy je píšeme**. Druhý přidaný řádek by se jinak provedl vždy.
+
+```php
+if ($a > $b)
+    echo 'a je větší než b';
+    echo 'Tohle se vypíše vždy!';     // není součástí podmínky
+```
+
+**Ternární operátor** - zkrácený zápis `podmínka ? hodnotaTrue : hodnotaFalse`
+
+```php
+echo ($a > $b) ? 'a je větší než b' : 'a není větší než b';
+```
 
 ---
 
-# Operátory
+# Porovnávací operátory
 
-- `$a == $b` - (<kbd>=</kbd><kbd>=</kbd>)	`$a` má stejnou hodnotu jako `$b`
-- `$a != $b` - (<kbd>!</kbd><kbd>=</kbd>)	`$a` má jinou hodnotu než `$b`
-- `$a > $b`	`$a` - je větší než `$b`
-- `$a < $b`	`$a` - je menší `$b`
-- `$a <= $b` - (<kbd><</kbd><kbd>=</kbd>) `$a` je menší nebo rovno `$b`
+Opakování z přednášky o datových typech.
 
+| Operátor | Význam |
+|---|---|
+| `$a == $b` | stejná hodnota (po případném převodu typu) |
+| `$a === $b` | stejná hodnota **a** stejný datový typ |
+| `$a != $b`, `$a <> $b` | různá hodnota |
+| `$a !== $b` | různá hodnota **nebo** datový typ |
+| `$a > $b`, `$a < $b` | větší, menší |
+| `$a >= $b`, `$a <= $b` | větší nebo rovno, menší nebo rovno |
 
 ---
 
 # Logické operátory
 
-- `!` - negace,  `!$x` proměnná `$x` není `true`
-- `$a === $b` - (<kbd>=</kbd><kbd>=</kbd><kbd>=</kbd>)	`$a` má stejnou hodnotu **A** typ jako `$b`
-- `$a !== $b` - (<kbd>!</kbd><kbd>=</kbd><kbd>=</kbd>)	`$a` má jinou hodnotu **NEBO** typ než `$b`
-- logický operátor AND - musí být oba pravdivé
-  - `$a and $b`
-  - `$a && $b` (<kbd>AltGr</kbd> + <kbd>C</kbd>)
-- logický operátor OR - alespoň jeden musí být pravdivý
-  - `$a or $b`
-  - `$a || $b` (<kbd>AltGr</kbd> + <kbd>W</kbd>)
-- `$a ?? $b` - null koalesční operátor - musí být stejný datový typ. Pokud je `$a` null, vrátí `$b`
-- `$a ?: $b` - ternární operátor - pokud je `$a` pravda, vrátí `$a`, jinak `$b`
-- `$a xor $b` - logický operátor XOR - jeden z nich musí být pravdivý, ale ne oba
-
----
-
-## Operátory rovnosti
-
-**Pozor na datové typy!**
-- `0 === 0` je pravda
-- `000 === 0` je nepravdivý
-- `foo == 0` je pravda
-- `000 == 0` je pravda
-- `"0" == 0` je pravda
-
-- Chcete-li zkontrolovat, zda jsou dva skaláry, které mají být číselné, stejné, použijte `==`, např. `5 == "5"` je pravda.
-- Chcete-li zkontrolovat, zda jsou dvě proměnné typu „řetězec“ a jsou stejné posloupnosti znaků, použijte `===`, například `1.e6" === "1.0e6` je nepravda.
-
----
-
-# Příklad
+- `!$a` - negace, pravda, pokud `$a` není pravdivé
+- `$a && $b` (<kbd>AltGr</kbd> + <kbd>C</kbd>) - AND, pravda, pokud jsou pravdivé oba
+- `$a || $b` (<kbd>AltGr</kbd> + <kbd>W</kbd>) - OR, pravda, pokud je pravdivý aspoň jeden
+- `$a xor $b` - pravda, pokud je pravdivý právě jeden
+- `$a and $b`, `$a or $b` - totéž co `&&` a `||`, ale s **nižší prioritou než `=`**. Nepoužíváme.
 
 ```php
-if ($var == "abc" || $var == "def" || ...)
-{
-  	// Alespoň jedna podmínka musí být true 
-    echo "true";
+$x = true and false;    // vyhodnotí se jako ($x = true) and false
+var_dump($x);           // bool(true)
+```
+
+Operátory pro výchozí hodnotu:
+
+- `$a ?? $b` - vrátí `$a`, pokud existuje a není `null`, jinak `$b`. Chybějící klíč pole nevyvolá varování.
+- `$a ?: $b` - zkrácený ternární operátor, vrátí `$a`, pokud je pravdivé, jinak `$b`.
+
+```php
+$jmeno = $_GET['jmeno'] ?? 'host';    // parametr chybí → 'host'
+$popis = $text ?: 'bez popisu';       // '' nebo '0' → 'bez popisu'
+```
+
+---
+
+# Pozor na `==`
+
+`==` před porovnáním převádí typy. Výsledek není vždy intuitivní (platí pro PHP 8).
+
+| Výraz | Výsledek |
+|---|---|
+| `5 == "5"` | `true` |
+| `"1" == "01"` | `true` (oba řetězce jsou čísla) |
+| `100 == "1e2"` | `true` |
+| `"abc" == 0` | `false` (v PHP 7 bylo `true`) |
+| `null == false` | `true` |
+| `"0" == false` | `true` |
+| `"" == null` | `true` |
+| `5 === "5"` | `false` |
+
+- Výchozí volba je `===`. `==` používáme vědomě, když chceme porovnat čísla bez ohledu na typ.
+
+---
+
+# Skládání podmínek
+
+```php
+$role = 'admin';
+
+if ($role === 'admin' || $role === 'editor') {
+    // stačí, aby platila alespoň jedna podmínka
+    echo 'Může upravovat obsah.';
 }
 ```
 
 ```php
-if ($var1 == "abc" && $var2 == "def" && ...)
-{
-  	// Všechny podmínky musí být vyhodnoceny jako true 
-    echo "true";
+$vek = 17;
+$souhlasRodicu = true;
+
+if ($vek >= 15 && $souhlasRodicu) {
+    // musí platit všechny podmínky
+    echo 'Může se registrovat.';
+}
+```
+
+- Delší výčet hodnot jde zapsat přes `in_array()`:
+
+```php
+if (in_array($role, ['admin', 'editor'], true)) {     // true = porovnání přes ===
+    echo 'Může upravovat obsah.';
 }
 ```
 
@@ -164,77 +189,134 @@ if ($var1 == "abc" && $var2 == "def" && ...)
 
 # Větvení podmínek `else`, `elseif`
 
-
 ```php
 if (podmínka) {
-  // příkazy
-} elseif (podmínka) {
-  // příkazy
+    // příkazy
+} elseif (jinaPodmínka) {
+    // příkazy
 } else {
-  // příkazy
+    // příkazy
 }
 ```
 
 ```php
 if ($cislo > 0) {
-  	echo $cislo . ' je kladné';
-  
+    echo $cislo . ' je kladné';
 } elseif ($cislo < 0) {
-  	// Vykoná se, pokud první podmínka je vyhodnocena jako false
-    // a je splněna definovaná podmínka
-	echo $cislo . 'je záporné';
-
+    // provede se, pokud první podmínka neplatí a platí tato
+    echo $cislo . ' je záporné';
 } else {
-	// Vykoná se, pokud není splněna žádná podmínka  
-	echo $cislo .'je nula';
-
+    // provede se, pokud neplatí žádná z podmínek
+    echo $cislo . ' je nula';
 }
 ```
+
+- Podmínky se vyhodnocují shora dolů a provede se **jen první** splněná větev.
+
+---
+
+# Co vypíše? - pořadí podmínek
+
+```php
+$body = 92;
+
+if ($body >= 50) {
+    echo 'Dostatečně';
+} elseif ($body >= 70) {
+    echo 'Dobře';
+} elseif ($body >= 90) {
+    echo 'Výborně';
+}
+```
+
+<v-click>
+
+```
+Dostatečně
+```
+
+První splněná podmínka ukončí celé větvení. Podmínky musí jít od nejpřísnější: nejdřív `>= 90`, pak `>= 70`, nakonec `>= 50`.
+
+</v-click>
 
 ---
 
 # `switch`
 
-- `switch` je alternativou k `if` a `elseif`
-- Používá se, pokud chceme porovnávat hodnoty, nikoliv podmínky
-- `switch` porovnává hodnotu proměnné s hodnotami v `case`
-- `break` ukončí `switch` blok
-- `default` je volitelný blok, který se vykoná, pokud žádný `case` nebyl splněn
+- Porovná jednu hodnotu s výčtem možností v `case`.
+- `break` ukončí `switch`. **Bez `break` pokračuje provádění do dalšího `case`.**
+- `default` je volitelný blok, provede se, pokud nesedí žádný `case`.
+- Porovnává přes `==`, tedy s převodem typů.
 
 ```php
-switch ($vstupniHodnota) {
-  case hodnota1:
-    // příkazy, pokud je splněna hodnota1
-    break;
-  case hodnota2:
-    // příkazy, pokud je splněna hodnota2
-    break;
-  default:
-    // příkazy, pokud nebyla splněna žádná hodnota
+$den = 'pondělí';
+
+switch ($den) {
+    case 'sobota':
+    case 'neděle':
+        echo 'Víkend.';         // společná větev pro dva případy
+        break;
+    case 'pondělí':
+        echo 'Začíná týden.';
+        break;
+    default:
+        echo 'Běžný pracovní den.';
 }
 ```
 
 ---
 
-# switch
+# Co vypíše? - zapomenutý `break`
 
 ```php
-$den = "pondělí";
+$znamka = 2;
 
-switch ($den) {
-    case "pondělí":
-        echo "Dnes je pondělí.";
-        break;
-    case "úterý":
-        echo "Dnes je úterý.";
-        break;
-    case "středa":
-        echo "Dnes je středa.";
+switch ($znamka) {
+    case 1:
+        echo 'Výborně ';
+    case 2:
+        echo 'Chvalitebně ';
+    case 3:
+        echo 'Dobře ';
         break;
     default:
-        echo "Dnes nevím, který den je.";
+        echo 'Jiná známka';
 }
 ```
+
+<v-click>
+
+```
+Chvalitebně Dobře
+```
+
+Bez `break` se po nalezeném `case` provádí i následující větve až do nejbližšího `break`.
+
+</v-click>
+
+---
+
+# `match` <span class="text-sm opacity-60">PHP 8</span>
+
+- Výraz, který **vrací hodnotu** podle porovnávané hodnoty.
+- Porovnává přes `===`, nepotřebuje `break`, nepropadá do dalších větví.
+- Pokud nesedí žádná větev a chybí `default`, vyhodí chybu `UnhandledMatchError`.
+
+```php
+$znamka = 2;
+
+$slovne = match ($znamka) {
+    1 => 'Výborně',
+    2 => 'Chvalitebně',
+    3 => 'Dobře',
+    4, 5 => 'Slabý výsledek',       // více hodnot v jedné větvi
+    default => 'Neplatná známka',
+};
+
+echo $slovne;       // Chvalitebně
+```
+
+- Pro přiřazení hodnoty podle výčtu je `match` přehlednější než `switch`.
 
 ---
 layout: cover
@@ -247,15 +329,25 @@ background: https://cover.sli.dev
 
 # Cyklus `for`
 
-- `for` cyklus se skládá ze tří částí
-  - inicializace proměnné
-  - podmínka
-  - iterace
+- Používá se, když předem známe počet opakování.
+- Hlavička má tři části oddělené středníkem:
+  - inicializace čítače (provede se jednou na začátku)
+  - podmínka (testuje se před každým průchodem)
+  - změna čítače (provede se po každém průchodu)
 
 ```php
-// for (inicializace čítače; testovací čítač; inkrement čítače)
-for ($i = 0; $i < 10; $i++) {
-  // příkazy
+// for (inicializace; podmínka; změna čítače)
+for ($i = 1; $i <= 5; $i++) {
+    echo $i . ' ';
+}
+// Výstup: 1 2 3 4 5
+```
+
+```php
+$barvy = ['red', 'green', 'blue'];
+
+for ($i = 0; $i < count($barvy); $i++) {     // indexy pole začínají od 0
+    echo $barvy[$i] . '<br>';
 }
 ```
 
@@ -263,51 +355,62 @@ for ($i = 0; $i < 10; $i++) {
 
 # Cyklus `foreach`
 
-- Smyčka bloku kódu pro každý prvek pole
-- Umožňuje iterovat přes pole a získávat pouze hodnoty prvků v poli.
-- foreach postupně projde všechny prvky v poli `$colors` a při každé iteraci bude proměnná `$value` obsahovat hodnotu aktuálního prvku v poli.
+- Projde postupně všechny prvky pole. Počet opakování určuje velikost pole.
+- V každém průchodu obsahuje proměnná `$hodnota` aktuální prvek.
 
 ```php
 foreach ($pole as $hodnota) {
-  // příkazy
+    // příkazy
 }
 ```
 
 ```php
-$colors = array("red", "green", "blue", "yellow");
+$barvy = ['red', 'green', 'blue', 'yellow'];
 
-foreach ($colors as $value) {
-    echo $value .'<br />';
+foreach ($barvy as $barva) {
+    echo $barva . '<br>';
 }
 ```
+
+- Pro procházení pole je `foreach` přehlednější než `for`, nepotřebuje čítač ani `count()`.
 
 ---
 
 # Cyklus `foreach` s klíčem
 
-- `as $key => $value` - pokud chceme získat klíč a hodnotu
+- `as $klic => $hodnota` - získáme klíč i hodnotu.
+- Hodí se hlavně pro asociativní pole.
 
 ```php
-$colors = array("red", "green", "blue", "yellow");
+$osoba = [
+    'jmeno' => 'Jan',
+    'prijmeni' => 'Novák',
+    'vek' => 17,
+];
 
-foreach ($colors as $key => $value) {
-  echo 'Klíč: ' . $key . ', Hodnota: ' . $value . '<br />';
+foreach ($osoba as $klic => $hodnota) {
+    echo $klic . ': ' . $hodnota . '<br>';
 }
+```
 
+```
+jmeno: Jan
+prijmeni: Novák
+vek: 17
 ```
 
 ---
 
 # Cyklus `while`
 
-- `while` cyklus se skládá z podmínky, která se vyhodnocuje před každou iterací
-- Pokud je podmínka vyhodnocena jako `true`, cyklus se opakuje
-- Pokud je podmínka vyhodnocena jako `false`, cyklus se ukončí
-- Pozor na zacyklení!
+- Podmínka se vyhodnocuje **před** každým průchodem.
+- Je-li `true`, cyklus se opakuje. Je-li `false`, cyklus skončí.
+- Používá se, když předem neznáme počet opakování.
+- Pozor na zacyklení: uvnitř se musí měnit něco, na čem podmínka závisí.
 
 ```php
 while (podmínka) {
-  // příkazy
+    // příkazy
 }
 ```
 
@@ -315,62 +418,82 @@ while (podmínka) {
 $i = 1;
 
 while ($i <= 10) {
-	echo $i . '<br />';
-  	$i++;
+    echo $i . '<br>';
+    $i++;           // bez této změny by cyklus nikdy neskončil
 }
-
 ```
 
 ---
 
 # Cyklus `do...while`
 
-- `do...while` cyklus se skládá z podmínky, která se vyhodnocuje po každé iteraci
-- Cyklus se vykoná alespoň jednou, i když je podmínka `false`
+- Podmínka se vyhodnocuje **po** každém průchodu.
+- Tělo cyklu se provede alespoň jednou, i když podmínka neplatí.
 
 ```php
 do {
-  // příkazy
+    // příkazy
 } while (podmínka);
 ```
 
 ```php
 $i = 20;
+
 do {
-    echo $i . '<br />';
-  	$i++;
+    echo $i . '<br>';
+    $i++;
 } while ($i <= 10);
 
-// Výstup: 20, ikdyž podmínka je false
-
+// Výstup: 20, i když podmínka neplatí už na začátku
 ```
 
 ---
-layout: cover
-background: https://cover.sli.dev
-hideInToc: true
----
 
-# Strict types
+# `break` a `continue`
 
----
-
-# Strict Types
-
-- PHP je volně typovaný jazyk
-- Přiřazení hodnoty do proměnné nevyžaduje deklaraci datového typu
-- Při volání funkcí se datové typy nepřísně kontrolují
-- Může to vést k neočekávanému chování a chybám
-- Pro eliminaci těchto problémů používáme přísné typování za využití `declare(strict_types=1);`
+- `break` - okamžitě ukončí celý cyklus.
+- `continue` - přeskočí zbytek aktuálního průchodu a pokračuje dalším.
 
 ```php
-// zapnutí vyžadování dodržování kontroly datových typů
-// standardně se uvádí hned za <?php
-// vždy na začátku každého souboru
-declare(strict_types=1);
+$cisla = [4, 8, -1, 15, 16];
+
+foreach ($cisla as $cislo) {
+    if ($cislo < 0) {
+        continue;       // záporná čísla přeskočíme
+    }
+    if ($cislo > 10) {
+        break;          // první číslo větší než 10 ukončí cyklus
+    }
+    echo $cislo . ' ';
+}
+// Výstup: 4 8
 ```
 
-> **Od nynějška povinně používáme.**
+---
+
+# Co vypíše? - `break` a `continue`
+
+```php
+for ($i = 1; $i <= 10; $i++) {
+    if ($i % 2 === 0) {
+        continue;
+    }
+    if ($i > 7) {
+        break;
+    }
+    echo $i . ' ';
+}
+```
+
+<v-click>
+
+```
+1 3 5 7
+```
+
+Sudá čísla přeskočí `continue`. Číslo 9 je první liché větší než 7, proto `break` cyklus ukončí.
+
+</v-click>
 
 ---
 layout: cover
@@ -381,35 +504,33 @@ background: https://cover.sli.dev
 
 ---
 
-# Funkce vs Procedura
+# Funkce
 
-- Funkce je blok kódu, který můžeme znovu použít
-- může přijímat parametry a vrací hodnotu
-- Procedura je blok kódu, který může být znovu použit, ale nevrací hodnotu
+- Funkce je pojmenovaný blok kódu, který lze opakovaně volat.
+- Může přijímat parametry a vracet hodnotu.
+- Funkce, která nic nevrací, má návratový typ `void` (v jiných jazycích se jí říká procedura).
 
-## Interní funkce
+## Vestavěné funkce
 
-- PHP má více než 1000 vestavěných funkcí a navíc si můžete vytvořit vlastní funkce.
-- Kompletní přehled funkcí je uveden na php.net
-- Každou funkci lze volat přímo ze skriptu a provést specifickou úlohu.
- 
+- PHP obsahuje přes 1000 vestavěných funkcí, např. `strlen()`, `count()`, `in_array()`, `round()`.
+- Přehled a dokumentace jsou na [php.net](https://www.php.net/manual/en/funcref.php).
+
 ---
 
 # Uživatelsky definované funkce
 
-- Funkce můžete definovat pomocí klíčového slova `function`
-- Nesputí se, dokud nejsou zavolány tzn. nejsou spouštěny automaticky ani při načtení stránky
-- Název funkce musí začínat písmenem nebo podtržítkem, na velikosti písmen nezáleží
-- Návratová hodnota přes `return`
-- Datový typ návratové hodnoty je uveden za dvojtečkou
-- Pokud očekáváme že fce může vracet i `null`, musíme to uvést pomocí `?datovyTyp` nebo `datovyTyp|null`
+- Definují se klíčovým slovem `function`.
+- Nespustí se, dokud je nezavoláme.
+- Název začíná písmenem nebo podtržítkem, píšeme ho v camelCase.
+- Hodnotu vrací příkaz `return`, který zároveň funkci ukončí.
+- Datový typ návratové hodnoty je za dvojtečkou.
+- Může-li funkce vrátit i `null`, zapíše se typ jako `?string` nebo `string|null`.
 
 ```php
-function nazevFunkce(): datovyTypVystupu {
-  // příkazy
-  
-  // návratová hodnota
-  return $vysledek;
+function nazevFunkce(): datovyTyp {
+    // příkazy
+
+    return $vysledek;
 }
 ```
 
@@ -417,56 +538,107 @@ function nazevFunkce(): datovyTypVystupu {
 
 # Volání funkce
 
-- Funkci zavoláme pomocí jejího názvu a závorek
-- Pokud funkce přijímá parametry, musíme je uvést v závorkách
+- Funkci zavoláme jejím názvem a kulatými závorkami.
+- Parametry se uvádějí do závorek.
 
 ```php
 nazevFunkce();
 ```
 
-Ukázka
 ```php
 function pozdrav(): string {
-  return "Ahoj!";
+    return 'Ahoj!';
 }
 
-echo pozdrav();
+echo pozdrav();     // Ahoj!
+```
+
+```php
+function vypisOddelovac(): void {
+    echo '<hr>';    // nic nevrací, jen vypisuje
+}
+
+vypisOddelovac();
 ```
 
 ---
 
-# Volání funkce s parametry
+# Parametry funkce
 
-- Parametry jsou hodnoty, které funkce přijímá a jsou nutné pro vykonání funkce
-- jsou uvedeny v závorkách a odděleny čárkou ve tvaru `datovyTyp parametr1, datovyTyp parametr2, ...`
-- Mají pouze lokální platnost
-- Můžeme nastavit výchozí hodnotu parametru přiřazení hodnoty za `=`
+- Parametry se uvádějí v závorkách, oddělené čárkou: `datovyTyp $nazev`.
+- Uvnitř funkce se chovají jako lokální proměnné.
+- Výchozí hodnota se zapíše za `=`. Parametr s výchozí hodnotou je nepovinný a patří na konec.
+- Výchozí hodnota `null` vyžaduje typ, který `null` připouští (`?int`).
 
 ```php
-function nazevFunkce(string $parametr1, int $parametr2 = null): string {
-  // příkazy
+function nazevFunkce(string $povinny, ?int $nepovinny = null): string {
+    // příkazy
 }
 ```
+
+---
+
+# Rozsah platnosti proměnných
+
+- Funkce **nevidí** proměnné definované mimo ni. Vše potřebné jí předáme parametrem.
+- Proměnné vytvořené ve funkci po jejím skončení zaniknou.
+
+```php
+$sazbaDph = 21;
+
+function cenaSDph(float $cena): float {
+    return $cena * (1 + $sazbaDph / 100);   // Warning: Undefined variable $sazbaDph
+}
+```
+
+```php
+function cenaSDph(float $cena, int $sazbaDph): float {
+    return $cena * (1 + $sazbaDph / 100);
+}
+
+echo cenaSDph(100, 21);     // 121
+```
+
+---
+
+# Strict types
+
+- PHP je dynamicky typovaný jazyk. Bez nastavení převádí hodnoty parametrů na požadovaný typ: `"5"` předané do `int` se změní na `5`.
+- Tichý převod může skrýt chybu.
+- `declare(strict_types=1);` převod zakáže. Hodnota jiného typu vyvolá chybu `TypeError`.
+- Musí být **prvním příkazem** souboru, hned za `<?php`, a platí jen pro daný soubor.
+
+```php
+<?php
+declare(strict_types=1);
+
+function dvojnasobek(int $cislo): int {
+    return $cislo * 2;
+}
+
+echo dvojnasobek(5);       // 10
+echo dvojnasobek('5');     // TypeError, bez strict_types by vrátilo 10
+```
+
+> **Od nynějška povinně používáme.**
 
 ---
 
 # Příklad
 
 ```php
+<?php
 declare(strict_types=1);
 
-function writeMessage(string $name, string $msg = "nic nenapsal"): string {
-  $output = $name . ' napsal: ' . $msg;
-  return $output;
+function napisZpravu(string $jmeno, string $zprava = 'nic nenapsal'): string {
+    return $jmeno . ' napsal: ' . $zprava;
 }
 ```
 
 ```php
-// volání funkce
-echo writeMessage('Honza', 'První zpráva');             # Honza napsal: První zpráva
-echo writeMessage('David', 'Druhá zpráva');             # David napsal: Druhá zpráva
-echo writeMessage('Ilona', 'Jiná zpráva do výstupu');   # Ilona napsal: Jiná zpráva do výstupu
-echo writeMessage('Petr');                              # Petr napsal: nic nenapsal
+echo napisZpravu('Honza', 'První zpráva');      // Honza napsal: První zpráva
+echo napisZpravu('Ilona', 'Jiná zpráva');       // Ilona napsal: Jiná zpráva
+echo napisZpravu('Petr');                       // Petr napsal: nic nenapsal
 ```
 
 ---
@@ -476,43 +648,45 @@ layout: two-cols-header
 # Rekurze
 
 - Rekurze je technika, kdy funkce volá sama sebe.
-- Používá se pro řešení problémů, které lze rozdělit na menší podobné podproblémy.
-- Každé volání funkce má svůj vlastní kontext a proměnné.
-- Musí obsahovat podmínku pro ukončení rekurze, aby nedošlo k nekonečnému volání.
+- Hodí se pro problémy, které lze rozdělit na menší podobné podproblémy.
+- Každé volání má vlastní parametry a proměnné.
+- Musí obsahovat podmínku ukončení, jinak se volá donekonečna.
 
 ::left::
 ```php
 function rekurzivniFunkce($parametr) {
-    if (podmínkaProUkončení) {
-        return;
-    } else {
-        // příkazy
-        rekurzivniFunkce(novýParametr);
+    if (podmínkaUkončení) {
+        return vysledek;
     }
+
+    // příkazy
+    return rekurzivniFunkce(novýParametr);
 }
 ```
 ::right::
 ```php
-function factorial(int $n): int {
+function faktorial(int $n): int {
     if ($n <= 1) {
         return 1;
-    } else {
-        return $n * factorial($n - 1);
     }
+
+    return $n * faktorial($n - 1);
 }
-echo factorial(5); // Výstup: 120
+
+echo faktorial(5);  // 120
 ```
 
 ---
 
 # Shrnutí
 
-- Řídící struktury umožňují řídit tok programu na základě podmínek a opakování
-- Podmínky (`if`, `elseif`, `else`, `switch`) umožňují vykonávat různé části kódu na základě splnění určitých podmínek
-- Cykly (`for`, `foreach`, `while`, `do...while`) umožňují opakovaně vykonávat blok kódu, dokud je splněna určitá podmínka
-- Funkce umožňují organizovat kód do samostatných bloků, které lze znovu použít a volat s různými parametry
-- Přísné typování (`declare(strict_types=1);`) pomáhá předcházet chybám tím, že vyžaduje dodržování datových typů při volání funkcí
-- Správné používání řídících struktur a funkcí vede k lepší čitelnosti, údržbě a efektivitě kódu.
+- Řídicí struktury určují tok programu: co se provede a kolikrát.
+- Podmínky: `if`, `elseif`, `else`. Provede se jen první splněná větev.
+- `switch` porovnává přes `==` a potřebuje `break`. `match` porovnává přes `===` a vrací hodnotu.
+- Pro porovnání volíme `===`, `==` jen vědomě.
+- Cykly: `for` (známý počet), `foreach` (pole), `while` a `do...while` (neznámý počet). `break` cyklus ukončí, `continue` přeskočí průchod.
+- Funkce: typované parametry a návratová hodnota. Vnější proměnné nevidí, data dostávají parametrem.
+- `declare(strict_types=1);` na začátku každého souboru.
 
 ---
 src: '../../pages/thanku.md'
