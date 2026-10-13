@@ -187,6 +187,51 @@ if (in_array($role, ['admin', 'editor'], true)) {     // true = porovnání pře
 
 ---
 
+# Dlouhé podmínky
+
+- Delší podmínku rozdělíme na více řádků: **co podmínka, to řádek**.
+- Logický operátor patří na začátek řádku. Je hned vidět, jak se podmínky spojují.
+- Kombinaci `&&` a `||` vždy uzávorkujeme. `&&` má vyšší prioritu než `||`, závorky to dávají najevo.
+
+```php
+if (
+    $vek >= 15
+    && $souhlasRodicu
+    && $email !== ''
+    && !$jeZablokovany
+) {
+    echo 'Může se registrovat.';
+}
+```
+
+```php
+if (
+    $role === 'admin'
+    || ($role === 'editor' && $jeAutorem)
+) {
+    echo 'Může článek upravit.';
+}
+```
+
+---
+
+# Pojmenované podmínky
+
+- Část podmínky lze uložit do proměnné s výstižným názvem.
+- Podmínka se pak čte jako věta a jednotlivé části jde vypsat při ladění.
+
+```php
+$jePlnolety = $vek >= 18;
+$maSouhlas = $jePlnolety || $souhlasRodicu;
+$maVyplnenyEmail = $email !== '';
+
+if ($maSouhlas && $maVyplnenyEmail && !$jeZablokovany) {
+    echo 'Může se registrovat.';
+}
+```
+
+---
+
 # Větvení podmínek `else`, `elseif`
 
 ```php
