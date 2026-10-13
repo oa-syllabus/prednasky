@@ -623,11 +623,12 @@ echo pozdrav();     // Ahoj!
 ```
 
 ```php
-function vypisOddelovac(): void {
-    echo '<hr>';    // nic nevrací, jen vypisuje
+function celeJmeno(string $jmeno, string $prijmeni): string {
+    return $jmeno . ' ' . $prijmeni;
 }
 
-vypisOddelovac();
+echo celeJmeno('Jan', 'Novák');                 // výsledek vypíšeme
+$autor = celeJmeno('Eva', 'Malá');              // nebo uložíme a použijeme dál
 ```
 
 ---
@@ -714,6 +715,98 @@ echo napisZpravu('Petr');                       // Petr napsal: nic nenapsal
 layout: two-cols-header
 ---
 
+# Antipattern: výpis místo `return`
+
+- Funkce má hodnotu **vrátit**. O tom, co se s ní stane (vypsat, uložit, porovnat), rozhodne volající kód.
+- Funkce s `echo` jde použít jen k jedné věci: k výpisu na místě, kde je zavolána.
+
+::left::
+
+**Špatně**
+
+```php
+function cenaSDph(float $cena): void {
+    echo $cena * 1.21;
+}
+
+cenaSDph(100);      // 121
+
+$celkem = cenaSDph(100) + cenaSDph(50);
+// vypíše 12160.5 (121 a 60.5 za sebou)
+// $celkem je 0, funkce nic nevrátila
+```
+
+::right::
+
+**Správně**
+
+```php
+function cenaSDph(float $cena): float {
+    return $cena * 1.21;
+}
+
+echo cenaSDph(100);                        // 121
+$celkem = cenaSDph(100) + cenaSDph(50);    // 181.5
+if (cenaSDph(100) > 120) { /* ... */ }
+```
+
+---
+layout: two-cols-header
+---
+
+# Antipattern: `global` místo parametru
+
+- `global` zpřístupní funkci vnější proměnnou. Funkce pak závisí na tom, co je nastavené jinde v souboru.
+- Kdo funkci volá, z hlavičky nepozná, co potřebuje. Změna vnější proměnné nečekaně změní výsledek.
+
+::left::
+
+**Špatně**
+
+```php
+$sazbaDph = 21;
+
+function cenaSDph(float $cena): float {
+    global $sazbaDph;
+    return $cena * (1 + $sazbaDph / 100);
+}
+
+echo cenaSDph(100);
+```
+
+::right::
+
+**Správně**
+
+```php
+$sazbaDph = 21;
+
+function cenaSDph(float $cena, int $sazbaDph): float {
+    return $cena * (1 + $sazbaDph / 100);
+}
+
+echo cenaSDph(100, $sazbaDph);
+```
+
+---
+
+# Další antipatterny ve funkcích
+
+| Antipattern | Proč vadí | Jak lépe |
+|---|---|---|
+| Funkce dělá víc věcí naráz (ověří, uloží, vypíše) | nejde použít jen část, těžko se hledá chyba | jedna funkce = jedna úloha |
+| Chybí typy parametrů a návratové hodnoty | chybný vstup projde bez varování | typy všude + `strict_types` |
+| Nevýstižný název (`f1`, `zpracuj`, `data`) | z volání nepoznáme, co funkce dělá | sloveso + předmět: `spocitejCenu`, `jeEmailPlatny` |
+| Hodně parametrů (5 a víc) | snadno se zamění pořadí | předat asociativní pole nebo funkci rozdělit |
+| Parametr `bool`, který mění chování (`vypis($data, true)`) | z volání nepoznáme, co `true` znamená | dvě funkce s výstižnými názvy |
+| Kopírovaný kód místo funkce | oprava se musí dělat na více místech | opakovaný kód přesunout do funkce |
+
+- Výjimka: funkce, jejímž úkolem je jen vykreslit kus HTML, s `echo` existovat může. Výpočet ale do ní nepatří.
+
+---
+layout: two-cols-header
+---
+
 # Rekurze
 
 - Rekurze je technika, kdy funkce volá sama sebe.
@@ -755,6 +848,7 @@ echo faktorial(5);  // 120
 - Pro porovnání volíme `===`, `==` jen vědomě.
 - Cykly: `for` (známý počet), `foreach` (pole), `while` a `do...while` (neznámý počet). `break` cyklus ukončí, `continue` přeskočí průchod.
 - Funkce: typované parametry a návratová hodnota. Vnější proměnné nevidí, data dostávají parametrem.
+- Funkce výsledek vrací přes `return`, nevypisuje ho. Jedna funkce = jedna úloha.
 - `declare(strict_types=1);` na začátku každého souboru.
 
 ---
