@@ -88,6 +88,8 @@ Atributy elementu `<form>`:
 | `<select>` + `<option>` | rozbalovací seznam |
 | `<textarea>` | víceřádkový text |
 | `<input type="hidden">` | skrytá hodnota |
+| `<input type="submit">` | tlačítko, které formulář odešle (text určuje `value`) |
+| `<button type="submit">` | totéž, ale uvnitř může být HTML (ikona, formátovaný text) |
 
 ---
 
