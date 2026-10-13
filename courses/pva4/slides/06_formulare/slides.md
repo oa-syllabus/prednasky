@@ -343,6 +343,25 @@ if ($errors === []) {
 
 ---
 
+# Načtení vstupu přes `filter_input()`
+
+- Čte přímo z `INPUT_GET` / `INPUT_POST` a rovnou hodnotu validuje nebo čistí.
+- Chybějící klíč nevyvolá varování, vrátí `null`. Neprojde-li filtr, vrátí `false`.
+
+```php
+$email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+$age   = filter_input(INPUT_POST, 'age', FILTER_VALIDATE_INT,
+    ['options' => ['min_range' => 1, 'max_range' => 120]]);
+
+if ($email === null || $email === false) {
+    $errors[] = 'E-mail chybí nebo nemá správný formát.';
+}
+```
+
+- `filter_input()` kontroluje typ a formát, ale **neošetřuje výstup**. Do HTML se hodnota dál vypisuje přes `htmlspecialchars()`.
+
+---
+
 # Po úspěšném odeslání: přesměrování
 
 - Po zpracování POST se nezobrazuje výsledek rovnou. Server odpoví **přesměrováním** (vzor Post/Redirect/Get).
@@ -354,6 +373,57 @@ if ($errors === []) {
     // ... uložení dat ...
     header('Location: dekujeme.php');
     exit;
+}
+```
+
+---
+
+# Nahrání souboru
+
+- Formulář musí mít `method="post"` a `enctype="multipart/form-data"`.
+- Soubor není v `$_POST`, ale v poli `$_FILES`.
+
+```html
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="avatar" accept="image/*">
+    <button type="submit">Nahrát</button>
+</form>
+```
+
+```php
+$file = $_FILES['avatar'] ?? null;
+
+if ($file && $file['error'] === UPLOAD_ERR_OK) {
+    // $file['name'] pochází od uživatele, nedůvěřovat mu, název vygenerovat
+    $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+    move_uploaded_file($file['tmp_name'], __DIR__ . '/uploads/' . uniqid() . '.' . $ext);
+}
+```
+
+- Vždy kontrolovat `error`, velikost a skutečný typ souboru, ne jen příponu (omezení: `upload_max_filesize`).
+
+---
+
+# Ochrana proti CSRF
+
+- CSRF: cizí stránka přiměje prohlížeč přihlášeného uživatele odeslat POST na naši aplikaci.
+- Obrana: formulář obsahuje náhodný **token** uložený i v session. Server ověří, že se shodují.
+- Session se probírá později, zde jde o princip.
+
+```php
+session_start();
+$_SESSION['token'] ??= bin2hex(random_bytes(32));   // vygenerování tokenu
+```
+
+```html
+<input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+```
+
+```php
+$sent = $_POST['token'] ?? '';
+if (!hash_equals($_SESSION['token'], $sent)) {
+    http_response_code(403);
+    exit('Neplatný token.');
 }
 ```
 
