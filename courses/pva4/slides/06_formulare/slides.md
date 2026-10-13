@@ -55,7 +55,7 @@ layout: default
 
 Atributy elementu `<form>`:
 
-- `action` - cílová URL, kam se data odešlou (prázdný nebo vynechaný = stejná stránka).
+- `action` - cílová URL, kam se data odešlou. V příkladech ho vždy vyplňujeme.
 - `method` - metoda odeslání, `get` (výchozí) nebo `post`.
 
 ```html
@@ -94,7 +94,7 @@ Atributy elementu `<form>`:
 # Prvky formuláře - příklad
 
 ```html
-<form method="post">
+<form action="destUrl.php" method="post">
     <input type="text" name="name" required>
 
     <select name="country">
@@ -384,7 +384,7 @@ if ($errors === []) {
 - Soubor není v `$_POST`, ale v poli `$_FILES`.
 
 ```html
-<form method="post" enctype="multipart/form-data">
+<form action="upload.php" method="post" enctype="multipart/form-data">
     <input type="file" name="avatar" accept="image/*">
     <button type="submit">Nahrát</button>
 </form>
