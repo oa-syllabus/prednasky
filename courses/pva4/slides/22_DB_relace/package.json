@@ -1,5 +1,5 @@
 {
-  "name": "23_DB_relace",
+  "name": "22_DB_relace",
   "title": "DB Relace",
   "section": "Databáze",
   "author": { "name": "Adam Fišer" },
@@ -9,6 +9,6 @@
   "scripts": {
     "dev": "slidev",
     "build": "slidev build",
-    "export": "slidev export --output ../23_DB_relace.pdf"
+    "export": "slidev export --output ../22_DB_relace.pdf"
   }
 }

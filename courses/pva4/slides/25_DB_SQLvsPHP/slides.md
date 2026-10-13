@@ -28,7 +28,7 @@ export:
 #== Slide Info
 src: '../../pages/index.md'
 title: "Databáze SQL vs PHP"
-exportFilename: "21_DB_SQLvsPHP"
+exportFilename: "25_DB_SQLvsPHP"
 titleTemplate: "PVA4 %s by Adam Fišer"
 info: |
   ## PVA4 Programování a vývoj aplikací

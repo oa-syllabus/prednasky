@@ -1,7 +1,7 @@
 {
-  "name": "09_auth",
-  "title": "Řízení bezpečnosti",
-  "section": "PHP",
+  "name": "21_DB_select",
+  "title": "DB select",
+  "section": "Databáze",
   "author": { "name": "Adam Fišer" },
   "type": "module",
   "version": "0.0.1",
@@ -9,6 +9,6 @@
   "scripts": {
     "dev": "slidev",
     "build": "slidev build",
-    "export": "slidev export --output ../09_auth.pdf"
+    "export": "slidev export --output ../21_DB_select.pdf"
   }
 }
