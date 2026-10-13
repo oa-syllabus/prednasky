@@ -647,28 +647,33 @@ function nazevFunkce(string $povinny, ?int $nepovinny = null): string {
 ```
 
 ---
+layout: two-cols-header
+---
 
 # Strict types
 
-- Bez nastavení PHP hodnotu parametru **potichu převede** na typ z hlavičky funkce. Chybný vstup tak projde bez upozornění.
-- `declare(strict_types=1);` převod zakáže. Hodnota jiného typu skončí chybou `TypeError`.
+- Bez nastavení PHP hodnotu parametru **potichu převede** na typ z hlavičky funkce.
+- `declare(strict_types=1);` převod zakáže, jiný typ skončí chybou `TypeError`.
+
+::left::
 
 ```php
 <?php
-declare(strict_types=1);        // první příkaz souboru
+declare(strict_types=1);
 
 function dvojnasobek(int $cislo): int {
     return $cislo * 2;
 }
 ```
 
-| Volání | Bez `strict_types` | Se `strict_types` |
+::right::
+
+| Volání | Bez | Se strict |
 |---|---|---|
 | `dvojnasobek(5)` | `10` | `10` |
 | `dvojnasobek('5')` | `10` | `TypeError` |
 | `dvojnasobek(true)` | `2` | `TypeError` |
-| `dvojnasobek(2.5)` | `4` + varování o ztrátě přesnosti | `TypeError` |
-| `dvojnasobek('abc')` | `TypeError` | `TypeError` |
+| `dvojnasobek(2.5)` | `4` + varování | `TypeError` |
 
 ---
 
