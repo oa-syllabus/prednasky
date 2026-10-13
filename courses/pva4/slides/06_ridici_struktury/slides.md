@@ -648,6 +648,54 @@ function nazevFunkce(string $povinny, ?int $nepovinny = null): string {
 
 ---
 
+# Strict types
+
+- Bez nastavení PHP hodnotu parametru **potichu převede** na typ z hlavičky funkce. Chybný vstup tak projde bez upozornění.
+- `declare(strict_types=1);` převod zakáže. Hodnota jiného typu skončí chybou `TypeError`.
+
+```php
+<?php
+declare(strict_types=1);        // první příkaz souboru
+
+function dvojnasobek(int $cislo): int {
+    return $cislo * 2;
+}
+```
+
+| Volání | Bez `strict_types` | Se `strict_types` |
+|---|---|---|
+| `dvojnasobek(5)` | `10` | `10` |
+| `dvojnasobek('5')` | `10` | `TypeError` |
+| `dvojnasobek(true)` | `2` | `TypeError` |
+| `dvojnasobek(2.5)` | `4` + varování o ztrátě přesnosti | `TypeError` |
+| `dvojnasobek('abc')` | `TypeError` | `TypeError` |
+
+---
+
+# Strict types v praxi
+
+- Uvádí se jako **první příkaz** souboru, hned za `<?php`.
+- Platí jen pro soubor, ve kterém je uvedeno. Proto ho píšeme na začátek **každého** souboru, i do souborů vkládaných přes `require`.
+- Jediný povolený převod: `int` lze předat do parametru typu `float` (`5` → `5.0`).
+- Hodnoty z formuláře (`$_POST`, `$_GET`) jsou **vždy řetězce**. Před předáním funkci je převedeme na správný typ.
+
+```php
+<?php
+declare(strict_types=1);
+
+function jePlnolety(int $vek): bool {
+    return $vek >= 18;
+}
+
+$vek = $_POST['vek'] ?? '0';       // např. '17', tedy string
+jePlnolety($vek);                  // TypeError
+jePlnolety((int) $vek);            // false
+```
+
+> **Od nynějška povinně používáme.**
+
+---
+
 # Rozsah platnosti proměnných
 
 - Funkce **nevidí** proměnné definované mimo ni. Vše potřebné jí předáme parametrem.
@@ -669,28 +717,6 @@ function cenaSDph(float $cena, int $sazbaDph): float {
 echo cenaSDph(100, 21);     // 121
 ```
 
----
-
-# Strict types
-
-- PHP je dynamicky typovaný jazyk. Bez nastavení převádí hodnoty parametrů na požadovaný typ: `"5"` předané do `int` se změní na `5`.
-- Tichý převod může skrýt chybu.
-- `declare(strict_types=1);` převod zakáže. Hodnota jiného typu vyvolá chybu `TypeError`.
-- Musí být **prvním příkazem** souboru, hned za `<?php`, a platí jen pro daný soubor.
-
-```php
-<?php
-declare(strict_types=1);
-
-function dvojnasobek(int $cislo): int {
-    return $cislo * 2;
-}
-
-echo dvojnasobek(5);       // 10
-echo dvojnasobek('5');     // TypeError, bez strict_types by vrátilo 10
-```
-
-> **Od nynějška povinně používáme.**
 
 ---
 
