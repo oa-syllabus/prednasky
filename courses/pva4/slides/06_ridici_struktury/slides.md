@@ -704,17 +704,17 @@ jePlnolety((int) $vek);            // false
 ```php
 $sazbaDph = 21;
 
-function cenaSDph(float $cena): float {
+function cenaVcetneDph(float $cena): float {
     return $cena * (1 + $sazbaDph / 100);   // Warning: Undefined variable $sazbaDph
 }
 ```
 
 ```php
-function cenaSDph(float $cena, int $sazbaDph): float {
+function cenaVcetneDph(float $cena, int $sazbaDph): float {
     return $cena * (1 + $sazbaDph / 100);
 }
 
-echo cenaSDph(100, 21);     // 121
+echo cenaVcetneDph(100, 21);     // 121
 ```
 
 
@@ -751,13 +751,13 @@ layout: two-cols-header
 **Špatně**
 
 ```php
-function cenaSDph(float $cena): void {
+function cenaVcetneDph(float $cena): void {
     echo $cena * 1.21;
 }
 
-cenaSDph(100);      // 121
+cenaVcetneDph(100);      // 121
 
-$celkem = cenaSDph(100) + cenaSDph(50);
+$celkem = cenaVcetneDph(100) + cenaVcetneDph(50);
 // vypíše 12160.5 (121 a 60.5 za sebou)
 // $celkem je 0, funkce nic nevrátila
 ```
@@ -767,13 +767,13 @@ $celkem = cenaSDph(100) + cenaSDph(50);
 **Správně**
 
 ```php
-function cenaSDph(float $cena): float {
+function cenaVcetneDph(float $cena): float {
     return $cena * 1.21;
 }
 
-echo cenaSDph(100);                        // 121
-$celkem = cenaSDph(100) + cenaSDph(50);    // 181.5
-if (cenaSDph(100) > 120) { /* ... */ }
+echo cenaVcetneDph(100);                        // 121
+$celkem = cenaVcetneDph(100) + cenaVcetneDph(50);    // 181.5
+if (cenaVcetneDph(100) > 120) { /* ... */ }
 ```
 
 ---
@@ -792,12 +792,12 @@ layout: two-cols-header
 ```php
 $sazbaDph = 21;
 
-function cenaSDph(float $cena): float {
+function cenaVcetneDph(float $cena): float {
     global $sazbaDph;
     return $cena * (1 + $sazbaDph / 100);
 }
 
-echo cenaSDph(100);
+echo cenaVcetneDph(100);
 ```
 
 ::right::
@@ -807,11 +807,11 @@ echo cenaSDph(100);
 ```php
 $sazbaDph = 21;
 
-function cenaSDph(float $cena, int $sazbaDph): float {
+function cenaVcetneDph(float $cena, int $sazbaDph): float {
     return $cena * (1 + $sazbaDph / 100);
 }
 
-echo cenaSDph(100, $sazbaDph);
+echo cenaVcetneDph(100, $sazbaDph);
 ```
 
 ---
