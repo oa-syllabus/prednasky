@@ -1,0 +1,14 @@
+{
+  "name": "10_email",
+  "title": "Email",
+  "section": "PHP",
+  "author": { "name": "Adam Fišer" },
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build",
+    "export": "slidev export --output ../10_email.pdf"
+  }
+}

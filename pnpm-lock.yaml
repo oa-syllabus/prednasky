@@ -111,15 +111,17 @@ importers:
 
   courses/pva4/slides/05_prikazy_include_require: {}
 
-  courses/pva4/slides/06_ridici_struktury: {}
+  courses/pva4/slides/06_podminky_cykly: {}
 
-  courses/pva4/slides/07_formulare: {}
+  courses/pva4/slides/07_funkce: {}
 
-  courses/pva4/slides/08_header: {}
+  courses/pva4/slides/08_formulare: {}
 
-  courses/pva4/slides/09_email: {}
+  courses/pva4/slides/09_header: {}
 
-  courses/pva4/slides/10_sessions: {}
+  courses/pva4/slides/10_email: {}
+
+  courses/pva4/slides/11_sessions: {}
 
   courses/pva4/slides/20_DB_nastaveni: {}
 

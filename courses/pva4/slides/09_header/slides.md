@@ -27,8 +27,8 @@ export:
 
 #== Slide Info
 src: '../../pages/index.md'
-title: "11 header"
-exportFilename: "08_header"
+title: "Header"
+exportFilename: "09_header"
 titleTemplate: "PVA4 %s by Adam Fišer"
 info: |
   ## PVA4 Programování a vývoj aplikací

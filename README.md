@@ -41,11 +41,12 @@
 | 02 | [Konstrukt 1 - Základy, proměnné, výstupy](https://oa-syllabus.github.io/prednasky/pva4/03_konstrukt1_zaklady_promenne_vystupy/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/03_konstrukt1_zaklady_promenne_vystupy/03_konstrukt1_zaklady_promenne_vystupy.pdf) |
 | 03 | [Konstrukt 2: Datové typy, proměnné, operátory](https://oa-syllabus.github.io/prednasky/pva4/04_konstrukt2_datovetypy_promenne_operator/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/04_konstrukt2_datovetypy_promenne_operator/04_konstrukt2_datovetypy_promenne_operator.pdf) |
 | 04 | [Příkazy include a require](https://oa-syllabus.github.io/prednasky/pva4/05_prikazy_include_require/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/05_prikazy_include_require/05_prikazy_include_require.pdf) |
-| 05 | [Řídící struktury](https://oa-syllabus.github.io/prednasky/pva4/06_ridici_struktury/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/06_ridici_struktury/06_ridici_struktury.pdf) |
-| 06 | [Formuláře](https://oa-syllabus.github.io/prednasky/pva4/07_formulare/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/07_formulare/07_formulare.pdf) |
-| 07 | [Header](https://oa-syllabus.github.io/prednasky/pva4/08_header/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/08_header/08_header.pdf) |
-| 08 | [Email](https://oa-syllabus.github.io/prednasky/pva4/09_email/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/09_email/09_email.pdf) |
-| 09 | [Sessions](https://oa-syllabus.github.io/prednasky/pva4/10_sessions/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/10_sessions/10_sessions.pdf) |
+| 05 | [Podmínky a cykly](https://oa-syllabus.github.io/prednasky/pva4/06_podminky_cykly/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/06_podminky_cykly/06_podminky_cykly.pdf) |
+| 06 | [Funkce](https://oa-syllabus.github.io/prednasky/pva4/07_funkce/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/07_funkce/07_funkce.pdf) |
+| 07 | [Formuláře](https://oa-syllabus.github.io/prednasky/pva4/08_formulare/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/08_formulare/08_formulare.pdf) |
+| 08 | [Header](https://oa-syllabus.github.io/prednasky/pva4/09_header/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/09_header/09_header.pdf) |
+| 09 | [Email](https://oa-syllabus.github.io/prednasky/pva4/10_email/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/10_email/10_email.pdf) |
+| 10 | [Sessions](https://oa-syllabus.github.io/prednasky/pva4/11_sessions/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/11_sessions/11_sessions.pdf) |
 
 ### Databáze
 
@@ -58,7 +59,12 @@
 | 05 | [DB Tabulky](https://oa-syllabus.github.io/prednasky/pva4/24_DB_tabulky/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/24_DB_tabulky/24_DB_tabulky.pdf) |
 | 06 | [SQL vs PHP](https://oa-syllabus.github.io/prednasky/pva4/25_DB_SQLvsPHP/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/25_DB_SQLvsPHP/25_DB_SQLvsPHP.pdf) |
 | 07 | [DB Insert](https://oa-syllabus.github.io/prednasky/pva4/26_DB_insert/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/26_DB_insert/26_DB_insert.pdf) |
-| 08 | [Řízení bezpečnosti](https://oa-syllabus.github.io/prednasky/pva4/30_auth/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/30_auth/30_auth.pdf) |
+
+### Aplikace
+
+| # | Přednáška | PDF |
+|---:|-----------|-----|
+| 01 | [Řízení bezpečnosti](https://oa-syllabus.github.io/prednasky/pva4/30_auth/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/30_auth/30_auth.pdf) |
 
 ### Nástroje
 
