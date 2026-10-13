@@ -1,6 +1,6 @@
 {
-  "name": "09_email",
-  "title": "Email",
+  "name": "09_header",
+  "title": "Header",
   "section": "PHP",
   "author": { "name": "Adam Fišer" },
   "type": "module",
@@ -9,6 +9,6 @@
   "scripts": {
     "dev": "slidev",
     "build": "slidev build",
-    "export": "slidev export --output ../09_email.pdf"
+    "export": "slidev export --output ../09_header.pdf"
   }
 }

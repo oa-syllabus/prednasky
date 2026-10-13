@@ -7,7 +7,7 @@
     {
       "id": "pva4",
       "title": "PVA4 | Programování a vývoj aplikací",
-      "sectionOrder": ["PHP", "Databáze", "Nástroje", "OOP"]
+      "sectionOrder": ["PHP", "Databáze", "Aplikace", "Nástroje", "OOP"]
     },
     { "id": "scm", "title": "SCM | Programování a vývoj aplikací" }
   ]

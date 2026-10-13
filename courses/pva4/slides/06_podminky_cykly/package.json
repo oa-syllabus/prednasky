@@ -1,6 +1,6 @@
 {
-  "name": "06_ridici_struktury",
-  "title": "Řídící struktury",
+  "name": "06_podminky_cykly",
+  "title": "Podmínky a cykly",
   "section": "PHP",
   "author": { "name": "Adam Fišer" },
   "type": "module",
@@ -9,6 +9,6 @@
   "scripts": {
     "dev": "slidev",
     "build": "slidev build",
-    "export": "slidev export --output ../06_ridici_struktury.pdf"
+    "export": "slidev export --output ../06_podminky_cykly.pdf"
   }
 }

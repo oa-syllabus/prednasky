@@ -1,6 +1,6 @@
 {
-  "name": "07_formulare",
-  "title": "Formuláře",
+  "name": "11_sessions",
+  "title": "Sessions",
   "section": "PHP",
   "author": { "name": "Adam Fišer" },
   "type": "module",
@@ -9,6 +9,6 @@
   "scripts": {
     "dev": "slidev",
     "build": "slidev build",
-    "export": "slidev export --output ../07_formulare.pdf"
+    "export": "slidev export --output ../11_sessions.pdf"
   }
 }
