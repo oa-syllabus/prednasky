@@ -111,31 +111,31 @@ importers:
 
   courses/pva4/slides/05_prikazy_include_require: {}
 
-  courses/pva4/slides/06_formulare: {}
+  courses/pva4/slides/06_ridici_struktury: {}
 
-  courses/pva4/slides/07_ridici_struktury: {}
+  courses/pva4/slides/07_formulare: {}
 
-  courses/pva4/slides/09_auth: {}
+  courses/pva4/slides/08_header: {}
+
+  courses/pva4/slides/09_email: {}
 
   courses/pva4/slides/10_sessions: {}
 
-  courses/pva4/slides/11_header: {}
-
-  courses/pva4/slides/12_email: {}
-
   courses/pva4/slides/20_DB_nastaveni: {}
 
-  courses/pva4/slides/21_DB_SQLvsPHP: {}
+  courses/pva4/slides/21_DB_select: {}
 
-  courses/pva4/slides/22_DB_select: {}
+  courses/pva4/slides/22_DB_relace: {}
 
-  courses/pva4/slides/23_DB_relace: {}
+  courses/pva4/slides/23_DB_agregace: {}
 
-  courses/pva4/slides/24_DB_agregace: {}
+  courses/pva4/slides/24_DB_tabulky: {}
 
-  courses/pva4/slides/25_DB_tabulky: {}
+  courses/pva4/slides/25_DB_SQLvsPHP: {}
 
   courses/pva4/slides/26_DB_insert: {}
+
+  courses/pva4/slides/30_auth: {}
 
   courses/pva4/slides/35_git_markdown: {}
 

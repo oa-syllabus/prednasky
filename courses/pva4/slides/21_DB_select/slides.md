@@ -28,7 +28,7 @@ export:
 #== Slide Info
 src: '../../pages/index.md'
 title: "DB Select"
-exportFilename: "22_DB_select"
+exportFilename: "21_DB_select"
 titleTemplate: "PVA4 %s by Adam Fišer"
 info: |
   ## PVA4 Programování a vývoj aplikací

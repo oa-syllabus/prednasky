@@ -41,24 +41,24 @@
 | 02 | [Konstrukt 1 - Základy, proměnné, výstupy](https://oa-syllabus.github.io/prednasky/pva4/03_konstrukt1_zaklady_promenne_vystupy/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/03_konstrukt1_zaklady_promenne_vystupy/03_konstrukt1_zaklady_promenne_vystupy.pdf) |
 | 03 | [Konstrukt 2: Datové typy, proměnné, operátory](https://oa-syllabus.github.io/prednasky/pva4/04_konstrukt2_datovetypy_promenne_operator/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/04_konstrukt2_datovetypy_promenne_operator/04_konstrukt2_datovetypy_promenne_operator.pdf) |
 | 04 | [Příkazy include a require](https://oa-syllabus.github.io/prednasky/pva4/05_prikazy_include_require/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/05_prikazy_include_require/05_prikazy_include_require.pdf) |
-| 05 | [Formuláře](https://oa-syllabus.github.io/prednasky/pva4/06_formulare/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/06_formulare/06_formulare.pdf) |
-| 06 | [Řídící struktury](https://oa-syllabus.github.io/prednasky/pva4/07_ridici_struktury/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/07_ridici_struktury/07_ridici_struktury.pdf) |
-| 07 | [Řízení bezpečnosti](https://oa-syllabus.github.io/prednasky/pva4/09_auth/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/09_auth/09_auth.pdf) |
-| 08 | [Sessions](https://oa-syllabus.github.io/prednasky/pva4/10_sessions/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/10_sessions/10_sessions.pdf) |
-| 09 | [Header](https://oa-syllabus.github.io/prednasky/pva4/11_header/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/11_header/11_header.pdf) |
-| 10 | [Email](https://oa-syllabus.github.io/prednasky/pva4/12_email/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/12_email/12_email.pdf) |
+| 05 | [Řídící struktury](https://oa-syllabus.github.io/prednasky/pva4/06_ridici_struktury/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/06_ridici_struktury/06_ridici_struktury.pdf) |
+| 06 | [Formuláře](https://oa-syllabus.github.io/prednasky/pva4/07_formulare/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/07_formulare/07_formulare.pdf) |
+| 07 | [Header](https://oa-syllabus.github.io/prednasky/pva4/08_header/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/08_header/08_header.pdf) |
+| 08 | [Email](https://oa-syllabus.github.io/prednasky/pva4/09_email/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/09_email/09_email.pdf) |
+| 09 | [Sessions](https://oa-syllabus.github.io/prednasky/pva4/10_sessions/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/10_sessions/10_sessions.pdf) |
 
 ### Databáze
 
 | # | Přednáška | PDF |
 |---:|-----------|-----|
 | 01 | [Nastavení prostředí](https://oa-syllabus.github.io/prednasky/pva4/20_DB_nastaveni/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/20_DB_nastaveni/20_DB_nastaveni.pdf) |
-| 02 | [SQL vs PHP](https://oa-syllabus.github.io/prednasky/pva4/21_DB_SQLvsPHP/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/21_DB_SQLvsPHP/21_DB_SQLvsPHP.pdf) |
-| 03 | [DB select](https://oa-syllabus.github.io/prednasky/pva4/22_DB_select/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/22_DB_select/22_DB_select.pdf) |
-| 04 | [DB Relace](https://oa-syllabus.github.io/prednasky/pva4/23_DB_relace/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/23_DB_relace/23_DB_relace.pdf) |
-| 05 | [DB Agregace](https://oa-syllabus.github.io/prednasky/pva4/24_DB_agregace/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/24_DB_agregace/24_DB_agregace.pdf) |
-| 06 | [DB Tabulky](https://oa-syllabus.github.io/prednasky/pva4/25_DB_tabulky/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/25_DB_tabulky/25_DB_tabulky.pdf) |
+| 02 | [DB select](https://oa-syllabus.github.io/prednasky/pva4/21_DB_select/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/21_DB_select/21_DB_select.pdf) |
+| 03 | [DB Relace](https://oa-syllabus.github.io/prednasky/pva4/22_DB_relace/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/22_DB_relace/22_DB_relace.pdf) |
+| 04 | [DB Agregace](https://oa-syllabus.github.io/prednasky/pva4/23_DB_agregace/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/23_DB_agregace/23_DB_agregace.pdf) |
+| 05 | [DB Tabulky](https://oa-syllabus.github.io/prednasky/pva4/24_DB_tabulky/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/24_DB_tabulky/24_DB_tabulky.pdf) |
+| 06 | [SQL vs PHP](https://oa-syllabus.github.io/prednasky/pva4/25_DB_SQLvsPHP/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/25_DB_SQLvsPHP/25_DB_SQLvsPHP.pdf) |
 | 07 | [DB Insert](https://oa-syllabus.github.io/prednasky/pva4/26_DB_insert/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/26_DB_insert/26_DB_insert.pdf) |
+| 08 | [Řízení bezpečnosti](https://oa-syllabus.github.io/prednasky/pva4/30_auth/) | [PDF](https://oa-syllabus.github.io/prednasky/pva4/30_auth/30_auth.pdf) |
 
 ### Nástroje
 

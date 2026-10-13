@@ -28,7 +28,7 @@ export:
 #== Slide Info
 src: '../../pages/index.md'
 title: "Řídící struktury"
-exportFilename: "07_ridici_struktury"
+exportFilename: "06_ridici_struktury"
 titleTemplate: "PVA4 %s by Adam Fišer"
 info: |
   ## PVA4 Programování a vývoj aplikací
