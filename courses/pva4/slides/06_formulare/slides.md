@@ -58,16 +58,18 @@ Atributy elementu `<form>`:
 - `action` - cílová URL, kam se data odešlou. V příkladech ho vždy vyplňujeme.
 - `method` - metoda odeslání, `get` (výchozí) nebo `post`.
 
-```html
-<form action="destUrl.php" method="post">
-    <label for="name">Jméno:</label>
-    <input type="text" id="name" name="name"><br>
+```php
+echo '
+    <form action="destUrl.php" method="post">
+        <label for="name">Jméno:</label>
+        <input type="text" id="name" name="name"><br>
 
-    <label for="email">E-mail:</label>
-    <input type="email" id="email" name="email"><br>
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email"><br>
 
-    <input type="submit" value="Odeslat">
-</form>
+        <input type="submit" value="Odeslat">
+    </form>
+';
 ```
 
 ---
@@ -95,23 +97,25 @@ Atributy elementu `<form>`:
 
 # Prvky formuláře - příklad
 
-```html
-<form action="destUrl.php" method="post">
-    <input type="text" name="name" required>
+```php
+echo '
+    <form action="destUrl.php" method="post">
+        <input type="text" name="name" required>
 
-    <select name="country">
-        <option value="cz">Česko</option>
-        <option value="sk">Slovensko</option>
-    </select>
+        <select name="country">
+            <option value="cz">Česko</option>
+            <option value="sk">Slovensko</option>
+        </select>
 
-    <input type="radio" name="size" value="m" checked> M
-    <input type="radio" name="size" value="l"> L
+        <input type="radio" name="size" value="m" checked> M
+        <input type="radio" name="size" value="l"> L
 
-    <input type="checkbox" name="newsletter" value="1"> Newsletter
+        <input type="checkbox" name="newsletter" value="1"> Newsletter
 
-    <textarea name="message"></textarea>
-    <button type="submit">Odeslat</button>
-</form>
+        <textarea name="message"></textarea>
+        <button type="submit">Odeslat</button>
+    </form>
+';
 ```
 
 - Atribut `required` a typy jako `email` kontroluje prohlížeč. Je to jen pohodlí pro uživatele, bezpečnost nezajistí.
@@ -305,10 +309,12 @@ if (isset($_GET['name'])) {
 - `radio` a `select` odešlou `value` vybrané možnosti.
 - Více hodnot pod jedním jménem: `name="hobby[]"`, v PHP pak vznikne pole.
 
-```html
-<input type="checkbox" name="newsletter" value="1"> Newsletter
-<input type="checkbox" name="hobby[]" value="sport"> Sport
-<input type="checkbox" name="hobby[]" value="hudba"> Hudba
+```php
+echo '
+    <input type="checkbox" name="newsletter" value="1"> Newsletter
+    <input type="checkbox" name="hobby[]" value="sport"> Sport
+    <input type="checkbox" name="hobby[]" value="hudba"> Hudba
+';
 ```
 
 ```php
@@ -339,8 +345,8 @@ if ($errors === []) {
 }
 ```
 
-```html
-<input type="email" name="email" value="<?= htmlspecialchars($email, ENT_QUOTES) ?>">
+```php
+echo '<input type="email" name="email" value="' . htmlspecialchars($email, ENT_QUOTES) . '">';
 ```
 
 ---
@@ -385,11 +391,13 @@ if ($errors === []) {
 - Formulář musí mít `method="post"` a `enctype="multipart/form-data"`.
 - Soubor není v `$_POST`, ale v poli `$_FILES`.
 
-```html
-<form action="upload.php" method="post" enctype="multipart/form-data">
-    <input type="file" name="avatar" accept="image/*">
-    <button type="submit">Nahrát</button>
-</form>
+```php
+echo '
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+        <input type="file" name="avatar" accept="image/*">
+        <button type="submit">Nahrát</button>
+    </form>
+';
 ```
 
 ```php
@@ -417,8 +425,8 @@ session_start();
 $_SESSION['token'] ??= bin2hex(random_bytes(32));   // vygenerování tokenu
 ```
 
-```html
-<input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+```php
+echo '<input type="hidden" name="token" value="' . $_SESSION['token'] . '">';
 ```
 
 ```php
@@ -433,7 +441,7 @@ if (!hash_equals($_SESSION['token'], $sent)) {
 
 # Bezpečnostní riziko
 
-<div class="absolute right-30px top-90px max-w-90">
+<div class="absolute right-40px top-40px max-w-120px">
   <img src="/vykricnik.png"/>
 </div>
 
