@@ -155,7 +155,7 @@ $muzeVstoupit  = false    ✔ nezletilý neprojde
 $muzeVstoupit2 = true     ✘ do proměnné se uložila jen $maVstupenku
 ```
 
-**Pravidlo: vždy píšeme `&&` a `||`.**
+**Pravidlo: vždy píšeme `&&` a `||`.** Nástroje na kontrolu stylu kódu to hlídají: PHP-CS-Fixer (pravidlo `logical_operators`) a PHP_CodeSniffer (`Squiz.Operators.ValidLogicalOperators`).
 
 </v-click>
 
@@ -213,7 +213,7 @@ if (in_array($role, ['admin', 'editor'], true)) {     // true = porovnání pře
 
 # Dlouhé podmínky
 
-- Delší podmínku rozdělíme na více řádků: **co podmínka, to řádek**.
+- Delší podmínku rozdělíme na více řádků: **co podmínka, to řádek**. Tvar předepisuje standard PSR-12 / PER Coding Style: první podmínka na novém řádku, `) {` na samostatném řádku.
 - Logický operátor patří na začátek řádku. Je hned vidět, jak se podmínky spojují.
 - Kombinaci `&&` a `||` vždy uzávorkujeme. `&&` má vyšší prioritu než `||`, závorky to dávají najevo.
 
