@@ -27,7 +27,7 @@ export:
 
 #== Slide Info
 src: '../../pages/index.md'
-title: "Řídící struktury"
+title: "Řídicí struktury"
 exportFilename: "07_ridici_struktury"
 titleTemplate: "PVA2 %s by Adam Fišer"
 info: |
@@ -44,45 +44,74 @@ layout: default
 
 #  Obsah
 
-<Toc :columns="2" minDepth="1" maxDepth="1"></Toc>
+<Toc :columns="3" minDepth="1" maxDepth="1"></Toc>
 ---
 
 # Úvod
 
-- Binární operace
-- Podmínky
+- Operátory - porovnávací, logické a členské
+- Podmínky `if`, `elif`, `else`
 - Cykly
-  - for
-  - while
-  - do while
+  - `for`
+  - `while`
+  - náhrada `do while`
+- Řízení cyklu - `break`, `continue`, `pass`, `else`
 
 ---
+layout: two-cols-header
+---
 
-# Porovnávací operace
+# Porovnávací operátory
 
-- `<` menší než
-- `>` větší než
-- `==` rovná se
-- `>=` větší nebo rovno
-- `<=` menší nebo rovno
-- `!=` nerovnají se
+- Porovnají dvě hodnoty, výsledkem je vždy `True` nebo `False`.
+
+::left::
+
+| Operátor | Význam | Příklad | Výsledek |
+|---|---|---|---|
+| `==` | rovná se | `5 == 5` | `True` |
+| `!=` | nerovná se | `5 != 3` | `True` |
+| `<` | menší než | `3 < 5` | `True` |
+| `>` | větší než | `3 > 5` | `False` |
+| `<=` | menší nebo rovno | `5 <= 5` | `True` |
+| `>=` | větší nebo rovno | `4 >= 5` | `False` |
+
+::right::
+
+- Pozor: `=` je přiřazení (`x = 5`), `==` je porovnání (`x == 5`).
+- Python umí porovnání řetězit: `0 < x < 10` znamená `0 < x and x < 10`.
 
 ---
 
 # Logické operátory
 
+- `and` - logický součin, výsledek je `True` jen když platí **obě** strany
+- `or` - logický součet, výsledek je `True` když platí **alespoň jedna** strana
+- `not` - negace, obrátí `True` na `False` a naopak
 
-- `and` logický součin - obě hodnoty musejí být splněny
-- `or`  logický součet - alespoň jedna hodnota musí být splněna
-- `not` negace hodnoty
+```python
+vek = 17
+ma_souhlas_rodicu = True
+
+print(vek >= 18 and ma_souhlas_rodicu)  # False
+print(vek >= 18 or ma_souhlas_rodicu)   # True
+print(not ma_souhlas_rodicu)            # False
+```
 
 ---
 
 # Členské operátory
 
-- `in` - je prvek v kolekci
-- `not in` - není prvek v kolekci
+- `in` - je prvek v kolekci (seznam, n-tice, množina, klíče slovníku, text)?
+- `not in` - není prvek v kolekci?
 
+```python
+ovoce = ["jablko", "banán", "třešeň"]
+
+print("banán" in ovoce)        # True
+print("hruška" not in ovoce)   # True
+print("dam" in "Adam")         # True - u textu hledá podřetězec
+```
 
 ---
 layout: cover
@@ -93,101 +122,130 @@ background: https://cover.sli.dev
 
 ---
 
-# Podmínky `if`
+# Podmínka `if`
 
-- Podmínka je výrok, který je vyhodnocen na pravda nebo nepravda
-- Příkazy jsou vykonány pouze pokud je podmínka splněna
-- Příkazy musí být odsazeny
-- `if` je klíčové slovo
-- `:` ukončuje podmínku
+- Podmínka je výraz, jehož výsledkem je `True` nebo `False`.
+- Tělo podmínky se provede jen tehdy, když je podmínka splněna.
+- Hlavička začíná klíčovým slovem `if` a končí dvojtečkou `:`.
+- Tělo podmínky musí být odsazené - standardně **4 mezery** ([PEP 8](https://peps.python.org/pep-0008/#indentation)).
+- Podmínku nepíšeme do závorek, Python je nepotřebuje.
 
 ```python
-if (podminka):
-    # Při splnění podmínky je vykonán program za dvojtečkou
-    # Příkazy musí být odsazeny
+if podminka:
+    # tělo podmínky - provede se jen při splnění podmínky
+    prikaz()
 ```
-
----
-
-# Podmínky `if` - příklad
 
 ```python
 a = 200
 b = 100
-if (a > b):
-    print("a je větší než b") # Vypíše "a je větší než b"
+if a > b:
+    print("a je větší než b")  # Vypíše "a je větší než b"
 ```
 
 ---
 
 # `else`
 
-- `else` - vykoná se pokud podmínka není splněna
+- `else` - provede se, když podmínka **není** splněna.
+- Nemá vlastní podmínku, jen dvojtečku.
 
 ```python
 a = 200
 b = 100
 if b > a:
-  print("b je vetsi nez a")
+    print("b je větší než a")
 else:
-  print("a je vetsi nez b")
+    print("b není větší než a")  # Vypíše tuto větev
 ```
 
 ---
 
 # `elif`
 
-- `else` - vykoná se pokud podmínka není splněna
+- `elif` (zkratka z „else if“) - další podmínka, testuje se jen tehdy, když žádná předchozí neplatila.
+- `elif` může být více, `else` na konci je nepovinné.
+- Provede se **nejvýše jedna** větev - ta první, jejíž podmínka platí.
 
 ```python
 a = 200
 b = 100
 if b > a:
-  print("b je vetsi nez a")
+    print("b je větší než a")
 elif a == b:
-  print("a a b jsou stejne")
+    print("a a b jsou stejné")
 else:
-  print("a je vetsi nez b")
-
+    print("a je větší než b")  # Vypíše tuto větev
 ```
 
 ---
 
-# Skládání podmínek - `and`
+# Co vypíše? - pořadí podmínek
 
-- `and` - logický součin
-- Výsledek je `True` pouze pokud jsou obě podmínky `True`
+```python
+body = 92
+
+if body >= 50:
+    print("Dostatečně")
+elif body >= 70:
+    print("Dobře")
+elif body >= 90:
+    print("Výborně")
+```
+
+<v-click>
+
+```text
+Dostatečně
+```
+
+První splněná podmínka ukončí celé větvení. Podmínky musí jít od nejpřísnější: nejdřív `>= 90`, pak `>= 70`, nakonec `>= 50`.
+
+</v-click>
+
+---
+layout: two-cols-header
+---
+
+# Skládání podmínek - `and` a `or`
+
+::left::
+
+## `and`
+
+- `True` jen když platí **obě** podmínky
 
 ```python
 a = 200
 b = 100
 c = 300
 
-if (a > b and c > a):
-  print("Obě podmínky jsou splněny")
+if a > b and c > a:
+    print("Obě podmínky jsou splněny")
 ```
 
 ```python
-a= 1
-b= 0
+a = 1
+b = 0
 
-if( a==1 and b==1 ): # Vypíše ne
+if a == 1 and b == 1:
     print("ano")
 else:
-    print("ne") 
+    print("ne")  # Vypíše ne
 ```
 
----
+::right::
 
-# Skládání podmínek - `or`
+## `or`
 
-- `or` - logický součet
-- Výsledek je `True` pokud je alespoň jedna podmínka `True`
-
+- `True` když platí **alespoň jedna** podmínka
 
 ```python
-if( a==1 or b==0 ): # Vypíše ano
-    print("ano")
+a = 1
+b = 0
+
+if a == 1 or b == 1:
+    print("ano")  # Vypíše ano
 else:
     print("ne")
 ```
@@ -203,32 +261,37 @@ background: https://cover.sli.dev
 
 # Cyklus
 
-- Cyklus je opakování bloku kódu
-  - `for` - opakuje blok kódu určitý počet krát
-  - `while` - opakuje blok kódu dokud je podmínka splněna
-  - `do while` - opakuje blok kódu dokud je podmínka splněna
+- Cyklus opakuje blok kódu. Jeden průchod cyklem se nazývá **iterace**.
+  - `for` - projde postupně všechny prvky posloupnosti (seznam, text, `range()`, slovník)
+  - `while` - opakuje blok kódu, dokud platí podmínka
+  - `do while` - v Pythonu **neexistuje**, nahrazuje se pomocí `while True` a `break`
+
+| Situace | Cyklus |
+|---|---|
+| Chci projít všechny prvky seznamu nebo textu | `for` |
+| Vím předem, kolikrát se má kód opakovat | `for` + `range()` |
+| Nevím, kolikrát se bude opakovat (např. dokud uživatel nezadá správnou hodnotu) | `while` |
 
 ---
 
 # Cyklus `for`
 
-- Cyklus for se používá k procházení prvky určité posloupnosti, jako jsou seznamy, n-tice, řetězce nebo slovníky.
+- Cyklus `for` prochází prvky posloupnosti - seznamu, n-tice, textu, slovníku nebo `range()`.
+- V každé iteraci obsahuje proměnná (zde `prvek`) další prvek posloupnosti.
 
 ```python
-for i in posloupnost:
-    # blok kódu je odsazen
-    # provádějte kód s prvkem
-    # tento kód se opakuje pro každý prvek v posloupnosti
+for prvek in posloupnost:
+    # tělo cyklu je odsazené
+    # provede se jednou pro každý prvek posloupnosti
 ```
-
 
 ```python
 for i in range(5):
     print(i)
-``` 
+```
 
-Výstup: 
-```python
+Výstup:
+```text
 0
 1
 2
@@ -236,39 +299,56 @@ Výstup:
 4
 ```
 
-
 ---
 
 # Vsuvka - funkce `range()`
 
-- `range()` - vytvoří posloupnost čísel
+- `range()` vytvoří posloupnost celých čísel - `range(start, stop, step)`.
+- `start` je nepovinný (výchozí `0`), `step` je nepovinný (výchozí `1`).
+- Hodnota `stop` se do posloupnosti **nikdy nezahrne**.
+- Vrací objekt `range`, ne seznam - čísla vytváří až při procházení. Seznam z něj získáme přes `list(range(5))`.
 
-```python
-# funkce range generuje sekvenci celých čísel
-range(start, stop, step)
-
-# cyklus
-# Funkce range(5) vrací seznam[0,1,2,3,4]
-# Pro každé číslo i v seznamu
-for i in range(5):
-	print(i)
-```
+| Volání | Vytvořená čísla |
+|---|---|
+| `range(5)` | `0, 1, 2, 3, 4` |
+| `range(2, 6)` | `2, 3, 4, 5` |
+| `range(0, 10, 2)` | `0, 2, 4, 6, 8` |
+| `range(5, 0, -1)` | `5, 4, 3, 2, 1` |
 
 ---
+layout: two-cols-header
+---
 
-# Cyklus `for` - příklad
+# Cyklus `for` - procházení seznamu
 
-- Zobrazení hodnot seznamu
+- `for` v Pythonu je cyklus typu **foreach** - prochází přímo prvky, index nepotřebujeme.
+
+::left::
+
+## Takto ne
 
 ```python
 seznam = [10, 50, 75, 80]
- 
-# Pro každý prvek v seznamu
-# Musíme nejprve zjistit délku seznamu len(seznam) a poté prvky projdeme
-for x in range( len(seznam) ): 
-    print(seznam[x]) 
 
-# Cyklus vrátí:
+for i in range(len(seznam)):
+    print(seznam[i])
+```
+
+- Zbytečně složité, index tu k ničemu nepotřebujeme.
+
+::right::
+
+## Takto ano
+
+```python
+seznam = [10, 50, 75, 80]
+
+for cislo in seznam:
+    print(cislo)
+```
+
+Výstup:
+```text
 10
 50
 75
@@ -277,36 +357,63 @@ for x in range( len(seznam) ):
 
 ---
 
-# Cyklus `for` - příklad přes text
+# Cyklus `for` - když potřebuji i pořadí
 
-- Zobrazení znaků řetězce
+- Funkce `enumerate()` vrací dvojice (pořadí, prvek).
+- Parametr `start` určí, od kterého čísla se počítá (výchozí `0`).
 
 ```python
-# Python texty jsou hodně podobné seznamům.
+ovoce = ["jablko", "banán", "třešeň"]
+
+for poradi, kus in enumerate(ovoce, start=1):
+    print(poradi, kus)
+```
+
+Výstup:
+```text
+1 jablko
+2 banán
+3 třešeň
+```
+
+---
+
+# Cyklus `for` - procházení textu
+
+- Text je posloupnost znaků, `for` ho prochází znak po znaku.
+
+```python
 hello_world = "Hello, World!"
 
-for ch in hello_world:    # Vytiskne každý znak z hello_world
-    print(ch)
+for znak in hello_world:  # Vypíše každý znak na samostatný řádek
+    print(znak)
+```
+
+```python
+text = "programování"
+pocet = 0
+for znak in text:
+    if znak in "aeiouyáéíóúůý":
+        pocet += 1
+print("Počet samohlásek:", pocet)  # Počet samohlásek: 5
 ```
 
 ---
 layout: two-cols-header
 ---
-# Cyklus `for` - příklad pro kolekce
-
-- V python sice nemáme klasický for each, ale můžeme použít klasický for pro projití kolekce
+# Cyklus `for` - procházení kolekcí
 
 ::left::
 ## Seznam
 
 ```python
-fruits = ['jablko', 'banán', 'třešeň']
-for fruit in fruits:
-    print(fruit)
+ovoce = ["jablko", "banán", "třešeň"]
+for kus in ovoce:
+    print(kus)
 ```
 
 Výstup:
-```
+```text
 jablko
 banán
 třešeň
@@ -316,27 +423,72 @@ třešeň
 
 ## Slovník
 
-```python
+- Samotný `for` prochází jen **klíče**, dvojice klíč-hodnota vrací `.items()`.
 
-person = {'name': 'Adam', 'age': 40, 'salary': 13500.0}
-for key, value in person.items():
-    print(key, value)
+```python
+osoba = {"jmeno": "Adam", "vek": 40, "plat": 13500.0}
+for klic, hodnota in osoba.items():
+    print(klic, hodnota)
 ```
 
 Výstup:
-```
-name Adam
-age 40
-salary 13500.0
+```text
+jmeno Adam
+vek 40
+plat 13500.0
 ```
 
+---
+
+# Vnořené cykly
+
+- Cyklus může být uvnitř jiného cyklu.
+- Vnitřní cyklus proběhne **celý** v každé iteraci vnějšího cyklu.
+
+```python
+for radek in range(1, 4):
+    for sloupec in range(1, 4):
+        print(radek * sloupec, end=" ")
+    print()  # po každém řádku odřádkuje
+```
+
+Výstup:
+```text
+1 2 3
+2 4 6
+3 6 9
+```
+
+- `print(..., end=" ")` místo odřádkování vypíše mezeru.
+
+---
+
+# Co vypíše? - `range()`
+
+```python
+for i in range(10, 0, -3):
+    print(i)
+```
+
+<v-click>
+
+```text
+10
+7
+4
+1
+```
+
+Začíná na `10`, odečítá `3` a skončí před `0`. Hodnota `stop` se nikdy nezahrne.
+
+</v-click>
 
 ---
 layout: image-right
 image: https://cover.sli.dev
 ---
 
-# Možnosti řízení toku
+# Řízení cyklu
 
 - `break`
 - `continue`
@@ -347,7 +499,8 @@ image: https://cover.sli.dev
 
 # `break`
 
-- `break` - ukončí cyklus a pokračuje na další kód
+- `break` - okamžitě ukončí cyklus, program pokračuje kódem za cyklem.
+- U vnořených cyklů ukončí jen ten nejvnitřnější.
 
 ```python
 for i in range(5):
@@ -357,7 +510,7 @@ for i in range(5):
 ```
 
 Výstup:
-```python
+```text
 0
 1
 2
@@ -365,10 +518,9 @@ Výstup:
 
 ---
 
-
 # `continue`
 
-- `continue` - přeskočí zbytek kódu v cyklu a pokračuje další iterací
+- `continue` - přeskočí zbytek těla cyklu a pokračuje další iterací.
 
 ```python
 for i in range(5):
@@ -378,7 +530,7 @@ for i in range(5):
 ```
 
 Výstup:
-```python
+```text
 0
 1
 2
@@ -387,21 +539,21 @@ Výstup:
 
 ---
 
-
 # `pass`
 
-- `pass` - pouze přeskočí blok kódu
-- často se používá na místě, kde chcete mít správnou syntaxi a definujete strukturu kódu, ale ještě nechcete psát kód.
+- `pass` - prázdný příkaz, **nedělá nic**.
+- Používá se tam, kde Python vyžaduje tělo bloku, ale kód ještě nemáme napsaný.
+- Na rozdíl od `continue` nic nepřeskočí.
 
 ```python
 for i in range(5):
     if i == 3:
-        pass
+        pass  # TODO: doplnit později
     print(i)
 ```
 
 Výstup:
-```python
+```text
 0
 1
 2
@@ -410,113 +562,198 @@ Výstup:
 ```
 
 ---
+layout: two-cols-header
+---
 
-# `else`
+# `else` u cyklu
 
-- `else` - blok kódu, který se vykoná po dokončení cyklu
+- `else` za cyklem se provede, když cyklus doběhne **bez** `break`.
+- Typické použití je hledání - `else` řeší situaci „nic jsem nenašel“.
+
+::left::
 
 ```python
-for i in range(5):
+for i in range(3):
     print(i)
 else:
     print("Konec")
 ```
 
 Výstup:
-```python
+```text
 0
 1
 2
-3
-4
 Konec
 ```
 
----
-layout: image-right
-image: https://cover.sli.dev
+::right::
+
+```python
+cisla = [3, 7, 11, 15]
+for cislo in cisla:
+    if cislo % 2 == 0:
+        print("Sudé číslo:", cislo)
+        break
+else:
+    print("Žádné sudé číslo")
+```
+
+Výstup:
+```text
+Žádné sudé číslo
+```
+
+Kdyby seznam obsahoval sudé číslo, `break` by cyklus ukončil a `else` by se neprovedlo.
+
 ---
 
-# While
+# Co vypíše? - `break` a `continue`
+
+```python
+for i in range(1, 8):
+    if i % 2 == 0:
+        continue
+    if i > 5:
+        break
+    print(i)
+```
+
+<v-click>
+
+```text
+1
+3
+5
+```
+
+Sudá čísla přeskočí `continue`. Při `i = 7` platí `i > 5` a `break` cyklus ukončí.
+
+</v-click>
+
+---
+layout: cover
+background: https://cover.sli.dev
+---
+
+# Cyklus while
 
 ---
 
 # Cyklus `while`
 
-- Cyklus while opakovaně provádí blok kódu, dokud je splněná určitá podmínka. 
-- Nutné ošetřit aby podmínka byla někdy splněna – riziko nekonečné smyčky.
-
+- Opakuje blok kódu, **dokud podmínka platí**. Podmínka se kontroluje před každou iterací.
+- Tělo cyklu musí změnit něco, na čem podmínka závisí - jinak podmínka platí pořád a vznikne **nekonečná smyčka**. Program pak přerušíme klávesami `Ctrl+C`.
 
 ```python
 while podminka:
-    # vykonávaný kód cyklu je odsazen
-    # tento kód se opakuje, dokud je splněna podmínka
-    # podmínka se kontroluje na začátku každé iterace
+    # tělo cyklu je odsazené
+    # opakuje se, dokud podmínka platí
 ```
 
 ```python
-sum = 1
-while sum <= 10:
-    print(sum) # postupně vypíše narůstající součet 1,2,3,...10
-    sum += 1
+i = 1
+while i <= 5:
+    print(i)  # postupně vypíše 1, 2, 3, 4, 5
+    i += 1    # bez tohoto řádku by cyklus nikdy neskončil
 
 print("Konec")
 ```
 
 ---
 
-# Cyklus do while
+# Cyklus `while` - neznámý počet opakování
 
-- Cyklus do while je podobný cyklu while, ale podmínka se kontroluje až po prvním provedení bloku kódu.
-- Používá, když chcete, aby se blok kódu vykonal alespoň jednou, i když podmínka není splněna.
-- Python nemá vestavěnou konstrukci do while, ale můžeme ji simulovat pomocí cyklu while a příkazu break.
+- `while` se hodí tam, kde předem nevíme, kolikrát se cyklus zopakuje.
+
+```python
+# Kolik čísel 1, 2, 3, ... musím sečíst, aby součet přesáhl 20?
+soucet = 0
+cislo = 0
+while soucet <= 20:
+    cislo += 1
+    soucet += cislo
+
+print("Sečetl jsem čísla 1 až", cislo)  # Sečetl jsem čísla 1 až 6
+print("Součet:", soucet)                 # Součet: 21
+```
+
+---
+
+# Co vypíše? - odsazení
+
+```python
+i = 0
+while i < 3:
+    print(i)
+i += 1
+```
+
+<v-click>
+
+```text
+0
+0
+0
+...
+```
+
+Nekonečná smyčka. Řádek `i += 1` není odsazený, takže nepatří do těla cyklu. Hodnota `i` zůstane `0` a podmínka platí pořád.
+
+</v-click>
+
+---
+
+# Náhrada cyklu `do while`
+
+- Cyklus `do while` provede tělo **alespoň jednou** a podmínku kontroluje až na konci.
+- Python ho nemá. Nahrazuje se nekonečným cyklem `while True` a příkazem `break`.
 
 ```python
 while True:
-    # vykonávaný kód cyklu je odsazen
-    # tento kód se opakuje, dokud není splněna podmínka
+    # tělo cyklu se provede alespoň jednou
     if not podminka:
-        break
+        break  # podmínka přestala platit, cyklus končí
 ```
 
 ---
 hideInToc: true
+---
 
-# Cyklus do while - příklad
+# Náhrada cyklu `do while` - příklad
+
+- Typické použití: opakovaně se ptát, dokud uživatel nezadá platnou hodnotu.
 
 ```python
-count = 0
 while True:
-    print("Počet je:", count)
-    count += 1
-    if count >= 5:
+    vek = int(input("Zadej věk: "))
+    if vek >= 0:
         break
+    print("Věk nesmí být záporný, zkus to znovu.")
+
+print("Tvůj věk je", vek)
 ```
 
-Výstup:
-```python
-Počet je: 0
-Počet je: 1
-Počet je: 2
-Počet je: 3
-Počet je: 4
+Ukázkový běh:
+```text
+Zadej věk: -5
+Věk nesmí být záporný, zkus to znovu.
+Zadej věk: 17
+Tvůj věk je 17
 ```
-
 
 ---
 
 # Shrnutí
 
-- Porovnávací operátory slouží k porovnání hodnot
-- Logické operátory umožňují kombinovat více podmínek
-- Podmínky `if`, `elif`, `else` umožňují řídit tok programu na základě podmínek
-- Cyklus
-  - `for` umožňuje iteraci přes posloupnosti
-  - `while` opakuje blok kódu, dokud je splněna podmínka
-  - `do while` zajišťuje, že se blok kódu vykoná alespoň jednou
-- Řídící příkazy `break`, `continue`, `pass` a `else` umožňují další kontrolu toku cyklů
-
-
+- Porovnávací operátory porovnají hodnoty, výsledkem je `True` nebo `False`.
+- Logické operátory `and`, `or`, `not` spojují a obracejí podmínky, `in` a `not in` testují členství v kolekci.
+- Podmínky `if`, `elif`, `else` řídí, která větev programu se provede. Provede se nejvýše jedna větev.
+- Cykly
+  - `for` prochází prvky posloupnosti, s `range()` opakuje kód daný počet krát
+  - `while` opakuje kód, dokud platí podmínka - pozor na nekonečnou smyčku
+  - `do while` Python nemá, nahrazuje se pomocí `while True` a `break`
+- Řízení cyklu: `break` cyklus ukončí, `continue` přeskočí na další iteraci, `pass` nedělá nic, `else` se provede, když cyklus skončil bez `break`.
 
 ---
 src: '../../pages/thanku.md'
