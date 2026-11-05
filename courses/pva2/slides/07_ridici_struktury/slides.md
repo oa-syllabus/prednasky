@@ -44,7 +44,7 @@ layout: default
 
 #  Obsah
 
-<Toc :columns="2" minDepth="1" maxDepth="1"></Toc>
+<Toc :columns="3" minDepth="1" maxDepth="1"></Toc>
 ---
 
 # Úvod
@@ -58,10 +58,14 @@ layout: default
 - Řízení cyklu - `break`, `continue`, `pass`, `else`
 
 ---
+layout: two-cols-header
+---
 
 # Porovnávací operátory
 
 - Porovnají dvě hodnoty, výsledkem je vždy `True` nebo `False`.
+
+::left::
 
 | Operátor | Význam | Příklad | Výsledek |
 |---|---|---|---|
@@ -71,6 +75,8 @@ layout: default
 | `>` | větší než | `3 > 5` | `False` |
 | `<=` | menší nebo rovno | `5 <= 5` | `True` |
 | `>=` | větší nebo rovno | `4 >= 5` | `False` |
+
+::right::
 
 - Pozor: `=` je přiřazení (`x = 5`), `==` je porovnání (`x == 5`).
 - Python umí porovnání řetězit: `0 < x < 10` znamená `0 < x and x < 10`.
@@ -630,7 +636,7 @@ layout: cover
 background: https://cover.sli.dev
 ---
 
-# Cyklus `while`
+# Cyklus while
 
 ---
 
