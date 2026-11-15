@@ -27,7 +27,7 @@ export:
 
 #== Slide Info
 src: '../../pages/index.md'
-title: "08 Funkce"
+title: "Funkce"
 exportFilename: "08_funkce"
 titleTemplate: "PVA2 %s by Adam Fišer"
 info: |
@@ -44,143 +44,305 @@ layout: default
 
 #  Obsah
 
-<Toc :columns="2" minDepth="1" maxDepth="1"></Toc>
+<Toc :columns="3" minDepth="1" maxDepth="1"></Toc>
 ---
 
-# Využití funkce
+# Úvod
 
-- Funkce jsou vhodný způsob jak rozdělit kód do užitečných bloků.
-- Zlepšuje přehlednost a čitelnost zdrojového kódu.
-- Umožňuje opakovaně využít část kódu.
-- Umožňuje předávat parametry a získávat návratové hodnoty.
+- Proč funkce
+- Definice a volání funkce
+- Návratová hodnota - `return` a `print`
+- Parametry a argumenty
+- Typové anotace
+- Proměnné ve funkcích - lokální a globální
+- Čisté funkce a vedlejší efekty
+- Dokumentace funkcí
+- Rekurze
 
----
-
-# Deklarace funkce
-
-- Pro definici funkce se využitá klíčové slovo `def`,
-- následuje název funkce a v závorce seznam formálních parametrů. Parametry mohou být i prázdné.
-- Deklarace je ukončena dvojtečkou.
-- Příkazy tvoří tělo funkce, začínají na dalším řádku a musí být odsazeny.
-
-```python
-# funkce s názvem mojeFunkce
-def mojeFunkce():
-    # Kód musí být odsazen
-    return "Ahoj"
-```
+Celou přednáškou nás provází jeden příklad: **výpočet ceny objednávky v e-shopu**.
 
 ---
-
-# Návratová hodnota
-
-- Funkce může vracet hodnotu pomocí klíčového slova `return`.
-- Pokud funkce nemá `return`, vrací `None`.
-- Po `return` se může vyskytovat pouze jedna hodnota.
-- Po `return` se funkce ukončí a další příkazy se nevykonají.
-- Vrácenou hodnotu můžete použít k přiřazení do proměnné nebo ji jen vypsat.
-
-```python
-# funkce s názvem mojeFunkce
-def mojeFunkce():
-    # Kód musí být odsazen
-    return "Ahoj"
-    print("Tento řádek se nevykoná")
-```
-
-```python
-def sumTwoValues(a, b):
-  return a + b
-
-# Do proměnné c přiřazen výsledek funkce sumTwoValues
-c = sumTwoValues(3, 12) 
-```
-
+layout: two-cols-header
 ---
 
-# Deklarace funkce s datovými typy
+# Proč funkce
 
-- Při deklaraci funkce můžeme uvést datové typy parametrů a návratové hodnoty.
-- Slouží jako dokumentace a pomáhají s kontrolou kódu.
-- Datové typy se uvádí za název parametru za dvojtečku tzn. `parametr: typ`.
-- Při použití výchozí hodnoty za rovnítkem `=` tzn. `parametr: typ = vychozi_hodnota`.
-- Návratový typ se uvádí za závorkou s parametry za šipkou `->`.
-- Datové typy mohou být libovolné, včetně vlastních tříd.
+- Funkce je **pojmenovaný blok kódu**, který můžeme spustit kdykoli a kolikrát chceme.
 
-````md magic-move
+::left::
+
+## Bez funkce
+
 ```python
-def pozdrav(jmeno, cislo = 1):
-    return "Ahoj " + jmeno + ", tvoje číslo je " + str(cislo)
+cenaTricka = 250
+print("Tričko:", cenaTricka * 1.21)
+
+cenaMikiny = 690
+print("Mikina:", cenaMikiny * 1.21)
+
+cenaCepice = 180
+print("Čepice:", cenaCepice * 1.21)
 ```
+
+- Sazba DPH se změní. Kolik míst musíme opravit?
+
+::right::
+
+## S funkcí
+
 ```python
-def pozdrav(jmeno: str, cislo: int = 1) -> str:
-    return "Ahoj " + jmeno + ", tvoje číslo je " + str(cislo)
+def cenaVcetneDph(cena):
+    return cena * 1.21
+
+print("Tričko:", cenaVcetneDph(250))
+print("Mikina:", cenaVcetneDph(690))
+print("Čepice:", cenaVcetneDph(180))
 ```
-````
+
+- Výpočet je na **jednom** místě - princip DRY (Don't Repeat Yourself).
+- Název funkce říká, **co** kód dělá.
+- Funkci lze samostatně otestovat.
 
 ---
 layout: cover
 background: https://cover.sli.dev
 ---
 
-# Použití funkce
+# Definice a volání funkce
+
+---
+
+# Definice funkce
+
+```python
+def cenaVcetneDph(cena, sazbaDph):
+    vysledek = cena * (1 + sazbaDph)
+    return vysledek
+```
+
+| Část | Význam |
+|---|---|
+| `def` | klíčové slovo, které zahajuje definici funkce |
+| `cenaVcetneDph` | název funkce |
+| `(cena, sazbaDph)` | seznam parametrů oddělených čárkou, může být i prázdný `()` |
+| `:` | dvojtečka ukončuje hlavičku funkce |
+| odsazené řádky | tělo funkce - standardně **4 mezery** |
+| `return` | ukončí funkci a vrátí výsledek |
+
+---
+
+# Pojmenování funkcí
+
+- V tomto kurzu píšeme názvy funkcí i proměnných ve stylu **camelCase**: `cenaVcetneDph`, `pocetKusu`.
+  - [PEP 8](https://peps.python.org/pep-0008/#function-and-variable-names) doporučuje snake_case (`cena_vcetne_dph`). Důležité je držet **jeden styl** v celém projektu.
+- Funkce, která něco dělá, má v názvu sloveso: `vypisUctenku`, `spocitejSlevu`.
+- Funkce, která vrací `True`/`False`, se jmenuje jako otázka: `jeSkladem`, `maDopravuZdarma`.
+- Funkce musí být definovaná **dříve**, než ji zavoláme.
+
+```python
+vypisPozdrav()      # NameError: name 'vypisPozdrav' is not defined
+
+def vypisPozdrav():
+    print("Vítejte v e-shopu")
+```
 
 ---
 
 # Volání funkce
 
-- Funkce se používá voláním pomocí jejího názvu a závorek.
-- Pokud funkce přijímá parametry, je nutné je předat v závorkách.
-- Pokud funkce vrací hodnotu, je možné ji uložit do proměnné.
-- Hodnotu lze také přímo vypisovat nebo používat v dalších výrazech.
-- Ve funkci můžeme volat i jiné funkce.
-- Funkci `print()` ve funkcích nevoláme, ale předáváme jí hodnoty k vypsání.
+- Funkci zavoláme jejím názvem a kulatými závorkami `()`.
+- Samotná definice nic nespustí. Kód v těle se provede až při volání.
+- Při volání program „skočí“ do těla funkce a po jeho dokončení pokračuje za místem volání.
+- Průběh si můžeš krokovat v [Python Tutor](https://pythontutor.com/python-compiler.html).
 
 ```python
-# funkce s názvem mojeFunkce
-def mojeFunkce() -> str:
-    # Kód musí být odsazen
-    return "Ahoj"
+def vypisPozdrav():
+    print("Vítejte v e-shopu")
+
+print("Start")
+vypisPozdrav()
+vypisPozdrav()
+print("Konec")
 ```
 
-```python
-# Volání funkce přes název
-mojeFunkce() # Volání funkce
-
-var = mojeFunkce() # Volání funkce, výsledek uložen do proměnné var
-
-print( mojeFunkce() ) # Vypíše Ahoj
+```text
+Start
+Vítejte v e-shopu
+Vítejte v e-shopu
+Konec
 ```
 
 ---
-hideInToc: true
+layout: cover
+background: https://cover.sli.dev
 ---
 
-# Volání funkce
+# Návratová hodnota
+
+---
+
+# `return`
+
+- `return` předá výsledek zpět na místo, odkud byla funkce zavolána.
+- Po `return` funkce **okamžitě skončí**. Kód za ním se neprovede.
+- Vrácenou hodnotu můžeme uložit do proměnné, použít ve výrazu nebo předat jiné funkci.
 
 ```python
-# funkce s názvem mojeFunkce
-def mojeFunkce() -> str:
-    # Kód musí být odsazen
-    return "Ahoj"
+def cenaVcetneDph(cena, sazbaDph):
+    return cena * (1 + sazbaDph)
+    print("Sem se program nikdy nedostane")
 ```
 
 ```python
-# zavoláme funkci pětkrát
-for i in range(5):
-    mojeFunkce() 
+tricko = cenaVcetneDph(250, 0.21)              # uložení do proměnné
+celkem = tricko + cenaVcetneDph(180, 0.21)     # použití ve výrazu
+print(cenaVcetneDph(690, 0.21))                # předání funkci print()
 ```
 
-## Volání funkce bez uložení návratové hodnoty
-- Funkci můžeme volat i bez uložení návratové hodnoty.
-- To je užitečné, pokud nás zajímá pouze efekt funkce, nikoli její výstup.
-- Datový typ návratové hodnoty uvádíme jako `None`.
+---
+layout: two-cols-header
+---
+
+# `return` a `print` nejsou totéž
+
+- `print()` zobrazí hodnotu **uživateli**. Program s ní dál pracovat nemůže.
+- `return` předá hodnotu **programu**. Ten ji může uložit, spočítat s ní nebo vypsat.
+
+::left::
+
+## `print` - výsledek se ztratí
 
 ```python
-# funkce s názvem pozdrav
-def pozdrav(jmeno: str) -> None:
-    print("Ahoj " + jmeno)
+def slevaPrint(cena):
+    print(cena * 0.9)
+
+x = slevaPrint(100)   # vypíše 90.0
+print(x * 2)          # TypeError
 ```
+
+```text
+TypeError: unsupported operand type(s)
+for *: 'NoneType' and 'int'
+```
+
+::right::
+
+## `return` - výsledek můžeme použít
+
+```python
+def slevaReturn(cena):
+    return cena * 0.9
+
+x = slevaReturn(100)  # nic nevypíše
+print(x * 2)          # 180.0
+```
+
+- **Pravidlo:** funkce, která počítá, výsledek **vrací**. Vypisuje až hlavní program.
+
+---
+
+# Funkce bez `return` vrací `None`
+
+- Pokud funkce nemá `return`, vrací speciální hodnotu `None` (nic).
+- Takové funkce voláme kvůli tomu, co **udělají** - například něco vypíšou.
+- Prázdný `return` funkci předčasně ukončí.
+
+```python
+def vypisUctenku(zbozi, cena):
+    if cena <= 0:
+        print("Chybná cena")
+        return              # předčasné ukončení funkce
+    print(f"{zbozi}: {cena} Kč")
+
+vysledek = vypisUctenku("Tričko", 250)   # vypíše Tričko: 250 Kč
+print(vysledek)                          # None
+```
+
+---
+
+# Vrácení více hodnot
+
+- Funkce vrací vždy **jeden** objekt.
+- Pokud za `return` napíšeme více hodnot oddělených čárkou, vrátí se jako n-tice (`tuple`).
+- N-tici můžeme hned při volání rozbalit do více proměnných.
+
+```python
+def rozdelCenu(cenaSDph, sazbaDph):
+    zaklad = cenaSDph / (1 + sazbaDph)
+    dph = cenaSDph - zaklad
+    return zaklad, dph
+
+vysledek = rozdelCenu(121, 0.21)
+print(vysledek)                 # (100.0, 21.0)
+
+zaklad, dph = rozdelCenu(121, 0.21)
+print(zaklad)                   # 100.0
+print(dph)                      # 21.0
+```
+
+---
+layout: two-cols-header
+---
+
+# Funkce, které vracejí `True` nebo `False`
+
+- Hodí se pro kontroly a ověřování, výsledek pak použijeme v podmínce.
+
+::left::
+
+## Takto ne
+
+```python
+def maDopravuZdarma(cenaObjednavky):
+    if cenaObjednavky >= 1500:
+        return True
+    else:
+        return False
+```
+
+- Porovnání už samo vrací `True` nebo `False`.
+
+::right::
+
+## Takto ano
+
+```python
+def maDopravuZdarma(cenaObjednavky):
+    return cenaObjednavky >= 1500
+```
+
+```python
+if maDopravuZdarma(1800):
+    print("Doprava zdarma")
+else:
+    print("Doprava 99 Kč")
+```
+
+---
+
+# Co vypíše? - `return`
+
+```python
+def zkontroluj(cena):
+    if cena > 1000:
+        return "drahé"
+    return "levné"
+    print("hotovo")
+
+print(zkontroluj(1500))
+print(zkontroluj(500))
+```
+
+<v-click>
+
+```text
+drahé
+levné
+```
+
+První `return` funkci ukončí. Řádek `print("hotovo")` se neprovede nikdy.
+
+</v-click>
 
 ---
 layout: cover
@@ -189,151 +351,343 @@ background: https://cover.sli.dev
 
 # Parametry a argumenty
 
-
 ---
 
-# Parametry funkce
+# Parametr a argument
 
-- Parametry jsou hodnoty, které funkce přijímá a jsou nutné pro vykonání funkce.
-- Uvádíme v závorce a odděleny čárkou.
-- Parametry mají pouze lokální platnost.
-- Můžeme nastavit výchozí hodnotu parametru přiřazení hodnoty za `=`
-
-```python
-def pozdrav(jmeno: str = "Nezadáno") -> str:
-    return "Ahoj " + jmeno
-```
+- **Parametr** je proměnná v definici funkce. Platí jen uvnitř funkce.
+- **Argument** je konkrétní hodnota, kterou předáme při volání.
+- Při volání se argumenty přiřadí parametrům: `cena = 250`, `sazbaDph = 0.21`.
 
 ```python
-print ( pozdrav("Adam") ) # Ahoj Adam
-print ( pozdrav() )       # Ahoj Nezadáno
+def cenaVcetneDph(cena, sazbaDph):      # cena a sazbaDph jsou parametry
+    return cena * (1 + sazbaDph)
+
+cenaVcetneDph(250, 0.21)                # 250 a 0.21 jsou argumenty
 ```
 
----
-
-# Parametry funkce
+- Funkci musíme zavolat se správným počtem argumentů, jinak Python vyvolá výjimku:
 
 ```python
-def mojeFunkce(parameter, secondParam):
-  return parameter + " " + secondParam
-
-mojeFunkce("argument") # vrátí chybu TypeError
+cenaVcetneDph(250)
 ```
 
-- Ve výchozím nastavení musí být funkce volána se správným počtem parametrů. Pokud funkce očekává 2 parametry, musíte ji zavolat se 2 argumenty.
-- nebo můžeme využít výchozí hodnotu parametru
+```text
+TypeError: cenaVcetneDph() missing 1 required positional argument: 'sazbaDph'
+```
 
 ---
 
 # Výchozí hodnota parametru
 
-- Můžeme nastavit výchozí hodnotu parametru přiřazení hodnoty za `=`
-- Pokud není parametr předán, použije se výchozí hodnota.
-- Parametry se přebírají v pořadí, není-li určeno jinak.
-
-
+- Parametr s výchozí hodnotou je **nepovinný**. Výchozí hodnotu zapíšeme za `=`.
+- Pokud argument nepředáme, použije se výchozí hodnota.
+- Nepovinné parametry musí být až **za** povinnými.
 
 ```python
-# Výchozí hodnota parametru
-def pozdrav(jmeno: str = "UN") -> str:
-    return "Ahoj " + jmeno
-    
-print ( pozdrav() ) # Ahoj UN
+def cenaVcetneDph(cena, sazbaDph=0.21):
+    return cena * (1 + sazbaDph)
+
+cenaVcetneDph(250)          # sazbaDph = 0.21 (základní sazba)
+cenaVcetneDph(250, 0.12)    # sazbaDph = 0.12 (snížená sazba)
 ```
 
 ```python
-def multiply(a: int, b:int = 2, c: int = 1) -> int:
-    return a * b + c
-
-multiply(3, 14, 10) # Všechny argumenty
-
-multiply(3) # Jeden povinný argument a
-
-multiply(3, 14) # Předány dva argumenty a, b
-multiply(3, c=10) # Předány dva argumenty a, c
+def cenaVcetneDph(sazbaDph=0.21, cena):   # SyntaxError - povinný parametr za nepovinným
+    return cena * (1 + sazbaDph)
 ```
 
 ---
 
-# Klíčová slova jako argumenty
+# Poziční a pojmenované argumenty
 
-- Pokud chcete předat argumenty do funkce, ale nechcete si pamatovat pořadí, můžete použít klíčová slova `kwArg = hodnota`
-- Klíčová slova musí být uvedena po pozicích argumentů.
-- Klíčová slova mohou být v libovolném pořadí.
+- **Poziční** argumenty se přiřadí parametrům podle pořadí.
+- **Pojmenované** argumenty (keyword arguments) zapíšeme jako `nazevParametru=hodnota`. Na pořadí pak nezáleží.
+- Pojmenované argumenty se hodí, když má funkce více nepovinných parametrů a chceme nastavit jen některý.
+- Pojmenované argumenty musí být až **za** pozičními.
+
+```python
+def cenaObjednavky(cena, sleva=0, doprava=99):
+    return cena - sleva + doprava
+
+cenaObjednavky(1000)                    # 1099
+cenaObjednavky(1000, 100)               # 999
+cenaObjednavky(1000, 100, 0)            # 900
+cenaObjednavky(1000, doprava=0)         # 1000 - sleva zůstala výchozí
+cenaObjednavky(doprava=0, cena=1000)    # 1000 - pořadí pojmenovaných nevadí
+```
+
+```python
+cenaObjednavky(cena=1000, 100)          # SyntaxError - poziční za pojmenovaným
+```
+
+---
+
+# Co vypíše? - argumenty
+
+```python
+def popis(zbozi, cena=100, mena="Kč"):
+    return f"{zbozi}: {cena} {mena}"
+
+print(popis("Tričko"))
+print(popis("Mikina", 690))
+print(popis("Čepice", mena="EUR"))
+```
+
+<v-click>
+
+```text
+Tričko: 100 Kč
+Mikina: 690 Kč
+Čepice: 100 EUR
+```
+
+U čepice jsme cenu nepředali, proto se použila výchozí hodnota `100`.
+
+</v-click>
+
+---
+
+# Typové anotace
+
+- U parametrů a návratové hodnoty můžeme uvést datový typ.
+- Parametr: `nazev: typ`, s výchozí hodnotou `nazev: typ = hodnota` (zde mezery kolem `=` píšeme).
+- Návratový typ za šipkou `->`. Funkce bez `return` má `-> None`.
+- Složitější typy: `list[str]` (seznam textů), `tuple[float, float]` (dvojice čísel), `bool`.
 
 ````md magic-move
 ```python
-def cat(food, state='stále hladová', action='mňau'):
-    print("-- Tahle kočka by nechtěla", action, end=' ')
-    print("kdybyste ji dali", food)
-    print("-- krásná srst", breed)
-    print("-- To je", state, "!")
-    
-    
-cat('kuře')                         # 1 argument dle pozice
-cat(food='kuře')                    # 1 argument klíčové slovo
-cat(food='rybu', action='kousat')   # 2 kwarg
-cat(action='kousat', food='rybu')   # 2 kwarg
-cat('beef', 'šťastná', 'syčet')     # 3 poziční argument
-cat('objetí', state='vrní')         # 1 poziční, 1 klíčové slovo
+def cenaVcetneDph(cena, sazbaDph=0.21):
+    return cena * (1 + sazbaDph)
 ```
-
 ```python
-def cat(food: str, state: str='stále hladová', action:str='mňau') -> None:
-    print("-- Tahle kočka by nechtěla", action, end=' ')
-    print("kdybyste ji dali", food)
-    print("-- krásná srst", breed)
-    print("-- To je", state, "!")
-    
-    
-cat('kuře')                         # 1 argument dle pozice
-cat(food='kuře')                    # 1 argument klíčové slovo
-cat(food='rybu', action='kousat')   # 2 kwarg
-cat(action='kousat', food='rybu')   # 2 kwarg
-cat('beef', 'šťastná', 'syčet')     # 3 poziční argument
-cat('objetí', state='vrní')         # 1 poziční, 1 klíčové slovo
+def cenaVcetneDph(cena: float, sazbaDph: float = 0.21) -> float:
+    return cena * (1 + sazbaDph)
 ```
 ````
 
----
-
-# Side effect
-
-- Funkce je bez tzv. **vedlejších efektů** (side effect), tj. používá pouze své parametry a nepoužívá žádné proměnné definované mimo ni (např. vstup od uživatele). Stejně tak mimo návratové hodnoty nijak neovlivňuje běh programu. 
-- Funkci bez vedlejších efektů se říká čistá funkce (pure function). Její výhodou je, že pro stejný vstup vždy vrací stejný výstup, což například usnadňuje testování nebo hledání chyby.
+- **Pozor:** Python typy při běhu **nekontroluje**. Anotace jsou dokumentace a nápověda pro editor (VS Code, PyCharm) nebo nástroj `mypy`.
 
 ```python
-# Špinavá funkce
-# čte proměnnou "zvenku". 
-# Může tedy v různých situacích vracet různé výsledky.
-
-exchange_rate = 26
-def convert_to_euro(crown: float) -> float:
-    return crown * exchange_rate
-
+cenaVcetneDph("250")    # editor zvýrazní chybu, Python spadne až uvnitř funkce
 ```
 
-```python
-# Takto uvedená funkce je již čistou funkcí.
-def convert_to_euro(crown: float, exchange_rate: float) -> float:
-    return crown * exchange_rate
+```text
+TypeError: can't multiply sequence by non-int of type 'float'
 ```
 
 ---
+layout: cover
+background: https://cover.sli.dev
+---
 
-# Rekurze
+# Proměnné ve funkcích
 
-- Rekurze je technika, kdy funkce volá sama sebe.
-- Rekurze je užitečná pro řešení problémů, které lze rozdělit na menší části.
-- Rekurze může být náročná na paměť, pokud je hloubka rekurze příliš velká.
-- Rekurze musí mít podmínku ukončení, aby se zabránilo nekonečnému volání.
+---
+
+# Lokální proměnné
+
+- Parametry a proměnné vytvořené uvnitř funkce jsou **lokální**.
+- Vzniknou při zavolání funkce a po jejím skončení zaniknou.
+- Mimo funkci nejsou vidět. Výsledek dostaneme ven jen přes `return`.
 
 ```python
-def factorial(n: int) -> int:
-    if n == 1:
-        return 1
-    else:
-        return n * factorial(n-1)
+def cenaVcetneDph(cena: float) -> float:
+    sazba = 0.21
+    return cena * (1 + sazba)
+
+print(cenaVcetneDph(100))
+print(sazba)
+```
+
+```text
+121.0
+NameError: name 'sazba' is not defined
+```
+
+---
+
+# Globální proměnné
+
+- Proměnná vytvořená mimo funkce je **globální**. Funkce ji může číst.
+- Přiřazení uvnitř funkce vytvoří **novou lokální** proměnnou. Globální proměnná se nezmění.
+
+```python
+cena = 1000
+
+def zlevni(cena: float) -> float:
+    cena = cena * 0.9       # lokální proměnná cena
+    return cena
+
+print(zlevni(500))          # 450.0
+print(cena)                 # 1000 - globální proměnná se nezměnila
+```
+
+- Klíčové slovo `global` dovolí globální proměnnou ve funkci změnit. **Nepoužíváme ho** - funkce pak závisí na stavu mimo sebe a chyby se špatně hledají.
+- Co funkce potřebuje, dostane **parametrem**. Co vytvoří, předá přes **`return`**.
+
+---
+
+# Co vypíše? - lokální a globální proměnná
+
+```python
+sleva = 100
+
+def cenaPoSleve(cena: int) -> int:
+    sleva = 200
+    return cena - sleva
+
+print(cenaPoSleve(1000))
+print(sleva)
+```
+
+<v-click>
+
+```text
+800
+100
+```
+
+`sleva = 200` uvnitř funkce vytvořila lokální proměnnou. Globální `sleva` zůstala `100`.
+
+</v-click>
+
+---
+layout: two-cols-header
+---
+
+# Seznam jako argument
+
+- Seznam se do funkce **nekopíruje**. Funkce pracuje se stejným seznamem jako volající.
+- Když funkce seznam změní (`append()`, `remove()`), změna je vidět i mimo funkci.
+
+::left::
+
+## Funkce mění předaný seznam
+
+```python
+def pridejDoKosiku(kosik: list[str],
+                   zbozi: str) -> None:
+    kosik.append(zbozi)
+
+muj = ["tričko"]
+pridejDoKosiku(muj, "mikina")
+print(muj)    # ['tričko', 'mikina']
+```
+
+- `-> None` napovídá, že funkce mění vstup.
+
+::right::
+
+## Funkce vrací nový seznam
+
+```python
+def bezVyprodanych(kosik: list[str],
+                   vyprodane: list[str]) -> list[str]:
+    vysledek = []
+    for zbozi in kosik:
+        if zbozi not in vyprodane:
+            vysledek.append(zbozi)
+    return vysledek
+
+muj = ["tričko", "mikina", "čepice"]
+dostupne = bezVyprodanych(muj, ["mikina"])
+print(muj)        # beze změny
+print(dostupne)   # ['tričko', 'čepice']
+```
+
+---
+
+# Past - seznam jako výchozí hodnota
+
+```python
+def pridejPolozku(zbozi: str, kosik: list[str] = []) -> list[str]:
+    kosik.append(zbozi)
+    return kosik
+
+print(pridejPolozku("tričko"))
+print(pridejPolozku("mikina"))
+```
+
+<v-click>
+
+```text
+['tričko']
+['tričko', 'mikina']
+```
+
+- Výchozí hodnota se vytvoří **jen jednou** při definici funkce. Všechna volání sdílejí stejný seznam.
+- Řešení: výchozí hodnota `None` a nový seznam vytvoříme až uvnitř funkce.
+
+```python
+def pridejPolozku(zbozi: str, kosik: list[str] | None = None) -> list[str]:
+    if kosik is None:
+        kosik = []
+    kosik.append(zbozi)
+    return kosik
+```
+
+</v-click>
+
+---
+layout: two-cols-header
+---
+
+# Čisté funkce a vedlejší efekty
+
+- **Vedlejší efekt** - funkce mění něco mimo sebe nebo komunikuje s okolím: `print()`, `input()`, změna předaného seznamu, změna globální proměnné, zápis do souboru.
+- **Čistá funkce** - výsledek závisí jen na parametrech a nemá vedlejší efekty. Pro stejný vstup vrací vždy stejný výstup, a proto se snadno testuje.
+
+::left::
+
+## Nečistá funkce
+
+```python
+kurzEur = 25.0
+
+def naEura(koruny: float) -> float:
+    print("Převádím...")       # vedlejší efekt
+    return koruny / kurzEur    # závisí na globální proměnné
+```
+
+::right::
+
+## Čistá funkce
+
+```python
+def naEura(koruny: float, kurzEur: float) -> float:
+    return koruny / kurzEur
+```
+
+```python
+print(naEura(1000, 25.0))      # 40.0
+```
+
+---
+
+# Stavba programu s funkcemi
+
+- Každá funkce dělá **jednu věc**. Funkce mohou volat jiné funkce.
+- Nahoře jsou definice funkcí, dole hlavní program.
+- Hlavní program načte vstup (`input()`), zavolá funkce a vypíše výsledek (`print()`).
+
+```python
+def cenaVcetneDph(cena: float, sazbaDph: float = 0.21) -> float:
+    return cena * (1 + sazbaDph)
+
+def maDopravuZdarma(cenaObjednavky: float) -> bool:
+    return cenaObjednavky >= 1500
+
+def cenaDopravy(cenaObjednavky: float) -> int:
+    if maDopravuZdarma(cenaObjednavky):
+        return 0
+    return 99
+
+# hlavní program: vstup -> výpočet -> výstup
+cena = float(input("Cena zboží bez DPH: "))
+celkem = cenaVcetneDph(cena)
+celkem += cenaDopravy(celkem)
+print(f"K úhradě: {celkem:.2f} Kč")
 ```
 
 ---
@@ -345,59 +699,87 @@ background: https://cover.sli.dev
 
 ---
 
-# Dokumentační řetězce `docstring`
+# Dokumentační řetězec - docstring
 
-- Docstring je speciální textový řetězec, který slouží k dokumentaci funkce, třídy nebo modulu.
-- Píše se hned za hlavičku funkce (pod deklaraci `def`).
-- Docstring se uzavírá do trojitých uvozovek `"""` nebo `'''`.
-- Pomáhá pochopit, co funkce dělá, jaké má parametry a co vrací.
-- Docstring lze zobrazit příkazem `help()` nebo přes .`__doc__`.
-- Dodržujeme konvenci [PEP 257](https://www.python.org/dev/peps/pep-0257/):
-  - Krátký popis funkce.
-  - Prázdný řádek.
-  - Detailní popis funkce.
-  - Seznam parametrů s jejich popisem.
-  - Popis návratové hodnoty.
-
----
-
-# Příklad docstringu
+- Docstring je text v trojitých uvozovkách `"""` hned pod hlavičkou funkce.
+- Podle [PEP 257](https://peps.python.org/pep-0257/): první řádek je krátké shrnutí (celá věta), pak prázdný řádek a podrobnosti.
+- Parametry a návratovou hodnotu popisujeme podle [Google stylu](https://google.github.io/styleguide/pyguide.html#383-functions-and-methods) - sekce `Args:` a `Returns:`.
+- Docstring zobrazí `help(nazevFunkce)`, `nazevFunkce.__doc__` i editor po najetí myší na název funkce.
 
 ```python
-def pozdrav(jmeno: str) -> str:
+def cenaVcetneDph(cena: float, sazbaDph: float = 0.21) -> float:
+    """Vrátí cenu zboží včetně DPH.
+
+    Args:
+        cena: Cena bez DPH v Kč.
+        sazbaDph: Sazba DPH jako desetinné číslo, výchozí je 0.21.
+
+    Returns:
+        Cena včetně DPH v Kč.
     """
-    Vrátí pozdrav pro zadané jméno.
-    
-    Parametry:
-        jmeno (str): jméno osoby, která má být pozdravena.
-    
-    Návratová hodnota:
-        str: text pozdravu.
-    """
-    return f"Ahoj {jmeno}!"
+    return cena * (1 + sazbaDph)
+
+help(cenaVcetneDph)
 ```
 
+---
+layout: two-cols-header
+---
+
+# Rekurze
+
+- Rekurze je technika, kdy funkce volá **sama sebe**.
+- Každé volání musí úlohu zmenšit a rekurze musí mít **ukončovací podmínku**.
+- Bez ukončovací podmínky Python po zhruba 1000 vnořených voláních vyvolá `RecursionError`.
+- Většinu úloh lze napsat i cyklem. Rekurze se hodí na stromové struktury, např. složky na disku.
+
+::left::
+
 ```python
-print( pozdrav("Adam") )
-print( help(pozdrav) )
-print( pozdrav.__doc__ )
+def odpocet(n: int) -> None:
+    if n <= 0:              # ukončovací podmínka
+        print("Start!")
+        return
+    print(n)
+    odpocet(n - 1)          # volání sebe sama
+
+odpocet(3)                  # 3, 2, 1, Start!
+```
+
+::right::
+
+```python
+def soucet(n: int) -> int:
+    """Vrátí součet 1 + 2 + ... + n."""
+    if n <= 1:              # ukončovací podmínka
+        return n
+    return n + soucet(n - 1)
+
+print(soucet(4))            # 10
 ```
 
 ---
 
 # Shrnutí
 
-- Funkce jsou bloky kódu, které lze opakovaně volat.
-- **Parametry** jsou proměnné uvedené v deklaraci funkce.
-  - mohou mít výchozí hodnoty
-  - lze je předávat pomocí klíčových slov kwArg v libovolném pořadí
-- **Argumenty** jsou hodnoty předané funkci při jejím volání.
-- Návratová hodnota se určuje pomocí klíčového slova `return`. 
-- Parametry i výstupní hodnoty mohou mít určené datové typy. Nemá-li funkce `return`, vrací `None`.
-- Popisujeme docstringem a držíme se konvence **PEP 257** – krátký popis, prázdný řádek, detaily, parametry, návratová hodnota.
-- Funkce by měly být co nejvíce čisté, **bez vedlejších efektů**.
-- **Rekurze** je technika, kdy funkce volá sama sebe.
+- Funkce je pojmenovaný blok kódu. Definujeme ji pomocí `def`, voláme názvem a závorkami.
+- Funkce, která počítá, výsledek **vrací** přes `return`. Funkce bez `return` vrací `None`.
+- **Parametr** je proměnná v definici, **argument** je hodnota při volání.
+  - Parametry mohou mít výchozí hodnotu, argumenty lze předat pozičně nebo pojmenovaně.
+- Typové anotace jsou dokumentace. Python je při běhu nekontroluje.
+- Proměnné ve funkci jsou lokální. Data jdou do funkce parametrem a ven přes `return`. Klíčové slovo `global` nepoužíváme.
+- Funkce může změnit předaný seznam. Seznam jako výchozí hodnotu nahradíme `None`.
+- Preferujeme čisté funkce bez vedlejších efektů. `input()` a `print()` patří do hlavního programu.
+- Funkce dokumentujeme docstringem. Rekurze potřebuje ukončovací podmínku.
 
+---
+
+# Cvičení
+
+- Základní: [Py_09_Funkce](https://github.com/oa-pva2-syllabus/Py_09_Funkce)
+  - definice a volání funkce, `return`, výchozí hodnoty, práce se seznamem
+- Pokročilé: [Py_10_Funkce_pokrocile](https://github.com/oa-pva2-syllabus/Py_10_Funkce_pokrocile)
+  - Státy světa, SMS brána, Hodnocení zakázky
 
 ---
 src: '../../pages/thanku.md'
