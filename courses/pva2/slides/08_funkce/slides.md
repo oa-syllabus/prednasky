@@ -91,7 +91,7 @@ print("Čepice:", cenaCepice * 1.21)
 ## S funkcí
 
 ```python
-def cenaVcetneDph(cena):
+def cenaVcetneDph(cena: float) -> float:
     return cena * 1.21
 
 print("Tričko:", cenaVcetneDph(250))
@@ -115,17 +115,16 @@ background: https://cover.sli.dev
 # Definice funkce
 
 ```python
-def cenaVcetneDph(cena, sazbaDph):
+def cenaVcetneDph(cena: float, sazbaDph: float) -> float:
     vysledek = cena * (1 + sazbaDph)
     return vysledek
 ```
 
 | Část | Význam |
 |---|---|
-| `def` | klíčové slovo, které zahajuje definici funkce |
-| `cenaVcetneDph` | název funkce |
-| `(cena, sazbaDph)` | seznam parametrů oddělených čárkou, může být i prázdný `()` |
-| `:` | dvojtečka ukončuje hlavičku funkce |
+| `def` | klíčové slovo zahajuje definici, za ním je název funkce |
+| `cena: float` | parametr a jeho datový typ, parametry oddělujeme čárkou |
+| `-> float:` | datový typ návratové hodnoty, dvojtečka ukončuje hlavičku funkce |
 | odsazené řádky | tělo funkce - standardně **4 mezery** |
 | `return` | ukončí funkci a vrátí výsledek |
 
@@ -142,7 +141,7 @@ def cenaVcetneDph(cena, sazbaDph):
 ```python
 vypisPozdrav()      # NameError: name 'vypisPozdrav' is not defined
 
-def vypisPozdrav():
+def vypisPozdrav() -> None:
     print("Vítejte v e-shopu")
 ```
 
@@ -156,7 +155,7 @@ def vypisPozdrav():
 - Průběh si můžeš krokovat v [Python Tutor](https://pythontutor.com/python-compiler.html).
 
 ```python
-def vypisPozdrav():
+def vypisPozdrav() -> None:
     print("Vítejte v e-shopu")
 
 print("Start")
@@ -188,7 +187,7 @@ background: https://cover.sli.dev
 - Vrácenou hodnotu můžeme uložit do proměnné, použít ve výrazu nebo předat jiné funkci.
 
 ```python
-def cenaVcetneDph(cena, sazbaDph):
+def cenaVcetneDph(cena: float, sazbaDph: float) -> float:
     return cena * (1 + sazbaDph)
     print("Sem se program nikdy nedostane")
 ```
@@ -213,7 +212,7 @@ layout: two-cols-header
 ## `print` - výsledek se ztratí
 
 ```python
-def slevaPrint(cena):
+def slevaPrint(cena: float) -> None:
     print(cena * 0.9)
 
 x = slevaPrint(100)   # vypíše 90.0
@@ -230,7 +229,7 @@ for *: 'NoneType' and 'int'
 ## `return` - výsledek můžeme použít
 
 ```python
-def slevaReturn(cena):
+def slevaReturn(cena: float) -> float:
     return cena * 0.9
 
 x = slevaReturn(100)  # nic nevypíše
@@ -248,7 +247,7 @@ print(x * 2)          # 180.0
 - Prázdný `return` funkci předčasně ukončí.
 
 ```python
-def vypisUctenku(zbozi, cena):
+def vypisUctenku(zbozi: str, cena: float) -> None:
     if cena <= 0:
         print("Chybná cena")
         return              # předčasné ukončení funkce
@@ -267,7 +266,7 @@ print(vysledek)                          # None
 - N-tici můžeme hned při volání rozbalit do více proměnných.
 
 ```python
-def rozdelCenu(cenaSDph, sazbaDph):
+def rozdelCenu(cenaSDph: float, sazbaDph: float) -> tuple[float, float]:
     zaklad = cenaSDph / (1 + sazbaDph)
     dph = cenaSDph - zaklad
     return zaklad, dph
@@ -293,7 +292,7 @@ layout: two-cols-header
 ## Takto ne
 
 ```python
-def maDopravuZdarma(cenaObjednavky):
+def maDopravuZdarma(cenaObjednavky: float) -> bool:
     if cenaObjednavky >= 1500:
         return True
     else:
@@ -307,7 +306,7 @@ def maDopravuZdarma(cenaObjednavky):
 ## Takto ano
 
 ```python
-def maDopravuZdarma(cenaObjednavky):
+def maDopravuZdarma(cenaObjednavky: float) -> bool:
     return cenaObjednavky >= 1500
 ```
 
@@ -323,7 +322,7 @@ else:
 # Co vypíše? - `return`
 
 ```python
-def zkontroluj(cena):
+def zkontroluj(cena: float) -> str:
     if cena > 1000:
         return "drahé"
     return "levné"
@@ -360,10 +359,12 @@ background: https://cover.sli.dev
 - Při volání se argumenty přiřadí parametrům: `cena = 250`, `sazbaDph = 0.21`.
 
 ```python
-def cenaVcetneDph(cena, sazbaDph):      # cena a sazbaDph jsou parametry
+# cena a sazbaDph jsou parametry
+def cenaVcetneDph(cena: float, sazbaDph: float) -> float:
     return cena * (1 + sazbaDph)
 
-cenaVcetneDph(250, 0.21)                # 250 a 0.21 jsou argumenty
+# 250 a 0.21 jsou argumenty
+cenaVcetneDph(250, 0.21)
 ```
 
 - Funkci musíme zavolat se správným počtem argumentů, jinak Python vyvolá výjimku:
@@ -380,12 +381,12 @@ TypeError: cenaVcetneDph() missing 1 required positional argument: 'sazbaDph'
 
 # Výchozí hodnota parametru
 
-- Parametr s výchozí hodnotou je **nepovinný**. Výchozí hodnotu zapíšeme za `=`.
+- Parametr s výchozí hodnotou je **nepovinný**. Výchozí hodnotu zapíšeme za datový typ a `=`: `sazbaDph: float = 0.21`.
 - Pokud argument nepředáme, použije se výchozí hodnota.
 - Nepovinné parametry musí být až **za** povinnými.
 
 ```python
-def cenaVcetneDph(cena, sazbaDph=0.21):
+def cenaVcetneDph(cena: float, sazbaDph: float = 0.21) -> float:
     return cena * (1 + sazbaDph)
 
 cenaVcetneDph(250)          # sazbaDph = 0.21 (základní sazba)
@@ -393,7 +394,8 @@ cenaVcetneDph(250, 0.12)    # sazbaDph = 0.12 (snížená sazba)
 ```
 
 ```python
-def cenaVcetneDph(sazbaDph=0.21, cena):   # SyntaxError - povinný parametr za nepovinným
+# SyntaxError - povinný parametr cena je za nepovinným
+def cenaVcetneDph(sazbaDph: float = 0.21, cena: float) -> float:
     return cena * (1 + sazbaDph)
 ```
 
@@ -407,7 +409,7 @@ def cenaVcetneDph(sazbaDph=0.21, cena):   # SyntaxError - povinný parametr za n
 - Pojmenované argumenty musí být až **za** pozičními.
 
 ```python
-def cenaObjednavky(cena, sleva=0, doprava=99):
+def cenaObjednavky(cena: float, sleva: float = 0, doprava: float = 99) -> float:
     return cena - sleva + doprava
 
 cenaObjednavky(1000)                    # 1099
@@ -426,7 +428,7 @@ cenaObjednavky(cena=1000, 100)          # SyntaxError - poziční za pojmenovan�
 # Co vypíše? - argumenty
 
 ```python
-def popis(zbozi, cena=100, mena="Kč"):
+def popis(zbozi: str, cena: float = 100, mena: str = "Kč") -> str:
     return f"{zbozi}: {cena} {mena}"
 
 print(popis("Tričko"))
@@ -450,25 +452,30 @@ U čepice jsme cenu nepředali, proto se použila výchozí hodnota `100`.
 
 # Typové anotace
 
-- U parametrů a návratové hodnoty můžeme uvést datový typ.
+- Datové typy u parametrů a návratové hodnoty se nazývají **typové anotace**.
 - Parametr: `nazev: typ`, s výchozí hodnotou `nazev: typ = hodnota` (zde mezery kolem `=` píšeme).
-- Návratový typ za šipkou `->`. Funkce bez `return` má `-> None`.
-- Složitější typy: `list[str]` (seznam textů), `tuple[float, float]` (dvojice čísel), `bool`.
+- Návratový typ za šipkou `->`.
 
-````md magic-move
-```python
-def cenaVcetneDph(cena, sazbaDph=0.21):
-    return cena * (1 + sazbaDph)
-```
-```python
-def cenaVcetneDph(cena: float, sazbaDph: float = 0.21) -> float:
-    return cena * (1 + sazbaDph)
-```
-````
+| Anotace | Význam |
+|---|---|
+| `int`, `float`, `str` | celé číslo, desetinné číslo, text |
+| `bool` | `True` nebo `False` |
+| `list[str]` | seznam textů |
+| `tuple[float, float]` | dvojice čísel |
+| `None` | funkce nic nevrací |
+
+---
+hideInToc: true
+---
+
+# Typové anotace - Python je nekontroluje
 
 - **Pozor:** Python typy při běhu **nekontroluje**. Anotace jsou dokumentace a nápověda pro editor (VS Code, PyCharm) nebo nástroj `mypy`.
 
 ```python
+def cenaVcetneDph(cena: float, sazbaDph: float = 0.21) -> float:
+    return cena * (1 + sazbaDph)
+
 cenaVcetneDph("250")    # editor zvýrazní chybu, Python spadne až uvnitř funkce
 ```
 
