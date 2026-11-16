@@ -152,7 +152,7 @@ def vypisPozdrav() -> None:
 - Funkci zavoláme jejím názvem a kulatými závorkami `()`.
 - Samotná definice nic nespustí. Kód v těle se provede až při volání.
 - Při volání program „skočí“ do těla funkce a po jeho dokončení pokračuje za místem volání.
-- Průběh si můžeš krokovat v [Python Tutor](https://pythontutor.com/python-compiler.html).
+- Průběh si můžeš krokovat přímo v editoru (další slide).
 
 ```python
 def vypisPozdrav() -> None:
@@ -170,6 +170,25 @@ Vítejte v e-shopu
 Vítejte v e-shopu
 Konec
 ```
+
+---
+
+# Krokování v editoru
+
+- **Breakpoint** (červená tečka po kliknutí vlevo od čísla řádku) zastaví program na daném řádku.
+- Panel **Variables** ukazuje hodnoty proměnných, **Call Stack** (PyCharm: **Frames**) funkci, ve které právě jsme.
+
+| Akce | VS Code | PyCharm |
+|---|---|---|
+| spustit ladění | `F5` | `Shift+F9` (ikona brouka) |
+| další řádek, do funkce nevstoupí (Step Over) | `F10` | `F8` |
+| vstoupit do funkce (Step Into) | `F11` | `F7` |
+| dokončit funkci a vrátit se (Step Out) | `Shift+F11` | `Shift+F8` |
+| pokračovat k dalšímu breakpointu | `F5` | `F9` |
+
+<!--
+Ukázat živě na příkladu vypisPozdrav(): breakpoint na řádek print("Start"), pak F11 do funkce.
+-->
 
 ---
 layout: cover
@@ -468,20 +487,22 @@ U čepice jsme cenu nepředali, proto se použila výchozí hodnota `100`.
 hideInToc: true
 ---
 
-# Typové anotace - Python je nekontroluje
+# Proč typové anotace píšeme
 
-- **Pozor:** Python typy při běhu **nekontroluje**. Anotace jsou dokumentace a nápověda pro editor (VS Code, PyCharm) nebo nástroj `mypy`.
+- **Čitelnost:** z hlavičky hned víme, co funkci předat a co vrátí, bez čtení těla.
+- **Nápověda editoru:** u `jmeno: str` editor po napsání tečky nabídne `.upper()`, `.strip()` …
+- **Chyby před spuštěním:** editor nebo nástroj `mypy` upozorní na špatný typ ještě před spuštěním programu.
+- **Kontrola ve cvičeních:** automatické hodnocení ověřuje, že funkce anotace mají.
+- Python sám typy při běhu **nekontroluje**. Chybu najde editor, ne interpret.
 
 ```python
 def cenaVcetneDph(cena: float, sazbaDph: float = 0.21) -> float:
     return cena * (1 + sazbaDph)
 
-cenaVcetneDph("250")    # editor zvýrazní chybu, Python spadne až uvnitř funkce
+cenaVcetneDph("250")   # PyCharm: Expected type 'float', got 'str' instead
 ```
 
-```text
-TypeError: can't multiply sequence by non-int of type 'float'
-```
+<p class="text-sm opacity-70">VS Code hlásí typové chyby až po zapnutí: Settings → Python › Analysis: Type Checking Mode → <code>basic</code>.</p>
 
 ---
 layout: cover
@@ -739,6 +760,7 @@ layout: two-cols-header
 - Každé volání musí úlohu zmenšit a rekurze musí mít **ukončovací podmínku**.
 - Bez ukončovací podmínky Python po zhruba 1000 vnořených voláních vyvolá `RecursionError`.
 - Většinu úloh lze napsat i cyklem. Rekurze se hodí na stromové struktury, např. složky na disku.
+- Krokuj `soucet(4)` přes Step Into a sleduj, jak v Call Stack přibývají volání.
 
 ::left::
 
@@ -773,7 +795,7 @@ print(soucet(4))            # 10
 - Funkce, která počítá, výsledek **vrací** přes `return`. Funkce bez `return` vrací `None`.
 - **Parametr** je proměnná v definici, **argument** je hodnota při volání.
   - Parametry mohou mít výchozí hodnotu, argumenty lze předat pozičně nebo pojmenovaně.
-- Typové anotace jsou dokumentace. Python je při běhu nekontroluje.
+- Typové anotace zlepšují čitelnost a editor podle nich hlásí chyby. Python je při běhu nekontroluje.
 - Proměnné ve funkci jsou lokální. Data jdou do funkce parametrem a ven přes `return`. Klíčové slovo `global` nepoužíváme.
 - Funkce může změnit předaný seznam. Seznam jako výchozí hodnotu nahradíme `None`.
 - Preferujeme čisté funkce bez vedlejších efektů. `input()` a `print()` patří do hlavního programu.
