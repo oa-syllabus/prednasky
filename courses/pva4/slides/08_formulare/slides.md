@@ -15,7 +15,7 @@ lineNumbers: true
 
 #== Dravings https://sli.dev/guide/drawing
 drawings:
-  persist: true
+  persist: false
 
 #== Export Configuration
 # use export CLI options in camelCase format https://sli.dev/guide/exporting.html
@@ -51,11 +51,11 @@ layout: default
 
 - Formulář je základní způsob, jak uživatel předá data serveru.
 - Tvoří ho element `<form>` a ovládací prvky uvnitř něj: `<input>`, `<textarea>`, `<select>`, `<button>`.
-- Pomocné prvky: `<label>`, `<fieldset>`, `<legend>`, `<optgroup>`, `<option>`, `<datalist>`, `<output>`.
+- Pomocné prvky: `<label>`, `<option>`, `<fieldset>`, `<legend>`.
 
 Atributy elementu `<form>`:
 
-- `action` - cílová URL, kam se data odešlou. V příkladech ho vždy vyplňujeme.
+- `action` - cílová URL, kam se data odešlou. Chybí-li, odešlou se na adresu aktuální stránky.
 - `method` - metoda odeslání, `get` (výchozí) nebo `post`.
 
 ```php
@@ -63,10 +63,8 @@ echo '
     <form action="destUrl.php" method="post">
         <label for="name">Jméno:</label>
         <input type="text" id="name" name="name"><br>
-
         <label for="email">E-mail:</label>
         <input type="email" id="email" name="email"><br>
-
         <input type="submit" value="Odeslat">
     </form>
 ';
@@ -87,11 +85,21 @@ echo '
 | `<input type="password">` | skryje zadávané znaky |
 | `<input type="checkbox">` | zaškrtávací pole (ano/ne) |
 | `<input type="radio">` | výběr jedné možnosti ze skupiny (stejné `name`) |
+
+---
+
+# Další prvky formuláře
+
+| Prvek | Použití |
+|---|---|
 | `<select>` + `<option>` | rozbalovací seznam |
 | `<textarea>` | víceřádkový text |
-| `<input type="hidden">` | skrytá hodnota |
+| `<input type="hidden">` | hodnota, kterou uživatel na stránce nevidí |
 | `<input type="submit">` | tlačítko, které formulář odešle (text určuje `value`) |
 | `<button type="submit">` | totéž, ale uvnitř může být HTML (ikona, formátovaný text) |
+
+- `hidden` je skrytý jen na stránce. Uživatel ho najde ve zdrojovém kódu a může ho změnit.
+- Do skrytého pole proto nepatří nic, čemu server slepě věří (cena, role, ID cizího záznamu).
 
 ---
 
@@ -100,17 +108,17 @@ echo '
 ```php
 echo '
     <form action="destUrl.php" method="post">
-        <input type="text" name="name" required>
+        <label>Jméno: <input type="text" name="name" required></label>
 
         <select name="country">
             <option value="cz">Česko</option>
             <option value="sk">Slovensko</option>
         </select>
 
-        <input type="radio" name="size" value="m" checked> M
-        <input type="radio" name="size" value="l"> L
+        <label><input type="radio" name="size" value="m" checked> M</label>
+        <label><input type="radio" name="size" value="l"> L</label>
 
-        <input type="checkbox" name="newsletter" value="1"> Newsletter
+        <label><input type="checkbox" name="newsletter" value="1"> Newsletter</label>
 
         <textarea name="message"></textarea>
         <button type="submit">Odeslat</button>
@@ -123,6 +131,7 @@ echo '
 ---
 layout: cover
 background: https://cover.sli.dev
+hideInToc: true
 ---
 
 # Metoda GET
@@ -131,11 +140,20 @@ background: https://cover.sli.dev
 
 # Metoda `GET`
 
-- Data se připojí k URL jako query string: `destUrl.php?name=Jan&email=jan@example.com`.
-- PHP je zpřístupní v superglobálním poli `$_GET`.
-- Superglobální proměnné jsou dostupné z libovolného místa skriptu (včetně funkcí).
-- Hodnoty jsou viditelné v adrese, v historii prohlížeče i v logu serveru.
+- Data se připojí k URL jako query string: `destUrl.php?name=Jan&email=jan%40example.com`.
+- Speciální znaky prohlížeč zakóduje (`@` → `%40`, mezera → `+`), PHP je dekóduje samo.
+- PHP data zpřístupní v superglobálním poli `$_GET`, dostupném odkudkoli (i ve funkci).
 - GET je určen pro **čtení** dat bez vedlejšího efektu: vyhledávání, filtrování, řazení, stránkování.
+
+```php
+echo '
+    <form action="destUrl.php" method="get">
+        <label>Jméno: <input type="text" name="name"></label><br>
+        <label>E-mail: <input type="email" name="email"></label><br>
+        <button type="submit">Odeslat</button>
+    </form>
+';
+```
 
 ---
 
@@ -145,55 +163,35 @@ background: https://cover.sli.dev
 - Odpověď je snadno cachovatelná.
 - Opakované načtení stránky je bezpečné, nic se nezmění.
 - Délka URL je omezená (v praxi zhruba 2000 znaků), jde posílat jen text.
-- Citlivé údaje se do URL nikdy nedávají.
-
-```php
-echo '
-    <form action="destUrl.php" method="get">
-        Name: 	<input type="text" name="name"><br>
-        E-mail:	 <input type="text" name="email"><br>
-        <input type="submit">
-    </form>
-';
-```
+- Hodnoty jsou vidět v adrese, v historii prohlížeče i v logu serveru. Citlivé údaje se do URL nikdy nedávají.
 
 ---
 
 # Přístup na hodnoty - GET
 
-<img src="/get.jpg"/>
+Požadavek, který prohlížeč odešle (F12 → Network → kliknout na požadavek):
 
----
-
-# Přístup na hodnoty - GET
-
-```php
-echo '
-    <form action="destUrl.php" method="get">
-        Name: 	<input type="text" name="name"><br>
-        E-mail:	 <input type="text" name="email"><br>
-        <input type="submit" value="odeslat">
-    </form>
-';
+```http
+GET /destUrl.php?name=Jan&email=jan%40example.com HTTP/1.1
+Host: localhost
 ```
 
-Hodnoty jsou předávány přes URL
-> url: `https://localhost/PVA4/destUrl.php?name=value&email=value`
+- Data jsou v první řádce požadavku, za otazníkem. Tělo požadavku je prázdné.
 
+Soubor `destUrl.php`:
 
-Přístup na hodnoty formuláře:
 ```php
 <?php
+declare(strict_types=1);
 
-$_GET['name'];
-$_GET['email'];
-
-?>
+$name = $_GET['name'] ?? '';      // 'Jan'
+$email = $_GET['email'] ?? '';    // 'jan@example.com'
 ```
 
 ---
 layout: cover
 background: https://cover.sli.dev
+hideInToc: true
 ---
 
 # Metoda POST
@@ -206,6 +204,16 @@ background: https://cover.sli.dev
 - PHP je zpřístupní v superglobálním poli `$_POST`.
 - POST je určen pro **změnu stavu**: přihlášení, registrace, uložení do databáze, odeslání zprávy.
 - Hodnoty v těle požadavku nejsou nijak šifrované. Ochranu při přenosu zajišťuje až HTTPS.
+
+```php
+echo '
+    <form action="destUrl.php" method="post">
+        <label>Jméno: <input type="text" name="name"></label><br>
+        <label>E-mail: <input type="email" name="email"></label><br>
+        <button type="submit">Odeslat</button>
+    </form>
+';
+```
 
 ---
 
@@ -221,30 +229,26 @@ background: https://cover.sli.dev
 
 # Přístup na hodnoty - POST
 
-<img src="/post.jpg"/>
+Požadavek, který prohlížeč odešle (F12 → Network → kliknout na požadavek):
 
----
+```http
+POST /destUrl.php HTTP/1.1
+Host: localhost
+Content-Type: application/x-www-form-urlencoded
 
-# Přístup na hodnoty - POST
-
-```php
-echo '
-    <form action="destUrl.php" method="post">
-        Name: 	<input type="text" name="name"><br>
-        E-mail:	 <input type="text" name="email"><br>
-        <input type="submit" value="odeslat">
-    </form>
-';
+name=Jan&email=jan%40example.com
 ```
 
-Přístup na hodnoty formuláře:
+- URL je bez dat. Data mají stejný zápis jako u GET, jen jsou v těle požadavku.
+
+Soubor `destUrl.php`:
+
 ```php
 <?php
+declare(strict_types=1);
 
-$_POST['name'];
-$_POST['email'];
-
-?>
+$name = $_POST['name'] ?? '';
+$email = $_POST['email'] ?? '';
 ```
 
 ---
@@ -254,8 +258,7 @@ $_POST['email'];
 | | GET | POST |
 |---|---|---|
 | Určení | čtení dat (bez vedlejšího efektu) | změna stavu na serveru |
-| Umístění dat | v URL (query string) | v těle HTTP požadavku |
-| Viditelnost | v URL, historii i záložce | není v URL ani v historii |
+| Umístění dat | v URL, zůstanou i v historii | v těle HTTP požadavku |
 | Délka dat | omezená délkou URL (cca 2000 znaků) | omezená jen nastavením serveru |
 | Datové typy | text | text i binární data (soubory) |
 | Záložka, sdílení odkazem | ano | ne |
@@ -268,13 +271,14 @@ $_POST['email'];
 
 - Data jsou v superglobálních polích `$_GET` a `$_POST`.
 - Jde o asociativní pole: klíč = `name` prvku, hodnota = vložený údaj.
-- Hodnota může **chybět** (uživatel pole nevyplnil, prvek se neodeslal, požadavek je podvržený). Přístup na neexistující klíč vyvolá varování `Undefined array key`.
+- Hodnoty jsou **vždy řetězce** (věk `'17'`, ne `17`). Před výpočtem nebo předáním funkci je převedeme, např. `(int)`.
+- Hodnota může **chybět** (prvek se neodeslal, požadavek je podvržený). Přístup na neexistující klíč vyvolá varování `Undefined array key`.
 - Bezpečný přístup s výchozí hodnotou: operátor `??`.
-- Ošetření výstupu: `htmlspecialchars()` převede speciální znaky na HTML entity a brání XSS.
+- Ošetření výstupu: `htmlspecialchars()` převede speciální znaky na HTML entity a brání XSS. Od PHP 8.1 převádí i uvozovky, další parametry nejsou potřeba.
 
 ```php
 $name = trim($_POST['name'] ?? '');                 // chybí-li, použije se ''
-echo '<h2>Ahoj ' . htmlspecialchars($name, ENT_QUOTES) . '</h2>';
+echo '<h2>Ahoj ' . htmlspecialchars($name) . '</h2>';
 ```
 
 ---
@@ -289,7 +293,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Tento kód se provede až po odeslání formuláře
     $name = trim($_POST['name'] ?? '');
-    echo '<h2>Děkujeme ' . htmlspecialchars($name, ENT_QUOTES) . '</h2>';
+    echo '<h2>Děkujeme ' . htmlspecialchars($name) . '</h2>';
 }
 ```
 
@@ -297,7 +301,7 @@ U formuláře s metodou GET nelze podle `REQUEST_METHOD` odeslání poznat, prot
 
 ```php
 if (isset($_GET['name'])) {
-    echo '<h2>Děkujeme ' . htmlspecialchars($_GET['name'], ENT_QUOTES) . '</h2>';
+    echo '<h2>Děkujeme ' . htmlspecialchars($_GET['name']) . '</h2>';
 }
 ```
 
@@ -306,21 +310,77 @@ if (isset($_GET['name'])) {
 # Checkbox, radio a select
 
 - Nezaškrtnutý `checkbox` se **neodešle vůbec**, v poli proto klíč chybí. Zjistí se přes `isset()`.
-- `radio` a `select` odešlou `value` vybrané možnosti.
+- `radio` a `select` odešlou `value` vybrané možnosti. Není-li vybrán žádný `radio`, klíč také chybí.
 - Více hodnot pod jedním jménem: `name="hobby[]"`, v PHP pak vznikne pole.
+- Uživatel může poslat i hodnotu, která ve formuláři není. Ověříme ji proti seznamu povolených.
 
 ```php
 echo '
-    <input type="checkbox" name="newsletter" value="1"> Newsletter
-    <input type="checkbox" name="hobby[]" value="sport"> Sport
-    <input type="checkbox" name="hobby[]" value="hudba"> Hudba
+    <label><input type="checkbox" name="newsletter" value="1"> Newsletter</label>
+    <label><input type="checkbox" name="hobby[]" value="sport"> Sport</label>
+    <label><input type="checkbox" name="hobby[]" value="hudba"> Hudba</label>
 ';
 ```
 
 ```php
 $newsletter = isset($_POST['newsletter']);          // true / false
 $hobby = $_POST['hobby'] ?? [];                     // pole, nebo prázdné pole
+$size = $_POST['size'] ?? '';
+
+if (!in_array($size, ['m', 'l'], true)) {
+    $errors[] = 'Vyberte velikost.';
+}
 ```
+
+---
+layout: two-cols-header
+---
+
+# Co vypíše? - odeslaný formulář
+
+Uživatel vyplní jméno `Jan`, věk `17`, zaškrtne Sport a Hudbu, Newsletter nechá prázdný.
+
+::left::
+
+```php
+echo '
+    <input type="text" name="name">
+    <input type="text" name="age">
+    <input type="checkbox" name="newsletter" value="1">
+    <input type="checkbox" name="hobby[]" value="sport">
+    <input type="checkbox" name="hobby[]" value="hudba">
+';
+```
+
+```php
+var_dump($_POST);
+```
+
+::right::
+
+<v-click>
+
+```
+array(3) {
+  ["name"]=>
+  string(3) "Jan"
+  ["age"]=>
+  string(2) "17"
+  ["hobby"]=>
+  array(2) {
+    [0]=>
+    string(5) "sport"
+    [1]=>
+    string(5) "hudba"
+  }
+}
+```
+
+- `newsletter` chybí, nezaškrtnutý checkbox se neposílá.
+- `age` je řetězec `"17"`, ne číslo.
+- `hobby` je pole.
+
+</v-click>
 
 ---
 
@@ -346,7 +406,7 @@ if ($errors === []) {
 ```
 
 ```php
-echo '<input type="email" name="email" value="' . htmlspecialchars($email, ENT_QUOTES) . '">';
+echo '<input type="email" name="email" value="' . htmlspecialchars($email) . '">';
 ```
 
 ---
@@ -375,6 +435,7 @@ if ($email === null || $email === false) {
 - Po zpracování POST se nezobrazuje výsledek rovnou. Server odpoví **přesměrováním** (vzor Post/Redirect/Get).
 - Obnovení stránky (F5) pak neodešle formulář znovu, takže nevznikne duplicitní objednávka ani záznam.
 - Přesměrování se provádí funkcí `header()`, probereme později.
+- `header()` musí zaznít dřív, než skript cokoli vypíše. Zpracování formuláře proto patří na začátek souboru, před HTML.
 
 ```php
 if ($errors === []) {
@@ -402,15 +463,17 @@ echo '
 
 ```php
 $file = $_FILES['avatar'] ?? null;
-
+$allowed = ['image/jpeg' => 'jpg', 'image/png' => 'png'];   // typ podle obsahu => přípona
 if ($file && $file['error'] === UPLOAD_ERR_OK) {
-    // $file['name'] pochází od uživatele, nedůvěřovat mu, název vygenerovat
-    $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
-    move_uploaded_file($file['tmp_name'], __DIR__ . '/uploads/' . uniqid() . '.' . $ext);
+    $type = mime_content_type($file['tmp_name']);           // skutečný typ, ne přípona
+    if (isset($allowed[$type])) {
+        move_uploaded_file($file['tmp_name'], __DIR__ . '/uploads/' . uniqid() . '.' . $allowed[$type]);
+    }
 }
 ```
 
-- Vždy kontrolovat `error`, velikost a skutečný typ souboru, ne jen příponu (omezení: `upload_max_filesize`).
+- Název ani příponu od uživatele nepoužíváme, `foto.php` by se uložil jako spustitelný skript.
+- Hlídat i velikost souboru (limit serveru: `upload_max_filesize`).
 
 ---
 
